@@ -27,3 +27,5 @@
 /.idea/gradle.xml
 app/app.iml
 /app/app.iml
+app/google-services.json
+/app/google-services.json
