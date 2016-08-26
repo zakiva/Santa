@@ -13,16 +13,17 @@
         android:layout_marginTop="20dp"
         android:textAllCaps="false"
         android:textSize="40dp"
-        android:id="@+id/textView" />
+        android:id="@+id/title" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="New User"
+        android:textAllCaps="false"
         android:id="@+id/button"
-        android:onClick="newButtonClicked"
-        android:layout_marginBottom="150dp"
-        android:layout_alignParentBottom="true"
+        android:onClick="newUserClicked"
+        android:layout_below="@id/title"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true" />
 
 
