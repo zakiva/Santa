@@ -1,6 +1,10 @@
 package com.example.zakiva.santa;
 
 import com.example.zakiva.santa.Models.*;
+import com.example.zakiva.santa.Helpers.*;
+import static com.example.zakiva.santa.Helpers.Infra.*;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,43 +17,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Console;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = ">>>>>>>Debug: ";
-    private String userEmail;
-    private DatabaseReference myDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myDatabase = FirebaseDatabase.getInstance().getReference();
         //set the real user email instead
         ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail");
-        userEmail = ((Santa) this.getApplication()).getGlobalEmail();
+        initInfra(((Santa) this.getApplication()).getGlobalEmail());
     }
 
-    public void newUserClicked(View view) {
-        Log.d(TAG, "newUserClicked");
-        User user = new User(userEmail);
-        myDatabase.child("Users").child(userEmail).setValue(user);
-    }
-
-    //example how to get an object from the database
-    public void getUser () {
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users/" + userEmail);
-        ValueEventListener userListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User u = dataSnapshot.getValue(User.class);
-                Log.d(TAG, "We got the user: " + u.getEmail());
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-            }
-        };
-        myRef.addValueEventListener(userListener);
+    public void startClicked(View view) {
+        addUser();
+        addCompetition("compeexample", "giftexample");
+        getUser();
+        getCompetition("compeexample");
     }
 }
