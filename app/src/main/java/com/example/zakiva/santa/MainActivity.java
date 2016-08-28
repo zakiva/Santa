@@ -4,7 +4,11 @@ import com.example.zakiva.santa.Models.*;
 import com.example.zakiva.santa.Helpers.*;
 import static com.example.zakiva.santa.Helpers.Infra.*;
 
-
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +26,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = ">>>>>>>Debug: ";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,5 +40,8 @@ public class MainActivity extends AppCompatActivity {
         addCompetition("compeexample", "giftexample");
         getUser();
         getCompetition("compeexample");
+    }
+    private void goToGoogle() {
+        startActivity(new Intent(MainActivity.this, Google.class));
     }
 }
