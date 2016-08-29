@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         getUser();
         getCompetition("compeexample");
     }
-    private void goToGoogle() {
+    public void goToGoogle(View v) {
         startActivity(new Intent(MainActivity.this, Google.class));
     }
 }
