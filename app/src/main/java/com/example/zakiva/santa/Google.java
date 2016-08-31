@@ -64,9 +64,6 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
-            Person profile = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-
-
             try {
                 Intent sendData = new Intent(Google.this, Google.class);
                 String name, email;

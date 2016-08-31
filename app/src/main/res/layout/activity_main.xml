@@ -30,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="go to google sign in"
-        android:id="@+id/button"
-        android:layout_below="@+id/btnStart"
+        android:id="@+id/btnGo"
+        android:layout_below="@id/button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="127dp"
         android:onClick="goToGoogle"/>
