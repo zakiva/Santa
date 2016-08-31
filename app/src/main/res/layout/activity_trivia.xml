@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="עיר הבירה של קפריסין היא:"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="25dp"
+        android:id="@+id/question" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_blue_light"
+        android:text="בריסל"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:layout_marginRight="45dp"
+        android:layout_below="@id/question"
+        android:textSize="25dp"
+        android:tag="a"
+        android:onClick="answerClicked"
+        android:id="@+id/answerA"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"
+        android:layout_marginRight="45dp"
+        android:text="איסטנבול"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:textAllCaps="false"
+        android:tag="b"
+        android:onClick="answerClicked"
+        android:layout_below="@id/answerA"
+        android:textSize="25dp"
+        android:id="@+id/answerB" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"
+        android:layout_toLeftOf="@id/answerA"
+        android:layout_marginRight="40dp"
+        android:text="ניקוסיה"
+        android:tag="c"
+        android:onClick="answerClicked"
+        android:layout_marginTop="40dp"
+        android:textAllCaps="false"
+        android:layout_below="@id/question"
+        android:textSize="25dp"
+        android:id="@+id/answerC" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"
+        android:text="בוקרשט"
+        android:tag="d"
+        android:layout_toLeftOf="@id/answerA"
+        android:layout_marginRight="40dp"
+        android:onClick="answerClicked"
+        android:layout_marginTop="30dp"
+        android:textAllCaps="false"
+        android:layout_below="@id/answerC"
+        android:textSize="25dp"
+        android:id="@+id/answerD" />
+
+
+</RelativeLayout>

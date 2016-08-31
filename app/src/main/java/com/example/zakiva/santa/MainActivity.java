@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = ">>>>>>>Debug: ";
+    public static final String TAG = ">>>>>>>Debug: ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,5 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goToGoogle(View v) {
         startActivity(new Intent(MainActivity.this, Google.class));
+    }
+
+    public void triviaClicked(View view) {
+        startActivity(new Intent(MainActivity.this, Trivia.class));
     }
 }

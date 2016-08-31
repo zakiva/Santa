@@ -3,12 +3,15 @@ package com.example.zakiva.santa.Helpers;
 import android.util.Log;
 
 import com.example.zakiva.santa.Models.Competition;
+import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Models.User;
+import com.example.zakiva.santa.Trivia;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.example.zakiva.santa.*;
 
 /**
  * Created by zakiva on 8/27/16.
@@ -33,6 +36,11 @@ public class Infra {
     public static void addCompetition (String key, String giftId) {
         Competition competition = new Competition(key, giftId);
         myDatabase.child("users").child(userEmail).child("competitions").child(key).setValue(competition);
+    }
+
+    public static void addTriviaQuestion (String key, String q, String ca, String a, String b, String c, String d) {
+        TriviaQuestion triviaQuestion = new TriviaQuestion(key, q, ca, a, b, c, d);
+        myDatabase.child("triviaQuestions").child(key).setValue(triviaQuestion);
     }
 
     //get a user object from the database
@@ -67,5 +75,23 @@ public class Infra {
             }
         };
         myRef.addValueEventListener(competitionListener);
+    }
+
+    //get a question object from the database and display it on the screen
+    public static void displayTriviaQuestion (String key) {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("triviaQuestions/" + key);
+        ValueEventListener triviaQuestionListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TriviaQuestion q = dataSnapshot.getValue(TriviaQuestion.class);
+                Log.d(TAG, "We got the question: " + q.getQuestion());
+                Trivia.loadQuestionToScreen(q);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "displayQuestion:onCancelled", databaseError.toException());
+            }
+        };
+        myRef.addValueEventListener(triviaQuestionListener);
     }
 }
