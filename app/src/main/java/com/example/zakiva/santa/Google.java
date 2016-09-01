@@ -15,8 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
 
 public class Google extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
@@ -26,7 +24,6 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
     private SignInButton btnGoSign;
     private TextView name, email;
     private String i_name="", i_email="";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,24 +40,20 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
         btnGoSign.setOnClickListener(this);
         test();
     }
-
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
-
     public void initGoogle() {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().requestProfile()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).addApi(Plus.API).build();
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
@@ -69,12 +62,9 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
                 String name, email;
                 if (account != null) {
                     name = account.getDisplayName();
-
                     email = account.getEmail();
-
                     sendData.putExtra("p_name", name);
                     sendData.putExtra("p_email", email);
-
                     startActivity(sendData);
                 }
             } catch (Exception e) {
@@ -84,18 +74,14 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
             Toast.makeText(Google.this, "login failed", Toast.LENGTH_LONG).show();
         }
     }
-
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(getApplicationContext(),"google connection failed",Toast.LENGTH_LONG).show();
     }
-
     public void test() {
         Intent i = getIntent();
         i_name = i.getStringExtra("p_name");
         i_email = i.getStringExtra("p_email");
-
         name.setText(i_name);
         email.setText(i_email);
     }
