@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,5 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void triviaClicked(View view) {
         startActivity(new Intent(MainActivity.this, Trivia.class));
+    }
+    public void goToFb(View v) {
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        startActivity(new Intent(MainActivity.this, Facebook.class));
     }
 }
