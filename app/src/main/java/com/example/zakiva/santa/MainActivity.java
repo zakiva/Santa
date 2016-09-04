@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vungle.publisher.VunglePub;
 
 import java.io.Console;
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = ">>>>>>>Debug: ";
+
+    final VunglePub vunglePub = VunglePub.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +39,29 @@ public class MainActivity extends AppCompatActivity {
         //set the real user email instead
         ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail");
         initInfra(((Santa) this.getApplication()).getGlobalEmail());
+
+        //Vungle init
+        VungleAds vungleAds = new VungleAds();
+        vungleAds.vungleInit(MainActivity.this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        vunglePub.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vunglePub.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        vunglePub.clearEventListeners();
+    };
 
     public void startClicked(View view) {
         addUser();
@@ -54,5 +80,9 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         startActivity(new Intent(MainActivity.this, Facebook.class));
+    }
+
+    public void playAd(View v) {
+        vunglePub.playAd();
     }
 }
