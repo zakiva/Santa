@@ -5,6 +5,9 @@ android {
     buildToolsVersion "24.0.1"
     defaultConfig {
         applicationId "com.example.zakiva.santa"
+        manifestPlaceholders = [manifestApplicationId: "${applicationId}",
+                                onesignal_app_id: "590c0b15-7203-4ac9-bfae-372df9c7885e",
+                                onesignal_google_project_number: "355181318463"]
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
@@ -36,6 +39,12 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:9.4.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.onesignal:OneSignal:3.+@aar'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile "com.google.android.gms:play-services-location:9.4.0"
+    compile 'com.google.android.gms:play-services-analytics:9.4.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
