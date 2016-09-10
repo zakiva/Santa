@@ -107,7 +107,7 @@ public class Images {
             Picasso.with(yourActivity).load(url).into(image);
         } else {
             FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://project-3679565234259493359.appspot.com");
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
             storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
