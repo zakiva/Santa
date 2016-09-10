@@ -5,9 +5,6 @@ android {
     buildToolsVersion "24.0.1"
     defaultConfig {
         applicationId "com.example.zakiva.santa"
-        manifestPlaceholders = [manifestApplicationId: "${applicationId}",
-                                onesignal_app_id: "590c0b15-7203-4ac9-bfae-372df9c7885e",
-                                onesignal_google_project_number: "355181318463"]
         minSdkVersion 15
         targetSdkVersion 20
         versionCode 1
