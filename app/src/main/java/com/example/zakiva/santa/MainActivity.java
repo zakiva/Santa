@@ -4,7 +4,9 @@ import com.example.zakiva.santa.Models.*;
 import com.example.zakiva.santa.Helpers.*;
 import static com.example.zakiva.santa.Helpers.Infra.*;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,8 +25,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vungle.publisher.VunglePub;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+
 import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         //Vungle init
         VungleAds vungleAds = new VungleAds();
         vungleAds.vungleInit(MainActivity.this);
+
+        //Parser.readExcelFile(this, "/storage/emulated/0/Download/trivia2.xls");
+        //OneSignal.sendTag("key", "value");
     }
 
     @Override

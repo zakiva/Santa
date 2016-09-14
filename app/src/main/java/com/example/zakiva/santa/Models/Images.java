@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
@@ -90,6 +91,41 @@ public class Images {
                 downloadAndUpdate2Images(imageName, imageViewId, imageName2, imageViewId2, yourActivity, index, index2);
                 Log.d("Load from: ", "WEB");
             }
+        }
+    }
+
+    /*
+    Another option to update image. Same args as "updateImage".
+    This method do the same thing as "updateImage". Use both and check which one perform better and use it.
+    */
+    public static void updateImageWithUrl(final String imageName, final int imageViewId, final Activity yourActivity, final String index){
+        SharedPreferences settings = yourActivity.getSharedPreferences("MY_DATA", 0);
+        String url = settings.getString("IM2" + " " + index, "NONE");
+        String name = settings.getString("IM2" + " name " + index, "NONE");
+        if (!url.equals("NONE") && imageName.equals(name)){
+            ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
+            Picasso.with(yourActivity).load(url).into(image);
+        } else {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
+            storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
+                    Picasso.with(yourActivity).load(uri).into(image);
+
+                    SharedPreferences settings = yourActivity.getSharedPreferences("MY_DATA", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("IM2" + " " + index, uri.toString());
+                    editor.putString("IM2" + " name " + index, imageName);
+                    editor.commit();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
         }
     }
 

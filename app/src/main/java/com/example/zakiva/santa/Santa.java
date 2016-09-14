@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.example.zakiva.santa.Helpers.VungleAds;
+import com.onesignal.OneSignal;
 import com.vungle.publisher.EventListener;
 import com.vungle.publisher.VunglePub;
 
@@ -27,6 +28,7 @@ public class Santa extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //oneSignal init
+        OneSignal.startInit(this).init();
     }
-
 }
