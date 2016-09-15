@@ -56,13 +56,5 @@
         android:layout_centerHorizontal="true"
         android:onClick="goToFb" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show Ad"
-        android:id="@+id/buttonShowAd"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:onClick="playAd" />
 
 </RelativeLayout>
