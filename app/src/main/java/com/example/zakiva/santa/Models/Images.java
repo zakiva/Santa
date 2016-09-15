@@ -31,7 +31,7 @@ public class Images {
     yourActivity - the activity that the imageView is in, The format is: [MainActivity.this]
     index - this helps the caching mechanism to search for the image. Each time you should call this method with a different index. The format is: ["1"]
     */
-    public static void updateImage(final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
+    static void updateImage(final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
         ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
         Bitmap bitmap = (Bitmap) Cache.getInstance().getLru().get(imageName);
         if (bitmap != null) {
@@ -61,7 +61,7 @@ public class Images {
     yourActivity - the activity that the imageView is in, The format is: [MainActivity.this]
     index - this helps the caching mechanism to search for the image. Each time you should call this method with a different index. The format is: ["1"]
     */
-    public static void update2Images(final String imageName, final int imageViewId, final String imageName2, final int imageViewId2, final Activity yourActivity, final String index, final String index2) {
+    static void update2Images(final String imageName, final int imageViewId, final String imageName2, final int imageViewId2, final Activity yourActivity, final String index, final String index2) {
         ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
         Bitmap bitmap = (Bitmap) Cache.getInstance().getLru().get(imageName);
         ImageView image2 = (ImageView) yourActivity.findViewById(imageViewId2);
