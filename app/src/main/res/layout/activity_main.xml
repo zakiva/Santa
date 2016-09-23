@@ -40,11 +40,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Draw"
+        android:textAllCaps="false"
+        android:id="@+id/draw"
+        android:onClick="drawClicked"
+        android:layout_below="@id/trivia"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="go to google sign in"
         android:id="@+id/btnGo"
         android:layout_below="@id/button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="127dp"
+        android:layout_marginTop="199dp"
         android:onClick="goToGoogle"/>
 
     <Button

@@ -1,0 +1,116 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    >
+
+    <!-- This is the view on which we will draw. -->
+    <view
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        class="com.example.zakiva.santa.Models.MainDrawingView"
+        android:id="@+id/single_touch_view"
+        android:layout_gravity="left|top"
+        android:background="#ffffff" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="print pixels"
+        android:textAllCaps="false"
+        android:id="@+id/print"
+        android:onClick="printPixelsClicked"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="convert"
+        android:textAllCaps="false"
+        android:id="@+id/convert"
+        android:onClick="convertImageToBitampClicked"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hide"
+        android:textAllCaps="false"
+        android:id="@+id/hide"
+        android:onClick="hideClicked"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="compare"
+        android:textAllCaps="false"
+        android:id="@+id/compare"
+        android:onClick="compareImagesClicked"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="290dp"
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Good Points:"
+        android:textAllCaps="false"
+        android:layout_marginTop="460dp"
+        android:layout_marginLeft="50dp"
+        android:id="@+id/goodPoints"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bad Points:"
+        android:textAllCaps="false"
+        android:layout_marginTop="460dp"
+        android:layout_marginLeft="220dp"
+        android:id="@+id/badPoints"
+        android:textSize="15dp"/>
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:id="@+id/pen"
+        android:tag="1"
+        android:layout_marginLeft="330dp"
+        android:onClick="drawingModeClicked"
+        android:background="@drawable/pen_icon"
+        android:layout_below="@id/title"
+        android:layout_marginTop="10dp" />
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:tag="0"
+        android:id="@+id/eraser"
+        android:layout_marginLeft="330dp"
+        android:onClick="drawingModeClicked"
+        android:background="@drawable/eraser_icon"
+        android:layout_below="@id/title"
+        android:layout_marginTop="60dp" />
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView" />
+
+</FrameLayout>
