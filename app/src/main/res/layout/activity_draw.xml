@@ -91,7 +91,7 @@
         android:tag="1"
         android:layout_marginLeft="330dp"
         android:onClick="drawingModeClicked"
-        android:background="@drawable/pen_icon"
+        android:background="@drawable/pen_icon_color"
         android:layout_below="@id/title"
         android:layout_marginTop="10dp" />
     <Button

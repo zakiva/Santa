@@ -26,8 +26,8 @@ import com.example.zakiva.santa.MainActivity;
 public class MainDrawingView extends View {
 
     public static final String TAG = ">>>>>>>Debug: ";
-    private Paint paint = new Paint();
-    private Path path = new Path();
+    private Paint paint;
+    private Path path;
     private Bitmap bitmap;
     private int [][] matrix;
     public static int SIZE = 700;
@@ -36,14 +36,22 @@ public class MainDrawingView extends View {
     private Context context;
     private int drawingMode;
 
-    private Bitmap mBitmap;
-    private Canvas mCanvas;
-    private Paint mBitmapPaint;
+    //canvas
+    private Canvas drawCanvas;
+    //canvas bitmap
+    private Bitmap canvasBitmap;
+    //canvas paint
+    private Paint canvasPaint;
+
 
 
     public MainDrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
        // this.setDrawingCacheEnabled(true);
+
+        paint = new Paint();
+        path = new Path();
+
         paint.setAntiAlias(true);
         paint.setStrokeWidth(11f);
         paint.setColor(Color.BLACK);
@@ -61,29 +69,16 @@ public class MainDrawingView extends View {
         drawingMode = 1;
         matrix = new int[SIZE][SIZE];
 
-
-        mBitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
-        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+        canvasPaint = new Paint(Paint.DITHER_FLAG);
+        canvasBitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
+        drawCanvas = new Canvas(canvasBitmap);
    }
-
-    public void onClickEraser()
-    {
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        paint.setXfermode(null);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         //bitmap = this.getDrawingCache(true);
-       // canvas.drawPath(path, paint); original line (single)
-
-        canvas.drawColor(0x00FFFFFF);
-        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-
+        canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(path, paint);
-
-
     }
 
     @Override
@@ -96,13 +91,16 @@ public class MainDrawingView extends View {
         int y = (int) eventY;
         int xRounded = roundUp(x);
         int yRounded = roundUp(y);
+        x = xRounded;
+        y = yRounded;
 
         if (x >= SIZE || y >= SIZE || x < 0 || y < 0)
             return false;
         if (xRounded >= SIZE || yRounded >= SIZE || xRounded < 0 || yRounded < 0)
             return false;
 
-        matrix[yRounded][xRounded] = drawingMode; // set pixel to 1 or 0
+        //matrix[yRounded][xRounded] = drawingMode; // set pixel to 1 or 0
+        updateMatrixWithDelta(yRounded, xRounded);
 
         Log.d(MainActivity.TAG, "touched: " + x +"," + y);
 
@@ -110,12 +108,14 @@ public class MainDrawingView extends View {
             case MotionEvent.ACTION_DOWN:
                 // Set a new starting point
                 path.moveTo(x, y);
-                return true;
+                break;
             case MotionEvent.ACTION_MOVE:
                 // Connect the points
                 path.lineTo(x, y);
-                mCanvas.drawPath(path, paint);
-                paint.reset();
+                break;
+            case MotionEvent.ACTION_UP:
+                drawCanvas.drawPath(path, paint);
+                path.reset();
                 break;
             default:
                 return false;
@@ -208,6 +208,23 @@ public class MainDrawingView extends View {
         return false;
     }
 
+    public void updateMatrixWithDelta (int i, int j) {
+
+        int DELTA = 3;
+        int limit = DELTA*JUMP;
+
+        if (i-limit < 0 || j-limit < 0 || i + limit > SIZE || j + limit > SIZE || drawingMode == 1) {
+            matrix[i][j] = drawingMode;
+            return;
+        }
+
+        for (int k = -1 * (DELTA - 1); k < DELTA; k++) {
+            for (int l = -1 * (DELTA - 1); l < DELTA; l++) {
+                matrix[i + k * JUMP][j + l * JUMP] = 0;
+            }
+        }
+    }
+
 
 
     /*
@@ -279,12 +296,20 @@ public class MainDrawingView extends View {
         setMeasuredDimension(width, height);
     }
 
-    public void setDrawingMode (String mode) {
-        this.drawingMode = Integer.parseInt(mode);
+    public void setDrawingMode (int mode) {
+        this.drawingMode = mode;
         Log.d(MainActivity.TAG, "this.drawingMode = " + this.drawingMode);
-        if (drawingMode == 0)
-            onClickEraser();
+
+        if (drawingMode == 0) {
+            paint.setStrokeWidth(20f);
+            paint.setColor(Color.WHITE);
+            //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        }
+        else {
+            paint.setStrokeWidth(11f);
+            paint.setColor(Color.BLACK);
+            //paint.setXfermode(null);
+        }
+
     }
-
-
 }

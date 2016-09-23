@@ -15,10 +15,12 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zakiva.santa.Models.MainDrawingView;
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.vision.text.Text;
 
 
@@ -34,6 +36,8 @@ public class Draw extends AppCompatActivity {
     public static int SIZE;
     public static int JUMP;
     public int randomImage;
+    private Button pen;
+    private Button eraser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,13 @@ public class Draw extends AppCompatActivity {
         setContentView(R.layout.activity_draw);
         SIZE = MainDrawingView.SIZE;
         JUMP = MainDrawingView.JUMP;
-        ArrayList <Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
-        Collections.shuffle(images);
+        ArrayList <Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.star700sq, R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
+        //Collections.shuffle(images);
         randomImage = images.get(0);
+
+        pen = (Button) findViewById(R.id.pen);
+        eraser = (Button) findViewById(R.id.eraser);
+
 
         // get height and width of screen
         //int screenWidth = displayMetrics.widthPixels;
@@ -256,7 +264,16 @@ public class Draw extends AppCompatActivity {
     }
 
     public void drawingModeClicked(View view) {
+        int mode = Integer.parseInt(view.getTag().toString());
+        if (mode == 0) {
+            pen.setBackgroundResource(R.drawable.pen_icon);
+            eraser.setBackgroundResource(R.drawable.eraser_icon_color);
+        }
+        else {
+            pen.setBackgroundResource(R.drawable.pen_icon_color);
+            eraser.setBackgroundResource(R.drawable.eraser_icon);
+        }
         View v = ((View) findViewById(R.id.single_touch_view));
-        ((MainDrawingView) v).setDrawingMode(view.getTag().toString());
+        ((MainDrawingView) v).setDrawingMode(mode);
     }
 }
