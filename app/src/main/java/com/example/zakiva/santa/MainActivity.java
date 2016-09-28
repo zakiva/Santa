@@ -55,4 +55,8 @@ public class MainActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
         startActivity(new Intent(MainActivity.this, Facebook.class));
     }
+
+    public void drawClicked(View view) {
+        startActivity(new Intent(MainActivity.this, Draw.class));
+    }
 }
