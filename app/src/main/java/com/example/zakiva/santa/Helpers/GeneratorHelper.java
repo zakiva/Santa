@@ -1,5 +1,9 @@
 package com.example.zakiva.santa.Helpers;
 
+import android.util.Log;
+
+import com.example.zakiva.santa.MainActivity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,13 +26,17 @@ public class GeneratorHelper {
 
         int i = 1;
 
-        while (answers.size() < 4 && i < data.size()) {
+        while (answers.size() < 4) {
             HashMap<String, Object>  answerHash = data.get(i);
             String answer = chooseStringFromField(answerHash, answerKey);
+
             if (!(answers.contains(answer)))
                 answers.add(answer);
             i++;
+            if (i == data.size())
+                i = 1;
         }
+
         Collections.shuffle(answers);
         result.put("answers", answers);
         return result;

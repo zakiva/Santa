@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
+
+import java.util.Random;
 
 import static com.example.zakiva.santa.Helpers.Infra.*;
 
@@ -38,6 +41,15 @@ public class Trivia extends AppCompatActivity {
         Log.d(MainActivity.TAG, "view id =  " + view.getId());
         Log.d(MainActivity.TAG, "view id =  " + view.getTag().toString());
 
+    }
+
+    public void changeQuestionClicked (View view) {
+        Generator generator = new Generator ();
+        int n = new Random().nextInt(2);
+        if (n == 0)
+            loadQuestionToScreen(generator.bandToAlbum());
+        else
+            loadQuestionToScreen(generator.countryToCapital());
     }
 
     public static void loadQuestionToScreen (TriviaQuestion q) {

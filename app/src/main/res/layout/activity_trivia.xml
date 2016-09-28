@@ -86,4 +86,16 @@
         android:id="@+id/answerD" />
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change"
+        android:textAllCaps="false"
+        android:id="@+id/change"
+        android:onClick="changeQuestionClicked"
+        android:layout_below="@id/button"
+        android:layout_marginTop="420dp"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

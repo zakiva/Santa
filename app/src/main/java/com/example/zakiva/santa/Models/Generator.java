@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Created by zakiva on 9/28/16.
  */
 
-public class Generators {
+public class Generator {
 
     public TriviaQuestion bandToAlbum () {
 
@@ -23,7 +23,23 @@ public class Generators {
         String right = (String) questionHashFromData.get("rightAnswer");
         ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
 
-        String q = "?" + name + "איזה מהאלבומים הבאים שייך ללהקה" ;
+        String q = "איזה מהאלבומים הבאים שייך ללהקת " + name + "?";
+
+        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
+        return question;
+    }
+
+    public TriviaQuestion countryToCapital () {
+
+        //this is just an example of data - to be removed
+        ArrayList<HashMap<String, Object>> dataExample = prepareCountriesData();
+
+        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(dataExample, "name", "capital");
+        String name = (String) questionHashFromData.get("question");
+        String right = (String) questionHashFromData.get("rightAnswer");
+        ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
+
+        String q = "מהי עיר הבירה של " + name + "?";
 
         TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
         return question;
@@ -62,6 +78,34 @@ public class Generators {
 
         return new ArrayList<HashMap<String, Object>> (Arrays.asList(d1, d2, d3, d4, d5, d6));
     }
+
+    //this method is just an example of preparing the data - to be removed
+    public static ArrayList<HashMap<String, Object>> prepareCountriesData () {
+
+        HashMap<String, Object> d1 = new HashMap<>();
+        HashMap<String, Object> d2 = new HashMap<>();
+        HashMap<String, Object> d3 = new HashMap<>();
+        HashMap<String, Object> d4 = new HashMap<>();
+        HashMap<String, Object> d5 = new HashMap<>();
+        HashMap<String, Object> d6 = new HashMap<>();
+
+        d1.put("name", "ישראל");
+        d2.put("name", "ספרד");
+        d3.put("name", "צרפת");
+        d4.put("name", "בלגיה");
+        d5.put("name", "יוון");
+        d6.put("name", "אוסטרליה");
+
+        d1.put("capital", "ירושלים");
+        d2.put("capital", "מדריד");
+        d3.put("capital", "פריז");
+        d4.put("capital", "בריסל");
+        d5.put("capital", "אתונה");
+        d6.put("capital", "קנברה");
+
+        return new ArrayList<HashMap<String, Object>> (Arrays.asList(d1, d2, d3, d4, d5, d6));
+    }
+
 
 
 
