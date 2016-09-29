@@ -45,11 +45,13 @@ public class Trivia extends AppCompatActivity {
 
     public void changeQuestionClicked (View view) {
         Generator generator = new Generator ();
-        int n = new Random().nextInt(2);
+        int n = new Random().nextInt(3);
         if (n == 0)
             loadQuestionToScreen(generator.bandToAlbum());
-        else
+        else if (n == 1)
             loadQuestionToScreen(generator.countryToCapital());
+        else
+            loadQuestionToScreen(generator.bandToYear());
     }
 
     public static void loadQuestionToScreen (TriviaQuestion q) {

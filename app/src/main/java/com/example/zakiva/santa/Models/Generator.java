@@ -29,6 +29,22 @@ public class Generator {
         return question;
     }
 
+    public TriviaQuestion bandToYear () {
+
+        //this is just an example of data - to be removed
+        ArrayList<HashMap<String, Object>> dataExample = prepareBandsData();
+
+        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(dataExample, "name", "year");
+        String name = (String) questionHashFromData.get("question");
+        String right = (String) questionHashFromData.get("rightAnswer");
+        ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
+
+        String q = "באיזו שנה הוקמה להקת " + name + "?";
+
+        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
+        return question;
+    }
+
     public TriviaQuestion countryToCapital () {
 
         //this is just an example of data - to be removed
@@ -75,6 +91,13 @@ public class Generator {
         d4.put("albums", albums4);
         d5.put("albums", albums5);
         d6.put("albums", albums6);
+
+        d1.put("year", "1910");
+        d2.put("year", "1930");
+        d3.put("year", "1940");
+        d4.put("year", "1950");
+        d5.put("year", "1970");
+        d6.put("year", "1910");
 
         return new ArrayList<HashMap<String, Object>> (Arrays.asList(d1, d2, d3, d4, d5, d6));
     }

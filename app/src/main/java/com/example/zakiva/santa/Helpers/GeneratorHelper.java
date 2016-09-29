@@ -24,7 +24,7 @@ public class GeneratorHelper {
         ArrayList<String> answers = new ArrayList<>();
         answers.add(rightAnswer);
 
-        int i = 1;
+        int i = 1, k = 0;
 
         while (answers.size() < 4) {
             HashMap<String, Object>  answerHash = data.get(i);
@@ -33,8 +33,11 @@ public class GeneratorHelper {
             if (!(answers.contains(answer)))
                 answers.add(answer);
             i++;
+            k++;
             if (i == data.size())
                 i = 1;
+            if (k > 300) // if data is correct, this should never happen
+                answers.add("XXX");
         }
 
         Collections.shuffle(answers);
