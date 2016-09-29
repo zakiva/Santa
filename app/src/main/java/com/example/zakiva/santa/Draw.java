@@ -3,6 +3,9 @@ package com.example.zakiva.santa;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,8 +51,13 @@ public class Draw extends AppCompatActivity {
     }
 
     public void convertImageToBitmapClicked(View view) {
-        Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
-        Drawing.drawBitmap(bitmap, this, v);
+        v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
+
+        //redundant
+       // Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
+       // Drawable d = new BitmapDrawable(getResources(), bitmap);
+       // v.setBackground(d);
+       // Drawing.drawBitmap(bitmap, this, v);
     }
 
     public void compareImagesClicked(View view) {
@@ -76,6 +84,10 @@ public class Draw extends AppCompatActivity {
 
     public void drawingModeClicked(View view) {
         int mode = Integer.parseInt(view.getTag().toString());
+
+        if (!(((MainDrawingView) v).setDrawingMode(mode)))
+            return;
+
         if (mode == 0) {
             pen.setBackgroundResource(R.drawable.pen_icon);
             eraser.setBackgroundResource(R.drawable.eraser_icon_color);
@@ -84,7 +96,6 @@ public class Draw extends AppCompatActivity {
             pen.setBackgroundResource(R.drawable.pen_icon_color);
             eraser.setBackgroundResource(R.drawable.eraser_icon);
         }
-        ((MainDrawingView) v).setDrawingMode(mode);
     }
 
     public void bitmapBbuttonClicked(View view) {

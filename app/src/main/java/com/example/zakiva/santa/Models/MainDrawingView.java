@@ -30,6 +30,7 @@ public class MainDrawingView extends View {
     private static final float RATIO = 1f / 1f;
     private Context context;
     private int drawingMode;
+    private boolean drawingNow;
 
     //canvas
     private Canvas drawCanvas;
@@ -60,6 +61,7 @@ public class MainDrawingView extends View {
         //SIZE = screenWidth;
 
         drawingMode = 1;
+        drawingNow = false;
         //matrix = new int[SIZE][SIZE];
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
@@ -101,6 +103,7 @@ public class MainDrawingView extends View {
             case MotionEvent.ACTION_DOWN:
                 // Set a new starting point
                 path.moveTo(x, y);
+                drawingNow = true;
                 break;
             case MotionEvent.ACTION_MOVE:
                 // Connect the points
@@ -108,6 +111,7 @@ public class MainDrawingView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 drawCanvas.drawPath(path, paint);
+                drawingNow = false;
                 path.reset();
                 break;
             default:
@@ -123,7 +127,10 @@ public class MainDrawingView extends View {
         return (n + JUMP - 1) / JUMP * JUMP;
     }
 
-    public void setDrawingMode (int mode) {
+    //return true iff we can change the mode (no drawing at the moment)
+    public boolean setDrawingMode (int mode) {
+        if (drawingNow)
+            return false;
         this.drawingMode = mode;
         if (drawingMode == 0) {
             paint.setStrokeWidth(20f);
@@ -135,6 +142,7 @@ public class MainDrawingView extends View {
             paint.setColor(Color.BLACK);
             //paint.setXfermode(null);
         }
+        return true;
     }
 
 
