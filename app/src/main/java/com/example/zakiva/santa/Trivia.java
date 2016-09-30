@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.example.zakiva.santa.Models.Generator;
@@ -25,6 +26,7 @@ public class Trivia extends AppCompatActivity {
     private static TextView answerB;
     private static TextView answerC;
     private static TextView answerD;
+    private Chronometer stopper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class Trivia extends AppCompatActivity {
         answerB = ((TextView) findViewById(R.id.answerB));
         answerC = ((TextView) findViewById(R.id.answerC));
         answerD = ((TextView) findViewById(R.id.answerD));
+
+        stopper = (Chronometer) findViewById(R.id.chronometer);
 
         //small test
         addTriviaQuestion("1", "כמה פעמים זכתה ברזיל במונדיאל?", "5", "4", "5", "6", "7");
@@ -86,5 +90,13 @@ public class Trivia extends AppCompatActivity {
         answerB.setText(q.getAnswerB().toString());
         answerC.setText(q.getAnswerC().toString());
         answerD.setText(q.getAnswerD().toString());
+    }
+
+    public void startStopperClicked(View view) {
+        stopper.start();
+    }
+
+    public void stopStopperClicked(View view) {
+        stopper.stop();
     }
 }

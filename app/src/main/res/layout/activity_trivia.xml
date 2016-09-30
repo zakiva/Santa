@@ -4,13 +4,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:textColor="#4169E1"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Chronometer" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="עיר הבירה של קפריסין היא:"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/chronometer"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="25dp"
@@ -108,6 +119,28 @@
         android:layout_marginTop="420dp"
         android:layout_marginLeft="40dp"
         android:background="#00ff08" />
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:text="Start"
+        android:textAllCaps="false"
+        android:id="@+id/start"
+        android:onClick="startStopperClicked"
+        android:layout_below="@id/button"
+        android:layout_marginTop="420dp"
+        android:layout_marginLeft="240dp" />
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:text="Stop"
+        android:textAllCaps="false"
+        android:id="@+id/stop"
+        android:onClick="stopStopperClicked"
+        android:layout_below="@id/button"
+        android:layout_marginTop="420dp"
+        android:layout_marginLeft="310dp" />
 
 
 </RelativeLayout>
