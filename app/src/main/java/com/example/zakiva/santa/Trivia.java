@@ -1,15 +1,20 @@
 package com.example.zakiva.santa;
 
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
+import com.example.zakiva.santa.Testers.TriviaTester;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.zakiva.santa.Helpers.Infra.*;
 
@@ -54,7 +59,28 @@ public class Trivia extends AppCompatActivity {
             loadQuestionToScreen(generator.bandToYear());
     }
 
+    public void testRandomQuestionsClicked (View view) {
+        final Button b = (Button) findViewById(R.id.test);
+        b.setBackgroundColor(Color.YELLOW);
+
+        Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable()
+        {
+            public void run()
+            {
+                try {
+                    TriviaTester.runRandomQuestions(b);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 500);
+    }
+
     public static void loadQuestionToScreen (TriviaQuestion q) {
+        Log.d(MainActivity.TAG, "loadtoscren  ");
+        Log.d(MainActivity.TAG, "queston  " + q.getQuestion());
         question.setText(q.question.toString());
         answerA.setText(q.getAnswerA().toString());
         answerB.setText(q.getAnswerB().toString());

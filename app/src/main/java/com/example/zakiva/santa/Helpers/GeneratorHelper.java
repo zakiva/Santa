@@ -3,6 +3,7 @@ package com.example.zakiva.santa.Helpers;
 import android.util.Log;
 
 import com.example.zakiva.santa.MainActivity;
+import com.example.zakiva.santa.Models.TriviaQuestion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,19 @@ import java.util.HashMap;
  */
 
 public class GeneratorHelper {
+
+    public static TriviaQuestion generateQuestionWithData (ArrayList<HashMap<String, Object>> data, String q, String questionKey, String answerKey) {
+
+        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(data, questionKey, answerKey);
+        String q$ = (String) questionHashFromData.get("question");
+        String right = (String) questionHashFromData.get("rightAnswer");
+        ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
+
+        q = q.replace("#$#", q$);
+
+        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
+        return question;
+    }
 
     public static HashMap<String, Object> buildQuestionHashFromData(ArrayList<HashMap<String, Object>> data, String questionKey, String answerKey) {
         HashMap<String, Object> result = new HashMap<>();

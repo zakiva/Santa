@@ -14,52 +14,17 @@ import java.util.HashMap;
 public class Generator {
 
     public TriviaQuestion bandToAlbum () {
-
-        //this is just an example of data - to be removed
-        ArrayList<HashMap<String, Object>> dataExample = prepareBandsData();
-
-        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(dataExample, "name", "albums");
-        String name = (String) questionHashFromData.get("question");
-        String right = (String) questionHashFromData.get("rightAnswer");
-        ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
-
-        String q = "איזה מהאלבומים הבאים שייך ללהקת " + name + "?";
-
-        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
-        return question;
+        return GeneratorHelper.generateQuestionWithData(prepareBandsData(), "איזה מהאלבומים הבאים שייך ללהקת #$#?","name", "albums");
     }
 
     public TriviaQuestion bandToYear () {
-
-        //this is just an example of data - to be removed
-        ArrayList<HashMap<String, Object>> dataExample = prepareBandsData();
-
-        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(dataExample, "name", "year");
-        String name = (String) questionHashFromData.get("question");
-        String right = (String) questionHashFromData.get("rightAnswer");
-        ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
-
-        String q = "באיזו שנה הוקמה להקת " + name + "?";
-
-        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
-        return question;
+        return GeneratorHelper.generateQuestionWithData(prepareBandsData(), "באיזו שנה הוקמה להקת #$#?","name", "year");
     }
 
     public TriviaQuestion countryToCapital () {
-
-        //this is just an example of data - to be removed
-        ArrayList<HashMap<String, Object>> dataExample = prepareCountriesData();
-
-        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(dataExample, "name", "capital");
-        String name = (String) questionHashFromData.get("question");
-        String right = (String) questionHashFromData.get("rightAnswer");
-        ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
-
-        String q = "מהי עיר הבירה של " + name + "?";
-
-        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
-        return question;
+        return GeneratorHelper.generateQuestionWithData(prepareCountriesData(), "מהי עיר הבירה של #$#?","name", "capital");
     }
+
 
     //this method is just an example of preparing the data - to be removed
     public static ArrayList<HashMap<String, Object>> prepareBandsData () {
@@ -128,9 +93,4 @@ public class Generator {
 
         return new ArrayList<HashMap<String, Object>> (Arrays.asList(d1, d2, d3, d4, d5, d6));
     }
-
-
-
-
-
 }
