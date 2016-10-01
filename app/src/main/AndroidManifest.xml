@@ -45,7 +45,8 @@
         </activity>
         <activity android:name=".Facebook" />
         <activity android:name=".Draw" />
-        <activity android:name=".DrawingGame"></activity>
+        <activity android:name=".DrawingGame" />
+        <activity android:name=".Score"></activity>
     </application>
 
 </manifest>
