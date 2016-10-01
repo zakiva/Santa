@@ -31,6 +31,7 @@ public class MainDrawingView extends View {
     private Context context;
     private int drawingMode;
     private boolean drawingNow;
+    private boolean allowDrawing;
 
     //canvas
     private Canvas drawCanvas;
@@ -62,6 +63,7 @@ public class MainDrawingView extends View {
 
         drawingMode = 1;
         drawingNow = false;
+        allowDrawing = false;
         //matrix = new int[SIZE][SIZE];
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
@@ -78,6 +80,8 @@ public class MainDrawingView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!allowDrawing)
+            return false;
         // Get the coordinates of the touch event.
         float eventX = event.getX();
         float eventY = event.getY();
@@ -143,6 +147,10 @@ public class MainDrawingView extends View {
             //paint.setXfermode(null);
         }
         return true;
+    }
+
+    public void setAllowDrawing (boolean allow) {
+        allowDrawing = allow;
     }
 
 

@@ -59,4 +59,8 @@ public class MainActivity extends AppCompatActivity {
     public void drawClicked(View view) {
         startActivity(new Intent(MainActivity.this, Draw.class));
     }
+
+    public void drawingGameClicked(View view) {
+        startActivity(new Intent(MainActivity.this, DrawingGame.class));
+    }
 }
