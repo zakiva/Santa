@@ -190,7 +190,7 @@ public class Drawing {
         Log.d(MainActivity.TAG, ">>>>>>>>>>Comparing summary<<<<<<<<<<<");
         Log.d(MainActivity.TAG, "white source = " + white_source);
         Log.d(MainActivity.TAG, "white matrix = " + white_matrix);
-        Log.d(MainActivity.TAG, "black source = " + black_source);
+        Log.d(MainActivity.TAG, "black source after compare = " + black_source);
         Log.d(MainActivity.TAG, "black matrix = " + black_matrix);
         Log.d(MainActivity.TAG, "equal = " + equal);
         Log.d(MainActivity.TAG, "equal delta = " + equal_delta);
@@ -204,6 +204,19 @@ public class Drawing {
         a[0] = equal_delta;
         a[1] = bad_black_delta;
         return a;
+    }
+
+    public static int countBlackPixels(int [][] source) {
+
+        int black_source = 0;
+
+        for (int i = 0; i < SIZE; i += JUMP) {
+            for (int j = 0; j < SIZE; j += JUMP) {
+                if (source[i][j] > 0)
+                    black_source++;
+            }
+        }
+        return black_source;
     }
 
     public static boolean compareWithDelta (int [][] source, int [][] matrix, int i, int j, int DELTA) {

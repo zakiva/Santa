@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.example.zakiva.santa.Helpers.Drawing;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 
 public class Draw extends AppCompatActivity {
@@ -41,6 +43,7 @@ public class Draw extends AppCompatActivity {
         pen = (Button) findViewById(R.id.pen);
         eraser = (Button) findViewById(R.id.eraser);
         v = findViewById(R.id.single_touch_view);
+        ((MainDrawingView)v).setAllowDrawing(true);
         ArrayList <Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.star700sq, R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
         Collections.shuffle(images);
         randomImage = images.get(0);
@@ -68,14 +71,23 @@ public class Draw extends AppCompatActivity {
         int [][] source_matrix = Drawing.convertBitmapToMatrix(source_bitmap);
         int [][] user_matrix = Drawing.convertBitmapToMatrix(draw_bitmap);
 
+        int blackSource = Drawing.countBlackPixels(source_matrix);
+
         Drawing.printMatrix(source_matrix);
 
         int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
+        Log.d(MainActivity.TAG, "black source original = " + blackSource);
+
 
         TextView good = ((TextView) findViewById(R.id.goodPoints));
         TextView bad = ((TextView) findViewById(R.id.badPoints));
-        good.setText("Good Points: " + result[0]);
-        bad.setText("Bad Points: " + result[1]);
+        int delta = result[0] - result[1];
+        if (delta < 0)
+            delta = 0;
+        double formula = ((double) delta / blackSource) * 1000;
+        int score = (int) formula;
+        good.setText("Good: " + result[0]);
+        bad.setText("Bad: " + result[1] + " For: " + score);
     }
 
     public void hideClicked(View view) {

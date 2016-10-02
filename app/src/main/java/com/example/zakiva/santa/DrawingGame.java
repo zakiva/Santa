@@ -18,6 +18,7 @@ import com.example.zakiva.santa.Models.MainDrawingView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 public class DrawingGame extends AppCompatActivity {
 
@@ -111,9 +112,13 @@ public class DrawingGame extends AppCompatActivity {
         int [][] source_matrix = Drawing.convertBitmapToMatrix(source_bitmap);
         int [][] user_matrix = Drawing.convertBitmapToMatrix(draw_bitmap);
         int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
-        int good = result[0];
-        int bad = result[1];
-        //change this formula
-        return ((good - bad + 500) * 10);
+        int blackSource = Drawing.countBlackPixels(source_matrix);
+        int delta = result[0] - result[1];
+        if (delta < 0)
+            return 0;
+        //change this formula?
+        double formula = ((double) delta / blackSource) * 1000;
+        int score = (int) formula;
+        return (score);
     }
 }
