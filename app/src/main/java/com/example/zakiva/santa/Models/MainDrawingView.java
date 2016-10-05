@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -114,17 +115,20 @@ public class MainDrawingView extends View {
                 path.lineTo(x, y);
                 break;
             case MotionEvent.ACTION_UP:
-                drawCanvas.drawPath(path, paint);
-                drawingNow = false;
-                path.reset();
+                end_motion();
                 break;
             default:
                 return false;
         }
-
         // Makes our view repaint and call onDraw
         invalidate();
         return true;
+    }
+
+    public void end_motion () {
+        drawCanvas.drawPath(path, paint);
+        drawingNow = false;
+        path.reset();
     }
 
     int roundUp(int n) {
@@ -151,6 +155,14 @@ public class MainDrawingView extends View {
 
     public void setAllowDrawing (boolean allow) {
         allowDrawing = allow;
+    }
+
+    public void restartDrawing () {
+        end_motion();
+        invalidate();
+        canvasBitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
+        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        drawCanvas = new Canvas(canvasBitmap);
     }
 
 

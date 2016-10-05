@@ -41,7 +41,21 @@
         android:onClick="drawingModeClicked"
         android:background="@drawable/eraser_icon"
         android:layout_below="@id/pen"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="14dp" />
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:tag="0"
+        android:visibility="gone"
+        android:id="@+id/restart"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:onClick="restartDrawClicked"
+        android:background="@drawable/restart_icon"
+        android:layout_below="@id/eraser"
+        android:layout_marginTop="14dp" />
 
     <Button
         android:layout_width="90dp"

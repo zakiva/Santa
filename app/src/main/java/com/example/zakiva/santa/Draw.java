@@ -117,4 +117,8 @@ public class Draw extends AppCompatActivity {
         int [][] m = Drawing.convertBitmapToMatrix(b);
         Drawing.printMatrix(m);
     }
+
+    public void restartButtonClicked(View view) {
+        ((MainDrawingView) v).restartDrawing();
+    }
 }

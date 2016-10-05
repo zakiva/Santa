@@ -117,6 +117,16 @@
         android:layout_below="@id/title"
         android:layout_marginTop="120dp" />
 
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="r"
+        android:tag="0"
+        android:id="@+id/restart"
+        android:layout_marginLeft="330dp"
+        android:onClick="restartButtonClicked"
+        android:layout_marginTop="180dp" />
+
 
 
     <ImageView
