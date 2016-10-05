@@ -94,6 +94,10 @@ public class Drawing {
         return matrix;
     }
 
+    public static int[][] convertImageToMatrix(int image, Context context) {
+        return convertBitmapToMatrix(convertImageToBitmap(image, context));
+    }
+
     public static void drawBitmap(Bitmap bitmap, Context context, View v) {
 
         int JUMP_FOR_DRAW = 1;
@@ -190,7 +194,7 @@ public class Drawing {
         Log.d(MainActivity.TAG, ">>>>>>>>>>Comparing summary<<<<<<<<<<<");
         Log.d(MainActivity.TAG, "white source = " + white_source);
         Log.d(MainActivity.TAG, "white matrix = " + white_matrix);
-        Log.d(MainActivity.TAG, "black source after compare = " + black_source);
+        Log.d(MainActivity.TAG, "black source during compare = " + black_source);
         Log.d(MainActivity.TAG, "black matrix = " + black_matrix);
         Log.d(MainActivity.TAG, "equal = " + equal);
         Log.d(MainActivity.TAG, "equal delta = " + equal_delta);
@@ -198,11 +202,16 @@ public class Drawing {
         Log.d(MainActivity.TAG, "diff = " + diff);
 
         Log.d(MainActivity.TAG, ">>>>>>>>>>After Compare, Source = <<<<<<<<<<<");
-        Drawing.printMatrix(source);
+        Log.d(MainActivity.TAG, ">>>>>>>>>>CANCELD PRINT<<<<<<<<<<");
+        // Drawing.printMatrix(source);
 
-        int[] a = new int[2];
+        int blackAfterCompare = Drawing.countBlackPixels(source);
+        Log.d(MainActivity.TAG, "blackAfterCompare = " + blackAfterCompare);
+
+        int[] a = new int[3];
         a[0] = equal_delta;
         a[1] = bad_black_delta;
+        a[2] = blackAfterCompare;
         return a;
     }
 
@@ -241,9 +250,25 @@ public class Drawing {
         return false;
     }
 
+    public static Bitmap convertBlackToColor (Bitmap bitmap) {
+        // Create a bitmap of the same size
+        Bitmap myBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
+        int[] allPixels = new int[bitmap.getHeight() * bitmap.getWidth()];
+        bitmap.getPixels(allPixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+        Log.d(MainActivity.TAG, "starting loop");
 
+        for (int i = 0; i < allPixels.length; i++) {
+                if (allPixels[i] == Color.BLACK || ( allPixels[i] < -1 && Color.alpha(allPixels[i]) == 255))
+                    allPixels[i] = Color.RED;
+        }
 
+        myBitmap.setPixels(allPixels, 0, myBitmap.getWidth(), 0, 0, myBitmap.getWidth(), myBitmap.getHeight());
+
+        Log.d(MainActivity.TAG, "returning");
+
+        return myBitmap;
+    }
 
 }
 

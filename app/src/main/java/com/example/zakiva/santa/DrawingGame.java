@@ -3,7 +3,10 @@ package com.example.zakiva.santa;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Models.MainDrawingView;
+import com.example.zakiva.santa.Testers.TriviaTester;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +49,7 @@ public class DrawingGame extends AppCompatActivity {
         eraser = (Button) findViewById(R.id.eraser);
         doneButton = (Button) findViewById(R.id.doneButton);
         v = (MainDrawingView) findViewById(R.id.single_touch_view);
-        ArrayList<Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.star700sq, R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
+        ArrayList<Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
         Collections.shuffle(images);
         randomImage = images.get(0);
     }
@@ -83,9 +87,27 @@ public class DrawingGame extends AppCompatActivity {
 
     //listeners
     public void doneButtonClicked(View view) {
-        Intent intent = new Intent(DrawingGame.this, Score.class);
+
+        v.setAllowDrawing(false);
+        pen.setVisibility(View.GONE);
+        eraser.setVisibility(View.GONE);
+        doneButton.setVisibility(View.GONE);
+
+        Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
+        Bitmap coloredBitmap = Drawing.convertBlackToColor(bitmap);
+        Drawable d = new BitmapDrawable(getResources(), coloredBitmap);
+        v.setBackground(d);
+
+        final Intent intent = new Intent(DrawingGame.this, Score.class);
         intent.putExtra("score", calcScore());
-        startActivity(intent);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            public void run()
+            {
+                startActivity(intent);
+            }
+        }, 2000);
     }
 
     public void drawingModeClicked(View view) {
@@ -107,18 +129,17 @@ public class DrawingGame extends AppCompatActivity {
     //helpers
 
     public int calcScore () {
-        Bitmap draw_bitmap = v.canvasBitmap;
-        Bitmap source_bitmap = Drawing.convertImageToBitmap(randomImage, this);
-        int [][] source_matrix = Drawing.convertBitmapToMatrix(source_bitmap);
-        int [][] user_matrix = Drawing.convertBitmapToMatrix(draw_bitmap);
-        int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
+        //Bitmap draw_bitmap = v.canvasBitmap;
+        //Bitmap source_bitmap = Drawing.convertImageToBitmap(randomImage, this);
+        int [][] source_matrix = Drawing.convertImageToMatrix(randomImage, this);
+        int [][] user_matrix = Drawing.convertBitmapToMatrix(v.canvasBitmap);
         int blackSource = Drawing.countBlackPixels(source_matrix);
-        int delta = result[0] - result[1];
-        if (delta < 0)
-            return 0;
-        //change this formula?
-        double formula = ((double) delta / blackSource) * 1000;
+        int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
+        int blackSourceAfterCompare = result[2];
+        int badBlackPixels = result[1];
+        double formula = ((double) (blackSource - blackSourceAfterCompare) / blackSource) * 1000 - badBlackPixels;
         int score = (int) formula;
-        return (score);
+        return score < 0 ?  0 : score;
     }
+
 }

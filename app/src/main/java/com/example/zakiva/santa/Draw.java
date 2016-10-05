@@ -44,7 +44,7 @@ public class Draw extends AppCompatActivity {
         eraser = (Button) findViewById(R.id.eraser);
         v = findViewById(R.id.single_touch_view);
         ((MainDrawingView)v).setAllowDrawing(true);
-        ArrayList <Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.star700sq, R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
+        ArrayList <Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
         Collections.shuffle(images);
         randomImage = images.get(0);
     }
@@ -75,9 +75,11 @@ public class Draw extends AppCompatActivity {
 
         Drawing.printMatrix(source_matrix);
 
-        int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
         Log.d(MainActivity.TAG, "black source original = " + blackSource);
+        int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
 
+        double new_for = (int) (((double) (blackSource - result[2]) / blackSource) * 1000) - result[1];
+        Log.d(MainActivity.TAG, "new_for = " + new_for);
 
         TextView good = ((TextView) findViewById(R.id.goodPoints));
         TextView bad = ((TextView) findViewById(R.id.badPoints));
@@ -115,6 +117,4 @@ public class Draw extends AppCompatActivity {
         int [][] m = Drawing.convertBitmapToMatrix(b);
         Drawing.printMatrix(m);
     }
-
-
 }
