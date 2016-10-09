@@ -89,6 +89,22 @@ public class Infra {
         myRef.addValueEventListener(competitionListener);
     }
 
+    //get a timestamp code from the database
+    public static void getTimeCodeFromServer () {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("timeCode");
+        ValueEventListener timeCodeListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                MainActivity.setTimeCode((String) dataSnapshot.getValue());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "getTimeCode:onCancelled", databaseError.toException());
+            }
+        };
+        myRef.addValueEventListener(timeCodeListener);
+    }
+
     //get a question object from the database and display it on the screen
     public static void displayTriviaQuestion (String key) {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("triviaQuestions/" + key);
