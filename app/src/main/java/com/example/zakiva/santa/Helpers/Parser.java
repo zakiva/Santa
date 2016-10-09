@@ -1,5 +1,7 @@
 package com.example.zakiva.santa.Helpers;
 
+import com.example.zakiva.santa.Models.Sheet;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -80,4 +82,8 @@ public class Parser {
         return aList;
     }
 
+    public void saveSheetToFirebase (String fileName, String sheetName) {
+        ArrayList<HashMap<String, Object>> data = readClassesExcelFile(fileName, sheetName);
+        Infra.addSheet(sheetName, data);
+    }
 }

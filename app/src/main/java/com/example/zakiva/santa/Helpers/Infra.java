@@ -3,6 +3,7 @@ package com.example.zakiva.santa.Helpers;
 import android.util.Log;
 
 import com.example.zakiva.santa.Models.Competition;
+import com.example.zakiva.santa.Models.Sheet;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Models.User;
 import com.example.zakiva.santa.Trivia;
@@ -12,6 +13,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.example.zakiva.santa.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by zakiva on 8/27/16.
@@ -41,6 +45,11 @@ public class Infra {
     public static void addTriviaQuestion (String key, String q, String ca, String a, String b, String c, String d) {
         TriviaQuestion triviaQuestion = new TriviaQuestion(key, q, ca, a, b, c, d);
         myDatabase.child("triviaQuestions").child(key).setValue(triviaQuestion);
+    }
+
+    public static void addSheet (String name, ArrayList<HashMap<String, Object>> data) {
+        Sheet sheet = new Sheet(name, data);
+        myDatabase.child("triviaDataSheets").child(name).setValue(sheet);
     }
 
     //get a user object from the database
