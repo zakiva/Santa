@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         //set the real user email instead
         ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail");
         initInfra(((Santa) this.getApplication()).getGlobalEmail());
+
+       // Infra.addSheet("c2", Generator.prepareCountriesData());
     }
 
     public void startClicked(View view) {

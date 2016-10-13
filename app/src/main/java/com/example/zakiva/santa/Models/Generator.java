@@ -1,6 +1,7 @@
 package com.example.zakiva.santa.Models;
 
 import com.example.zakiva.santa.Helpers.GeneratorHelper;
+import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Trivia;
 
 import java.util.ArrayList;
@@ -23,6 +24,11 @@ public class Generator {
 
     public TriviaQuestion countryToCapital () {
         return GeneratorHelper.generateQuestionWithData(prepareCountriesData(), "מהי עיר הבירה של #$#?","name", "capital");
+    }
+
+
+    public TriviaQuestion inventionToInventor() {
+        return GeneratorHelper.generateQuestionWithData(Trivia.dataHash.get("inventions"), "מי המציא את ה#$#?", "name", "inventor");
     }
 
 

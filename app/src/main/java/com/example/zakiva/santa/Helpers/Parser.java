@@ -1,6 +1,5 @@
 package com.example.zakiva.santa.Helpers;
 
-import com.example.zakiva.santa.Models.Sheet;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -16,7 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
-/**
+/***
  * Created by max on 09/10/16.
  */
 public class Parser {
@@ -52,7 +51,7 @@ public class Parser {
                 }
                 cellArrayHolder.add(line);
             }
-            myWorkBook.close();
+            //myWorkBook.close(); no need in new version
         } catch (Exception e) {
             e.printStackTrace();
         }

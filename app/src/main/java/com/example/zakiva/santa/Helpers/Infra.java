@@ -3,7 +3,6 @@ package com.example.zakiva.santa.Helpers;
 import android.util.Log;
 
 import com.example.zakiva.santa.Models.Competition;
-import com.example.zakiva.santa.Models.Sheet;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Models.User;
 import com.example.zakiva.santa.Trivia;
@@ -11,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.example.zakiva.santa.*;
 
@@ -48,8 +48,8 @@ public class Infra {
     }
 
     public static void addSheet (String name, ArrayList<HashMap<String, Object>> data) {
-        Sheet sheet = new Sheet(name, data);
-        myDatabase.child("triviaDataSheets").child(name).setValue(sheet);
+        //Sheet sheet = new Sheet(name, data);
+        myDatabase.child("triviaDataSheets").child(name).setValue(data);
     }
 
     //get a user object from the database
@@ -102,5 +102,34 @@ public class Infra {
             }
         };
         myRef.addValueEventListener(triviaQuestionListener);
+    }
+
+    public static void getTriviaDataFromFirebase(final String sheet) {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("triviaDataSheets/" + sheet);
+        ValueEventListener triviaDataListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               // Log.d(TAG, "snapppppppppppppp");
+
+               // GenericTypeIndicator<ArrayList<HashMap<String, Object>>> t = new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
+
+               // ArrayList<HashMap<String, Object>> lst = dataSnapshot.getValue(t);
+
+                ArrayList<HashMap<String, Object>> lst = (ArrayList<HashMap<String, Object>>) dataSnapshot.getValue();
+
+
+                //Sheet s = dataSnapshot.getValue(GenericTypeIndicator);
+               // Log.d(TAG, "s is ourssssssssss");
+
+               // ArrayList<HashMap<String,Object>> lst = s.getData();
+             //   Log.d(TAG, "We got the sheet: " + s.getName());
+                Trivia.addSheetToDataHash(sheet, lst);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "displayQuestion:onCancelled", databaseError.toException());
+            }
+        };
+        myRef.addValueEventListener(triviaDataListener);
     }
 }

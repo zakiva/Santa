@@ -10,10 +10,14 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.example.zakiva.santa.Helpers.GeneratorHelper;
+import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Testers.TriviaTester;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -27,11 +31,14 @@ public class Trivia extends AppCompatActivity {
     private static TextView answerC;
     private static TextView answerD;
     private Chronometer stopper;
+    public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia);
+        dataHash = new HashMap<>();
+        getTriviaDataFromFirebase("inventions");
 
         question = ((TextView) findViewById(R.id.question));
         answerA = ((TextView) findViewById(R.id.answerA));
@@ -46,6 +53,10 @@ public class Trivia extends AppCompatActivity {
         displayTriviaQuestion("1");
     }
 
+    public static void addSheetToDataHash (String name, ArrayList<HashMap<String,Object>> data) {
+        dataHash.put(name, data);
+    }
+
     public void answerClicked(View view) {
         Log.d(MainActivity.TAG, "view id =  " + view.getId());
         Log.d(MainActivity.TAG, "view id =  " + view.getTag().toString());
@@ -54,6 +65,10 @@ public class Trivia extends AppCompatActivity {
 
     public void changeQuestionClicked (View view) {
         Generator generator = new Generator ();
+
+        loadQuestionToScreen(generator.inventionToInventor());
+        /*
+
         int n = new Random().nextInt(3);
         if (n == 0)
             loadQuestionToScreen(generator.bandToAlbum());
@@ -61,6 +76,8 @@ public class Trivia extends AppCompatActivity {
             loadQuestionToScreen(generator.countryToCapital());
         else
             loadQuestionToScreen(generator.bandToYear());
+
+            */
     }
 
     public void testRandomQuestionsClicked (View view) {
