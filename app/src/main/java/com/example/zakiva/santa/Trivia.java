@@ -12,12 +12,16 @@ import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.GeneratorHelper;
 import com.example.zakiva.santa.Helpers.Infra;
+import com.example.zakiva.santa.Helpers.Parser;
 import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Testers.TriviaTester;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +42,17 @@ public class Trivia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia);
         dataHash = new HashMap<>();
-        getTriviaDataFromFirebase("inventions");
+        //getTriviaDataFromFirebase("inventions");
+
+        try {
+            Log.d(MainActivity.TAG, "start try =  " );
+            int id = getResources().getIdentifier("sheets","raw",this.getApplicationContext().getPackageName());
+            InputStream raw = this.getApplicationContext().getResources().openRawResource(id);
+            Parser p = new Parser();
+            p.saveSheetToFirebase("micha","inventions",raw);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         question = ((TextView) findViewById(R.id.question));
         answerA = ((TextView) findViewById(R.id.answerA));
