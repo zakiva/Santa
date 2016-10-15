@@ -49,6 +49,7 @@
         <activity android:name=".Score" />
         <activity android:name=".Prize" />
         <activity android:name=".Games"></activity>
+        <activity android:name=".TriviaGame"></activity>
     </application>
 
 </manifest>

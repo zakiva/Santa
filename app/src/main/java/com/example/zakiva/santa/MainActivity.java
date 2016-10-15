@@ -66,12 +66,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, " trivia clicked and time code field = " + timeCode);
         startActivity(new Intent(MainActivity.this, Trivia.class));
     }
+    public void triviaGameClicked(View view) {
+        startActivity(new Intent(MainActivity.this, TriviaGame.class));
+    }
     public void goToFb(View v) {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         startActivity(new Intent(MainActivity.this, Facebook.class));
     }
-
     public void drawClicked(View view) {
         startActivity(new Intent(MainActivity.this, Draw.class));
     }

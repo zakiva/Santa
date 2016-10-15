@@ -11,19 +11,13 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.GeneratorHelper;
-import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Helpers.Parser;
 import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Testers.TriviaTester;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import static com.example.zakiva.santa.Helpers.Infra.*;
 
@@ -44,16 +38,6 @@ public class Trivia extends AppCompatActivity {
         dataHash = new HashMap<>();
         getTriviaDataFromFirebase();
 
-        try {
-            Log.d(MainActivity.TAG, "start try =  " );
-            int id = getResources().getIdentifier("sheets","raw",this.getApplicationContext().getPackageName());
-            InputStream raw = this.getApplicationContext().getResources().openRawResource(id);
-            Parser p = new Parser();
-            p.saveSheetToFirebase("micha","inventions",raw);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         question = ((TextView) findViewById(R.id.question));
         answerA = ((TextView) findViewById(R.id.answerA));
         answerB = ((TextView) findViewById(R.id.answerB));
@@ -71,13 +55,21 @@ public class Trivia extends AppCompatActivity {
         dataHash.put(name, data);
         Log.d(MainActivity.TAG, "putting in dataHash -> name: " + name);
     }
-
+    public void parseClicked(View view) {
+        try {
+            Log.d(MainActivity.TAG, "start try =  ");
+            int id = getResources().getIdentifier("sheets", "raw", this.getApplicationContext().getPackageName());
+            InputStream raw = this.getApplicationContext().getResources().openRawResource(id);
+            Parser p = new Parser();
+            p.saveSheetToFirebase("micha", "latitudes", raw);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void answerClicked(View view) {
         Log.d(MainActivity.TAG, "view id =  " + view.getId());
         Log.d(MainActivity.TAG, "view id =  " + view.getTag().toString());
-
     }
-
     public void changeQuestionClicked (View view) {
 
         //prints all the data hash
