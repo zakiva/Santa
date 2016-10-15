@@ -16,6 +16,7 @@ import com.example.zakiva.santa.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zakiva on 8/27/16.
@@ -26,6 +27,8 @@ public class Infra {
     public static final String TAG = ">>>>>>>Debug: ";
     public static DatabaseReference myDatabase;
     public static String userEmail;
+    public static String [] triviaSheets = {"inventions", "countries", "bands", "singers", "timeZone"};
+
 
     public static void initInfra (String email) {
         myDatabase = FirebaseDatabase.getInstance().getReference();
@@ -104,8 +107,8 @@ public class Infra {
         myRef.addValueEventListener(triviaQuestionListener);
     }
 
-    public static void getTriviaDataFromFirebase(final String sheet) {
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("triviaDataSheets/" + sheet);
+    public static void getTriviaDataFromFirebase() {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("triviaDataSheets");
         ValueEventListener triviaDataListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -115,7 +118,12 @@ public class Infra {
 
                // ArrayList<HashMap<String, Object>> lst = dataSnapshot.getValue(t);
 
-                ArrayList<HashMap<String, Object>> lst = (ArrayList<HashMap<String, Object>>) dataSnapshot.getValue();
+                Map <String, Object> data = (Map) dataSnapshot.getValue();
+
+                for (String sheet : triviaSheets) {
+                    ArrayList<HashMap<String, Object>> lst = (ArrayList<HashMap<String, Object>>) data.get(sheet);
+                    Trivia.addSheetToDataHash(sheet, lst);
+                }
 
 
                 //Sheet s = dataSnapshot.getValue(GenericTypeIndicator);
@@ -123,7 +131,6 @@ public class Infra {
 
                // ArrayList<HashMap<String,Object>> lst = s.getData();
              //   Log.d(TAG, "We got the sheet: " + s.getName());
-                Trivia.addSheetToDataHash(sheet, lst);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

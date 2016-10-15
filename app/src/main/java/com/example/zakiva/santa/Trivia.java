@@ -42,7 +42,7 @@ public class Trivia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia);
         dataHash = new HashMap<>();
-        //getTriviaDataFromFirebase("inventions");
+        getTriviaDataFromFirebase();
 
         try {
             Log.d(MainActivity.TAG, "start try =  " );
@@ -69,6 +69,7 @@ public class Trivia extends AppCompatActivity {
 
     public static void addSheetToDataHash (String name, ArrayList<HashMap<String,Object>> data) {
         dataHash.put(name, data);
+        Log.d(MainActivity.TAG, "putting in dataHash -> name: " + name);
     }
 
     public void answerClicked(View view) {
@@ -78,6 +79,12 @@ public class Trivia extends AppCompatActivity {
     }
 
     public void changeQuestionClicked (View view) {
+
+        //prints all the data hash
+        for (String key : dataHash.keySet()) {
+            GeneratorHelper.printSheet(key, dataHash.get(key));
+        }
+
         Generator generator = new Generator ();
 
         loadQuestionToScreen(generator.inventionToInventor());

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.zakiva.santa.MainActivity;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,6 +15,8 @@ import java.util.HashMap;
  */
 
 public class GeneratorHelper {
+
+    public static final String TAG = ">>>>>>>Debug: ";
 
     public static TriviaQuestion generateQuestionWithData (ArrayList<HashMap<String, Object>> data, String q, String questionKey, String answerKey) {
 
@@ -67,5 +70,21 @@ public class GeneratorHelper {
         ArrayList<String> lst = (ArrayList<String>) hash.get(key);
         Collections.shuffle(lst);
         return lst.get(0);
+    }
+
+
+    public static void printSheet (String name, ArrayList<HashMap<String, Object>> sheet) {
+        Log.d(TAG, "#####################SHEET NAME = " + name + "#####################");
+        for (HashMap<String, Object> hash : sheet) {
+            printHash(hash);
+        }
+    }
+
+    public static void printHash(HashMap<String, Object> hash) {
+        String line = "";
+        for (String key : hash.keySet()) {
+            line = line + ", " + key + ":" + hash.get(key);
+        }
+        Log.d(TAG, line);
     }
 }
