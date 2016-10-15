@@ -115,6 +115,7 @@ public class MainDrawingView extends View {
                 path.lineTo(x, y);
                 break;
             case MotionEvent.ACTION_UP:
+                drawPoint(x, y);
                 end_motion();
                 break;
             default:
@@ -123,6 +124,18 @@ public class MainDrawingView extends View {
         // Makes our view repaint and call onDraw
         invalidate();
         return true;
+    }
+
+    public void drawPoint(int x, int y) {
+        path.lineTo((float) (x+0), (float) (y+0.5));
+        path.lineTo((float) (x+0.3), (float) (y+0.3));
+        path.lineTo((float) (x+0.5), (float) (y+0));
+        path.lineTo((float) (x+0.3), (float) (y-0.3));
+        path.lineTo((float) (x+0), (float) (y-0.5));
+        path.lineTo((float) (x-0.3), (float) (y-0.3));
+        path.lineTo((float) (x-0.5), (float) (y-0));
+        path.lineTo((float) (x-0.3), (float) (y+0.3));
+        path.lineTo((float) (x+0), (float) (y+0.5));
     }
 
     public void end_motion () {
