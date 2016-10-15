@@ -78,7 +78,7 @@ public class Draw extends AppCompatActivity {
         Log.d(MainActivity.TAG, "black source original = " + blackSource);
         int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
 
-        double new_for = (int) (((double) (blackSource - result[2]) / blackSource) * 1000) - result[1];
+        double new_for = (int) (((double) (blackSource - result[2]) / blackSource) * 1000) - 0.5 * result[1];
         Log.d(MainActivity.TAG, "new_for = " + new_for);
 
         TextView good = ((TextView) findViewById(R.id.goodPoints));
@@ -89,7 +89,19 @@ public class Draw extends AppCompatActivity {
         double formula = ((double) delta / blackSource) * 1000;
         int score = (int) formula;
         good.setText("Good: " + result[0]);
-        bad.setText("Bad: " + result[1] + " For: " + score);
+        bad.setText("Bad: " + result[1] + " For: " + calcScore(result));
+    }
+
+    public int calcScore (int [] result ) {
+        //Bitmap draw_bitmap = v.canvasBitmap;
+        //Bitmap source_bitmap = Drawing.convertImageToBitmap(randomImage, this);
+        int [][] source_matrix = Drawing.convertImageToMatrix(randomImage, this);
+        int blackSource = Drawing.countBlackPixels(source_matrix);
+        int blackSourceAfterCompare = result[2];
+        int badBlackPixels = result[1];
+        double formula = ((double) (blackSource - blackSourceAfterCompare) / blackSource) * 1000 - 0.5 * badBlackPixels;
+        int score = (int) formula;
+        return score < 0 ?  0 : score;
     }
 
     public void hideClicked(View view) {

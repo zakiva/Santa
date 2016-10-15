@@ -145,7 +145,7 @@ public class DrawingGame extends AppCompatActivity {
         int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
         int blackSourceAfterCompare = result[2];
         int badBlackPixels = result[1];
-        double formula = ((double) (blackSource - blackSourceAfterCompare) / blackSource) * 1000 - badBlackPixels;
+        double formula = ((double) (blackSource - blackSourceAfterCompare) / blackSource) * 1000 - 0.5 * badBlackPixels;
         int score = (int) formula;
         return score < 0 ?  0 : score;
     }
