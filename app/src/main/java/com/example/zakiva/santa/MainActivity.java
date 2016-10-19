@@ -3,6 +3,9 @@ package com.example.zakiva.santa;
 import com.example.zakiva.santa.Helpers.*;
 import static com.example.zakiva.santa.Helpers.Infra.*;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,14 +19,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = ">>>>>>>Debug: ";
     private static String timeCode;
+    private static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity = this;
         //set the real user email instead
         ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail");
-        initInfra(((Santa) this.getApplication()).getGlobalEmail());
 
        // Infra.addSheet("c2", Generator.prepareCountriesData());
         //this must end before continue to first user interface !!!
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setTimeCode(String timeCode) {
         MainActivity.timeCode = timeCode;
+        initInfra(((Santa) activity.getApplication()).getGlobalEmail(), timeCode);
     }
 
     public static String getTimeCode () {
@@ -40,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void startClicked(View view) {
         addUser();
-        addCompetition("compeexample", "giftexample");
+        //addCompetition("compeexample", "giftexample");
         getUser();
-        getCompetition("compeexample");
+        //getCompetition("compeexample");
     }
 
     public void goToGoogle(View v) {

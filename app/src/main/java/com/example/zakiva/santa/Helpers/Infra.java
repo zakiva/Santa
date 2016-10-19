@@ -27,12 +27,14 @@ public class Infra {
     public static final String TAG = ">>>>>>>Debug: ";
     public static DatabaseReference myDatabase;
     public static String userEmail;
+    public static String timeCode;
     public static String [] triviaSheets = {"inventions", "countries", "bands", "singers", "timeZone"};
 
 
-    public static void initInfra (String email) {
+    public static void initInfra (String email, String time) {
         myDatabase = FirebaseDatabase.getInstance().getReference();
         userEmail = email;
+        timeCode = time;
     }
 
     public static void addUser () {
@@ -40,10 +42,12 @@ public class Infra {
         myDatabase.child("users").child(userEmail).child("userObject").setValue(user);
     }
 
+    /*
     public static void addCompetition (String key, String giftId) {
         Competition competition = new Competition(key, giftId);
         myDatabase.child("users").child(userEmail).child("competitions").child(key).setValue(competition);
     }
+    */
 
     public static void addTriviaQuestion (String key, String q, String ca, String a, String b, String c, String d) {
         TriviaQuestion triviaQuestion = new TriviaQuestion(key, q, ca, a, b, c, d);
@@ -53,6 +57,10 @@ public class Infra {
     public static void addSheet (String name, ArrayList<HashMap<String, Object>> data) {
         //Sheet sheet = new Sheet(name, data);
         myDatabase.child("triviaDataSheets").child(name).setValue(data);
+    }
+
+    public static void addPrizeToUser (String prize) {
+        myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("prize").setValue(prize);
     }
 
     //get a user object from the database

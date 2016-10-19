@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.zakiva.santa.Helpers.Infra;
+
 public class Prize extends AppCompatActivity {
 
     private Button prizeA;
@@ -23,6 +25,7 @@ public class Prize extends AppCompatActivity {
 
     public void prizeClicked(View view) {
         prizeChosen = view.getTag().toString();
+        Infra.addPrizeToUser(prizeChosen);
     }
 
     public void windisPrizeClicked(View view) {
