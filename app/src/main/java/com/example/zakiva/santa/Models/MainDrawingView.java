@@ -16,6 +16,8 @@ import android.view.View;
 
 import com.example.zakiva.santa.MainActivity;
 
+import java.util.ArrayList;
+
 /**
  * Created by zakiva on 9/15/16.
  */
@@ -33,6 +35,8 @@ public class MainDrawingView extends View {
     private int drawingMode;
     private boolean drawingNow;
     private boolean allowDrawing;
+    private ArrayList<Path> pathsUndo;
+    private boolean actionDownPressed = false;
 
     //canvas
     private Canvas drawCanvas;
@@ -70,6 +74,8 @@ public class MainDrawingView extends View {
         canvasPaint = new Paint(Paint.DITHER_FLAG);
         canvasBitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
         drawCanvas = new Canvas(canvasBitmap);
+
+        this.pathsUndo = new ArrayList<>();
     }
 
     @Override
@@ -94,10 +100,18 @@ public class MainDrawingView extends View {
         x = xRounded;
         y = yRounded;
 
-        if (x >= SIZE || y >= SIZE || x < 0 || y < 0)
+        if (x >= SIZE || y >= SIZE || x < 0 || y < 0) {
+            if (drawingNow)
+                end_motion();
+            invalidate();
             return false;
-        if (xRounded >= SIZE || yRounded >= SIZE || xRounded < 0 || yRounded < 0)
+        }
+        if (xRounded >= SIZE || yRounded >= SIZE || xRounded < 0 || yRounded < 0) {
+            if (drawingNow)
+                end_motion();
+            invalidate();
             return false;
+        }
 
         //matrix[yRounded][xRounded] = drawingMode; // set pixel to 1 or 0
         //updateMatrixWithDelta(yRounded, xRounded);
@@ -109,10 +123,17 @@ public class MainDrawingView extends View {
                 // Set a new starting point
                 path.moveTo(x, y);
                 drawingNow = true;
+                actionDownPressed = true;
                 break;
             case MotionEvent.ACTION_MOVE:
                 // Connect the points
-                path.lineTo(x, y);
+                if (actionDownPressed)
+                    path.lineTo(x, y);
+                else {
+                    path.moveTo(x, y);
+                    drawingNow = true;
+                    actionDownPressed = true;
+                }
                 break;
             case MotionEvent.ACTION_UP:
                 drawPoint(x, y);
@@ -140,8 +161,18 @@ public class MainDrawingView extends View {
 
     public void end_motion () {
         drawCanvas.drawPath(path, paint);
+        if (drawingMode == 1)
+            addPathToUndoList();
+        else
+            path = new Path();
         drawingNow = false;
-        path.reset();
+        actionDownPressed = false;
+        //path.reset();
+    }
+
+    public void addPathToUndoList () {
+        pathsUndo.add(0, path);
+        path = new Path();
     }
 
     int roundUp(int n) {
@@ -153,8 +184,13 @@ public class MainDrawingView extends View {
         if (drawingNow)
             return false;
         this.drawingMode = mode;
+        updatePaintWithMode();
+        return true;
+    }
+
+    public void updatePaintWithMode () {
         if (drawingMode == 0) {
-            paint.setStrokeWidth(20f);
+            paint.setStrokeWidth(22f);
             paint.setColor(Color.WHITE);
             //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         }
@@ -163,7 +199,6 @@ public class MainDrawingView extends View {
             paint.setColor(Color.BLACK);
             //paint.setXfermode(null);
         }
-        return true;
     }
 
     public void setAllowDrawing (boolean allow) {
@@ -176,6 +211,21 @@ public class MainDrawingView extends View {
         canvasBitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         drawCanvas = new Canvas(canvasBitmap);
+        this.pathsUndo = new ArrayList<>();
+    }
+
+    public void undoLastPath () {
+        Log.d(MainActivity.TAG, "paths.size() = " +  pathsUndo.size());
+        if (pathsUndo.size()==0)
+            return;
+        Path p = pathsUndo.get(0);
+        pathsUndo.remove(0);
+        paint.setStrokeWidth(7f);
+        paint.setColor(Color.WHITE);
+        drawCanvas.drawPath(p, paint);
+        updatePaintWithMode();
+        //path.reset();
+        //invalidate();
     }
 
 

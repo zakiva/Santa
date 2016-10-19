@@ -127,6 +127,16 @@
         android:onClick="restartButtonClicked"
         android:layout_marginTop="180dp" />
 
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="U"
+        android:tag="0"
+        android:id="@+id/undo"
+        android:layout_marginLeft="330dp"
+        android:onClick="undoButtonClicked"
+        android:layout_marginTop="180dp" />
+
 
 
     <ImageView

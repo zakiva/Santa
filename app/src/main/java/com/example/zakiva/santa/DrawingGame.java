@@ -35,6 +35,7 @@ public class DrawingGame extends AppCompatActivity {
     private Button pen;
     private Button eraser;
     private Button restart;
+    private Button undo;
     private Button doneButton;
     private MainDrawingView v;
 
@@ -53,6 +54,7 @@ public class DrawingGame extends AppCompatActivity {
         pen = (Button) findViewById(R.id.pen);
         eraser = (Button) findViewById(R.id.eraser);
         restart = (Button) findViewById(R.id.restart);
+        undo = (Button) findViewById(R.id.undo);
         doneButton = (Button) findViewById(R.id.doneButton);
         v = (MainDrawingView) findViewById(R.id.single_touch_view);
         ArrayList<Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
@@ -89,6 +91,7 @@ public class DrawingGame extends AppCompatActivity {
         pen.setVisibility(View.VISIBLE);
         eraser.setVisibility(View.VISIBLE);
         restart.setVisibility(View.VISIBLE);
+        undo.setVisibility(View.VISIBLE);
         doneButton.setVisibility(View.VISIBLE);
     }
 
@@ -99,6 +102,7 @@ public class DrawingGame extends AppCompatActivity {
         pen.setVisibility(View.GONE);
         eraser.setVisibility(View.GONE);
         restart.setVisibility(View.GONE);
+        undo.setVisibility(View.GONE);
         doneButton.setVisibility(View.GONE);
 
         Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
@@ -134,6 +138,15 @@ public class DrawingGame extends AppCompatActivity {
         }
     }
 
+    public void restartDrawClicked(View view) {
+        // change: pass it arguments instead
+        showAlertDialog();
+    }
+
+    public void undoButtonClicked(View view) {
+        v.undoLastPath();
+    }
+
     //helpers
 
     public int calcScore () {
@@ -148,11 +161,6 @@ public class DrawingGame extends AppCompatActivity {
         double formula = ((double) (blackSource - blackSourceAfterCompare) / blackSource) * 1000 - 0.5 * badBlackPixels;
         int score = (int) formula;
         return score < 0 ?  0 : score;
-    }
-
-    public void restartDrawClicked(View view) {
-        // change: pass it arguments instead
-        showAlertDialog();
     }
 
     //make this function generic by passing it arguments (and move to INFRA)

@@ -53,8 +53,22 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:onClick="restartDrawClicked"
-        android:background="@drawable/restart_icon"
+        android:background="@drawable/trash_icon"
         android:layout_below="@id/eraser"
+        android:layout_marginTop="14dp" />
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:tag="0"
+        android:visibility="gone"
+        android:id="@+id/undo"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/undo_icon"
+        android:onClick="undoButtonClicked"
+        android:layout_below="@id/restart"
         android:layout_marginTop="14dp" />
 
     <Button

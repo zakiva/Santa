@@ -133,4 +133,8 @@ public class Draw extends AppCompatActivity {
     public void restartButtonClicked(View view) {
         ((MainDrawingView) v).restartDrawing();
     }
+
+    public void undoButtonClicked(View view) {
+        ((MainDrawingView) v).undoLastPath();
+    }
 }
