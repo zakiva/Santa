@@ -36,7 +36,6 @@ public class MainDrawingView extends View {
     private boolean drawingNow;
     private boolean allowDrawing;
     private ArrayList<Path> pathsUndo;
-    private boolean actionDownPressed = false;
 
     //canvas
     private Canvas drawCanvas;
@@ -123,16 +122,14 @@ public class MainDrawingView extends View {
                 // Set a new starting point
                 path.moveTo(x, y);
                 drawingNow = true;
-                actionDownPressed = true;
                 break;
             case MotionEvent.ACTION_MOVE:
                 // Connect the points
-                if (actionDownPressed)
+                if (drawingNow)
                     path.lineTo(x, y);
                 else {
                     path.moveTo(x, y);
                     drawingNow = true;
-                    actionDownPressed = true;
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -166,7 +163,6 @@ public class MainDrawingView extends View {
         else
             path = new Path();
         drawingNow = false;
-        actionDownPressed = false;
         //path.reset();
     }
 
