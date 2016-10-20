@@ -22,6 +22,11 @@ public class Prize extends AppCompatActivity {
         prizeB = (Button) findViewById(R.id.prizeB);
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     public void prizeClicked(View view) {
         prizeChosen = view.getTag().toString();
         Infra.addPrizeToUser(prizeChosen);

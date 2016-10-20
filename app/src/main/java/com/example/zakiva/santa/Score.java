@@ -25,7 +25,19 @@ public class Score extends AppCompatActivity {
         initFields();
         if (score != -1)
             Infra.addGameToUser(gameType, score);
-        displayScoreAndCandies();
+        displayScore();
+        displayCandies();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Score.this, Games.class));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        displayCandies();
     }
 
     public void initFields () {
@@ -36,8 +48,11 @@ public class Score extends AppCompatActivity {
         gameType = extras.getString("game");
     }
 
-    public void displayScoreAndCandies () {
+    public void displayCandies () {
         candiesTextView.setText(MainActivity.candies + " candies");
+    }
+
+    public void displayScore () {
         if (extras != null) {
             if (score != -1) {
                 ((TextView) findViewById(R.id.score)).setText("Your score is: " + score);
@@ -74,5 +89,9 @@ public class Score extends AppCompatActivity {
         long new_candies = MainActivity.candies - TRY_CANDIES_PRICE;
         Infra.setUserCandies(new_candies);
         return true;
+    }
+
+    public void homeScreenButtonClicked(View view) {
+        startActivity(new Intent(Score.this, Prize.class));
     }
 }

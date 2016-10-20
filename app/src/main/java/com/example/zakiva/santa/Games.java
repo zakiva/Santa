@@ -13,6 +13,11 @@ public class Games extends AppCompatActivity {
         setContentView(R.layout.activity_game);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Games.this, Prize.class));
+    }
+
     public void gameClicked(View view) {
         Intent intent = new Intent(Games.this, Score.class);
         intent.putExtra("game", view.getTag().toString());
