@@ -3,6 +3,7 @@ package com.example.zakiva.santa.Helpers;
 import android.util.Log;
 
 import com.example.zakiva.santa.Models.Competition;
+import com.example.zakiva.santa.Models.Game;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Models.User;
 import com.example.zakiva.santa.Trivia;
@@ -62,6 +63,11 @@ public class Infra {
 
     public static void addPrizeToUser (String prize) {
         myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("prize").setValue(prize);
+    }
+
+    public static void addGameToUser (String type, long score) {
+        Game game = new Game (type, score);
+        myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("games").push().setValue(game);
     }
 
     public static void initUserCandies () {

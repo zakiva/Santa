@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.Infra;
 
@@ -29,6 +28,6 @@ public class Prize extends AppCompatActivity {
     }
 
     public void windisPrizeClicked(View view) {
-        startActivity(new Intent(Prize.this, Game.class));
+        startActivity(new Intent(Prize.this, Games.class));
     }
 }

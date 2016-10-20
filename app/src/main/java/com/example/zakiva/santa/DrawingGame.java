@@ -112,6 +112,7 @@ public class DrawingGame extends AppCompatActivity {
 
         final Intent intent = new Intent(DrawingGame.this, Score.class);
         intent.putExtra("score", calcScore());
+        intent.putExtra("game", "drawing");
         Handler handler = new Handler();
         handler.postDelayed(new Runnable()
         {
@@ -149,7 +150,7 @@ public class DrawingGame extends AppCompatActivity {
 
     //helpers
 
-    public int calcScore () {
+    public long calcScore () {
         //Bitmap draw_bitmap = v.canvasBitmap;
         //Bitmap source_bitmap = Drawing.convertImageToBitmap(randomImage, this);
         int [][] source_matrix = Drawing.convertImageToMatrix(randomImage, this);
@@ -159,7 +160,7 @@ public class DrawingGame extends AppCompatActivity {
         int blackSourceAfterCompare = result[2];
         int badBlackPixels = result[1];
         double formula = ((double) (blackSource - blackSourceAfterCompare) / blackSource) * 1000 - 0.5 * badBlackPixels;
-        int score = (int) formula;
+        long score = (long) formula;
         return score < 0 ?  0 : score;
     }
 
