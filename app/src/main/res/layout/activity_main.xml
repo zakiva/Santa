@@ -73,21 +73,29 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="go to google sign in"
-        android:id="@+id/btnGo"
-        android:layout_below="@id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="252dp"
-        android:onClick="goToGoogle"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Go To Facebook Sign In"
         android:id="@+id/button2"
         android:layout_below="@+id/btnGo"
         android:layout_centerHorizontal="true"
         android:onClick="goToFb" />
+    <Button
+        android:text="Trivia Game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TriviaGameBtn"
+        android:onClick="triviaGameClicked"
+        android:textAllCaps="false"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="go to google sign in"
+        android:id="@+id/btnGo"
+        android:onClick="goToGoogle"
+        android:layout_below="@+id/prize"
+        android:layout_alignRight="@+id/button2"
+        android:layout_alignEnd="@+id/button2" />
 
 </RelativeLayout>

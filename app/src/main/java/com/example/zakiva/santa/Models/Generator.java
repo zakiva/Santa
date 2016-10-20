@@ -1,12 +1,14 @@
 package com.example.zakiva.santa.Models;
 
 import com.example.zakiva.santa.Helpers.GeneratorHelper;
-import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Trivia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
+import static com.example.zakiva.santa.Helpers.GeneratorHelper.getNumericAnswers;
 
 /**
  * Created by zakiva on 9/28/16.
@@ -14,6 +16,67 @@ import java.util.HashMap;
 
 public class Generator {
 
+    public static TriviaQuestion gene1() {
+        int a1 = (int)(Math.random() * 21), diff =1+(int)(Math.random() * 21),t=a1;
+
+        List<Integer> pro =new ArrayList<Integer>();
+        pro.add(a1);
+        while(pro.size()<4){
+            t= t+diff;
+            pro.add(t);
+        }
+        int n = pro.get(3);
+        String s  =String.valueOf(pro.get(3));
+        pro.remove(3);
+        return new TriviaQuestion("30", "בסדרה זו מה המספר הבא  ?"+pro.toString(), s,s, getNumericAnswers(n).get(0), getNumericAnswers(n).get(1), getNumericAnswers(n).get(2));
+    }
+    public static TriviaQuestion gene2(){
+        int a1 = (int)(Math.random() * 21), diff =1+(int)(Math.random() * 21),t=a1;
+
+        List<Integer> pro =new ArrayList<Integer>();
+        pro.add(a1);
+        while(pro.size()<4){
+            t= t+diff;
+            pro.add(t);
+            diff--;
+        }
+        int n = pro.get(3);
+        String s = String.valueOf(pro.get(3));
+        pro.remove(3);
+        return new TriviaQuestion("31", "בסדרה זו מה המספר הבא  ?"+pro.toString(), s,getNumericAnswers(n).get(0), getNumericAnswers(n).get(1), getNumericAnswers(n).get(2),s);
+    }
+    public static TriviaQuestion gene3(){
+        int a1 = (int)(Math.random() * 21), diff =1+(int)(Math.random() * 21),t=a1;
+
+        List<Integer> pro =new ArrayList<Integer>();
+        pro.add(a1);
+        while(pro.size()<4){
+            t= t+diff;
+            pro.add(t);
+            diff++;
+        }
+        int n = pro.get(3);
+        String s = String.valueOf(pro.get(3));
+        pro.remove(3);
+        return new TriviaQuestion("32", "בסדרה זו מה המספר הבא  ?"+pro.toString(), s,getNumericAnswers(n).get(0),s, getNumericAnswers(n).get(1), getNumericAnswers(n).get(2));
+    }
+    public static TriviaQuestion gene4(){
+        int a1=1+(int)(Math.random() * 10);
+        System.out.println(a1);
+
+        List<Integer> pro =new ArrayList<Integer>();
+        pro.add(a1);
+        int b=a1;
+        while(pro.size()<4){
+            b=a1*b;
+            pro.add(b);
+        }
+        int n = pro.get(3);
+        String s  =String.valueOf(pro.get(3));
+        pro.remove(3);
+        System.out.println(pro.toString());
+        return new TriviaQuestion("33", "בסדרה זו מה המספר הבא  ?"+pro.toString(), s,getNumericAnswers(n).get(0), getNumericAnswers(n).get(1),s, getNumericAnswers(n).get(2));
+    }
     public TriviaQuestion bandToAlbum () {
         return GeneratorHelper.generateQuestionWithData(prepareBandsData(), "איזה מהאלבומים הבאים שייך ללהקת #$#?","name", "albums");
     }

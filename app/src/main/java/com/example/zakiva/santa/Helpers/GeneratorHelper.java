@@ -2,9 +2,7 @@ package com.example.zakiva.santa.Helpers;
 
 import android.util.Log;
 
-import com.example.zakiva.santa.MainActivity;
 import com.example.zakiva.santa.Models.TriviaQuestion;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,5 +84,22 @@ public class GeneratorHelper {
             line = line + ", " + key + ":" + hash.get(key);
         }
         Log.d(TAG, line);
+    }
+    public static ArrayList<String> getNumericAnswers(int n) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < 15; i++) {
+            int test = n - 10 + (int) (Math.random() * (n + 10));
+            if (test > 4)
+                list.add(String.valueOf(test));
+
+            else
+                list.add(0, String.valueOf(test + 1));
+            list.add(1, String.valueOf(test + 2));
+            list.add(2, String.valueOf(test + 3));
+        }
+
+        Collections.shuffle(list);
+
+        return list;
     }
 }

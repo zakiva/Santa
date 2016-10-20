@@ -29,7 +29,7 @@ public class Infra {
     public static DatabaseReference myDatabase;
     public static String userEmail;
     public static String timeCode;
-    public static String [] triviaSheets = {"inventions", "countries", "bands", "singers", "timeZone"};
+    public static String [] triviaSheets = {"inventions", "countries", "bands", "singers", "timeZones","worldCups","championships","latitudes","authors","israelEvents"};
 
 
     public static void initInfra (String email, String time) {

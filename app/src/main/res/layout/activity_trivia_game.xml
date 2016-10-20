@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.zakiva.santa.TriviaGame">
 
     <Chronometer
-        android:id="@+id/chronometer"
+        android:id="@+id/clock"
         android:textColor="#4169E1"
         android:textSize="20dp"
         android:layout_width="wrap_content"
@@ -18,31 +22,29 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="עיר הבירה של קפריסין היא:"
         android:layout_below="@+id/chronometer"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="25dp"
-        android:id="@+id/question" />
+        android:id="@+id/quest" />
 
     <TextView
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:textColor="@android:color/black"
         android:background="@android:color/holo_blue_light"
-        android:text="בריסל"
         android:layout_alignParentRight="true"
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:textAllCaps="false"
         android:layout_marginRight="45dp"
-        android:layout_below="@id/question"
+        android:layout_below="@id/quest"
         android:textSize="25dp"
         android:tag="a"
         android:onClick="answerClicked"
-        android:id="@+id/answerA"
+        android:id="@+id/answer1"
         android:textAlignment="center" />
 
     <TextView
@@ -52,15 +54,14 @@
         android:background="@android:color/holo_blue_light"
         android:gravity="center"
         android:layout_marginRight="45dp"
-        android:text="איסטנבול"
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
         android:textAllCaps="false"
         android:tag="b"
         android:onClick="answerClicked"
-        android:layout_below="@id/answerA"
+        android:layout_below="@id/answer1"
         android:textSize="25dp"
-        android:id="@+id/answerB" />
+        android:id="@+id/answer2" />
 
     <TextView
         android:layout_width="120dp"
@@ -68,16 +69,15 @@
         android:textColor="@android:color/black"
         android:background="@android:color/holo_blue_light"
         android:gravity="center"
-        android:layout_toLeftOf="@id/answerA"
+        android:layout_toLeftOf="@id/answer1"
         android:layout_marginRight="40dp"
-        android:text="ניקוסיה"
         android:tag="c"
         android:onClick="answerClicked"
         android:layout_marginTop="40dp"
         android:textAllCaps="false"
-        android:layout_below="@id/question"
+        android:layout_below="@id/quest"
         android:textSize="25dp"
-        android:id="@+id/answerC" />
+        android:id="@+id/answer3" />
 
     <TextView
         android:layout_width="120dp"
@@ -85,72 +85,26 @@
         android:textColor="@android:color/black"
         android:background="@android:color/holo_blue_light"
         android:gravity="center"
-        android:text="בוקרשט"
         android:tag="d"
-        android:layout_toLeftOf="@id/answerA"
+        android:layout_toLeftOf="@id/answer1"
         android:layout_marginRight="40dp"
         android:onClick="answerClicked"
         android:layout_marginTop="30dp"
         android:textAllCaps="false"
-        android:layout_below="@id/answerC"
+        android:layout_below="@id/answer3"
         android:textSize="25dp"
-        android:id="@+id/answerD" />
-
+        android:id="@+id/answer4" />
 
     <Button
+        android:text="Start Game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change"
-        android:textAllCaps="false"
-        android:id="@+id/change"
-        android:onClick="changeQuestionClicked"
-        android:layout_below="@id/button"
-        android:layout_marginTop="420dp"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test"
-        android:textAllCaps="false"
-        android:id="@+id/test"
-        android:onClick="testRandomQuestionsClicked"
-        android:layout_below="@id/button"
-        android:layout_marginTop="420dp"
-        android:layout_marginLeft="40dp"
-        android:background="#00ff08" />
-
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:text="Start"
-        android:textAllCaps="false"
-        android:id="@+id/start"
-        android:onClick="startStopperClicked"
-        android:layout_below="@id/button"
-        android:layout_marginTop="420dp"
-        android:layout_marginLeft="240dp" />
-
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:text="Stop"
-        android:textAllCaps="false"
-        android:id="@+id/stop"
-        android:onClick="stopStopperClicked"
-        android:layout_below="@id/button"
-        android:layout_marginTop="420dp"
-        android:layout_marginLeft="310dp" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Parser"
-        android:id="@+id/parser"
-        android:onClick="parseClicked"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-
+        android:layout_below="@+id/answer2"
+        android:layout_alignRight="@+id/quest"
+        android:layout_alignEnd="@+id/quest"
+        android:layout_marginRight="74dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/startBtn"
+        android:onClick="startGameClicked" />
 </RelativeLayout>
