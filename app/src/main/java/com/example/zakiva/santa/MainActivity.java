@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = ">>>>>>>Debug: ";
     private static String timeCode;
     private static Activity activity;
+    private static long candies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
     public static void setTimeCode(String timeCode) {
         MainActivity.timeCode = timeCode;
         initInfra(((Santa) activity.getApplication()).getGlobalEmail(), timeCode);
+        initUserCandies();
+    }
+
+    public static void setCandies(long c) {
+        candies = c;
+        Log.d(TAG, "setCandies = " + c);
     }
 
     public static String getTimeCode () {

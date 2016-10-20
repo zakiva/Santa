@@ -25,6 +25,7 @@ import java.util.Map;
 public class Infra {
 
     public static final String TAG = ">>>>>>>Debug: ";
+    public static int CANDIES_NUMBER = 1000;
     public static DatabaseReference myDatabase;
     public static String userEmail;
     public static String timeCode;
@@ -61,6 +62,28 @@ public class Infra {
 
     public static void addPrizeToUser (String prize) {
         myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("prize").setValue(prize);
+    }
+
+    public static void initUserCandies () {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users/" + userEmail + "/competitions/" + timeCode + "/candies");
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("candies").setValue(CANDIES_NUMBER);
+                    MainActivity.setCandies(CANDIES_NUMBER);
+                }
+                else {
+                    long candies = (long) dataSnapshot.getValue();
+                    MainActivity.setCandies(candies);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+            }
+        };
+        myRef.addValueEventListener(userListener);
     }
 
     //get a user object from the database
