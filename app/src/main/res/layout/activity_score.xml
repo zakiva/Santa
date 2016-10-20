@@ -7,6 +7,14 @@
     >
 
     <TextView
+        android:text="99999 candies"
+        android:layout_alignParentTop="true"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/candies" />
+
+    <TextView
         android:text="score"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
@@ -18,7 +26,7 @@
         android:id="@+id/score" />
 
     <Button
-        android:text="Play!"
+        android:text="Play! (400 candies)"
         android:layout_width="wrap_content"
         android:textAllCaps="false"
         android:layout_height="wrap_content"

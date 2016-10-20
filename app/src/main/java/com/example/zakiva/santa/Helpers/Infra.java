@@ -26,7 +26,6 @@ import java.util.Map;
 public class Infra {
 
     public static final String TAG = ">>>>>>>Debug: ";
-    public static int CANDIES_NUMBER = 1000;
     public static DatabaseReference myDatabase;
     public static String userEmail;
     public static String timeCode;
@@ -70,14 +69,19 @@ public class Infra {
         myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("games").push().setValue(game);
     }
 
-    public static void initUserCandies () {
+    public static void setUserCandies (long candies) {
+        myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("candies").setValue(candies);
+    }
+
+    public static void initUserCandies (final long candies) {
+
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users/" + userEmail + "/competitions/" + timeCode + "/candies");
         ValueEventListener userListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() == null) {
-                    myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("candies").setValue(CANDIES_NUMBER);
-                    MainActivity.setCandies(CANDIES_NUMBER);
+                    setUserCandies(candies);
+                    MainActivity.setCandies(candies);
                 }
                 else {
                     long candies = (long) dataSnapshot.getValue();

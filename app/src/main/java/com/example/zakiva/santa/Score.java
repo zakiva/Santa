@@ -11,8 +11,10 @@ import com.example.zakiva.santa.Helpers.Infra;
 
 public class Score extends AppCompatActivity {
 
+    static int TRY_CANDIES_PRICE = 400;
     Bundle extras;
     TextView scoreTextView;
+    TextView candiesTextView;
     long score;
     String gameType;
 
@@ -23,17 +25,19 @@ public class Score extends AppCompatActivity {
         initFields();
         if (score != -1)
             Infra.addGameToUser(gameType, score);
-        displayScore();
+        displayScoreAndCandies();
     }
 
     public void initFields () {
         extras = getIntent().getExtras();
         scoreTextView = ((TextView) findViewById(R.id.score));
+        candiesTextView = ((TextView) findViewById(R.id.candies));
         score = extras.getLong("score");
         gameType = extras.getString("game");
     }
 
-    public void displayScore () {
+    public void displayScoreAndCandies () {
+        candiesTextView.setText(MainActivity.candies + " candies");
         if (extras != null) {
             if (score != -1) {
                 ((TextView) findViewById(R.id.score)).setText("Your score is: " + score);
@@ -49,6 +53,9 @@ public class Score extends AppCompatActivity {
         if (extras == null)
             return;
 
+        if (!updateCandies()) // don't start game (and inform the user need more candies?)
+            return;
+
         switch (gameType) {
             case "trivia":
                 startActivity(new Intent(Score.this, Trivia.class));
@@ -59,5 +66,13 @@ public class Score extends AppCompatActivity {
             default:
                 return;
         }
+    }
+
+    public boolean updateCandies () {
+        if (MainActivity.candies < TRY_CANDIES_PRICE)
+            return false;
+        long new_candies = MainActivity.candies - TRY_CANDIES_PRICE;
+        Infra.setUserCandies(new_candies);
+        return true;
     }
 }
