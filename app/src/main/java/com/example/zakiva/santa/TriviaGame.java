@@ -25,9 +25,9 @@ public class TriviaGame extends AppCompatActivity {
     private static TextView answer3;
     private static TextView answer4;
     private RelativeLayout layout;
-    private static int wrongCount=0;
     private static int NUMBER_OF_QUESTIONS=5;
-    private static int index = 0;
+    private static int wrongCount;
+    private static int index;
     private static ArrayList<TriviaQuestion> QuestionsArray = getQuestArray();
     private Chronometer clock;
 
@@ -36,6 +36,8 @@ public class TriviaGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
+        wrongCount = 0;
+        index = 0;
         quest = ((TextView)findViewById(R.id.quest));
         answer1 = ((TextView)findViewById(R.id.answer1));
         answer2 = ((TextView)findViewById(R.id.answer2));

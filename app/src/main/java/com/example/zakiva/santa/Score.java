@@ -73,7 +73,7 @@ public class Score extends AppCompatActivity {
 
         switch (gameType) {
             case "trivia":
-                startActivity(new Intent(Score.this, Trivia.class));
+                startActivity(new Intent(Score.this, TriviaGame.class));
                 break;
             case "drawing":
                 startActivity(new Intent(Score.this, DrawingGame.class));
