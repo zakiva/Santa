@@ -87,7 +87,7 @@ public class Score extends AppCompatActivity {
         if (MainActivity.candies < TRY_CANDIES_PRICE)
             return false;
         long new_candies = MainActivity.candies - TRY_CANDIES_PRICE;
-        Infra.setUserCandies(new_candies);
+        Infra.addCandiesToUser(new_candies);
         return true;
     }
 

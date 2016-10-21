@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private static String timeCode;
     private static Activity activity;
     public static long candies;
-    public static long INIT_CANDIES_NUMBER = 1000;
+    //public static String prize;
+    public static long INIT_CANDIES_NUMBER = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
     public static void setTimeCode(String timeCode) {
         MainActivity.timeCode = timeCode;
         initInfra(((Santa) activity.getApplication()).getGlobalEmail(), timeCode);
-        initUserCandies(INIT_CANDIES_NUMBER);
+        initUserFields(INIT_CANDIES_NUMBER);
     }
 
     public static void setCandies(long c) {
         candies = c;
-        Log.d(TAG, "setCandies = " + c);
+        //Log.d(TAG, "setCandies = " + c);
     }
 
     public static String getTimeCode () {

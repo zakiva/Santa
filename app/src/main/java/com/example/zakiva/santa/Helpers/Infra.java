@@ -61,7 +61,10 @@ public class Infra {
     }
 
     public static void addPrizeToUser (String prize) {
+        Log.d(TAG, "addPrizeToUser  We got the prize: " + prize);
         myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("prize").setValue(prize);
+        Log.d(TAG, "addPrizeToUser  saved prize prize: " + prize);
+
     }
 
     public static void addGameToUser (String type, long score) {
@@ -69,24 +72,50 @@ public class Infra {
         myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("games").push().setValue(game);
     }
 
-    public static void setUserCandies (long candies) {
+    public static void addCandiesToUser (long candies) {
         myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("candies").setValue(candies);
     }
 
-    public static void initUserCandies (final long candies) {
+    //init candies, prize, etc.
+    //set/retrieve data from firebase and set the global vars.
+    public static void initUserFields (final long candies) {
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users/" + userEmail + "/competitions/" + timeCode + "/candies");
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users/" + userEmail + "/competitions/" + timeCode);
         ValueEventListener userListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // need this for the first time only (?)
                 if (dataSnapshot.getValue() == null) {
-                    setUserCandies(candies);
+                    addCandiesToUser(candies);
+                    return;
+                }
+
+                //candies
+
+                Object c = ((Map) dataSnapshot.getValue()).get("candies");
+
+                if (c == null) {
+                    addCandiesToUser(candies);
                     MainActivity.setCandies(candies);
                 }
                 else {
-                    long candies = (long) dataSnapshot.getValue();
+                    long candies = (long) c;
                     MainActivity.setCandies(candies);
                 }
+
+                //prize
+
+                Object p = ((Map) dataSnapshot.getValue()).get("prize");
+
+                if (p == null) {
+                    Prize.setPrizeChosen("NONE");
+                }
+                else {
+                    String prize = (String) p;
+                    Prize.setPrizeChosen(prize);
+                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
