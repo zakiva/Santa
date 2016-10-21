@@ -8,19 +8,15 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import static com.example.zakiva.santa.Models.Generator.gene1;
-import static com.example.zakiva.santa.Models.Generator.gene2;
-import static com.example.zakiva.santa.Models.Generator.gene3;
-import static com.example.zakiva.santa.Models.Generator.gene4;
 
 public class TriviaGame extends AppCompatActivity {
     private static TextView quest;
@@ -28,11 +24,11 @@ public class TriviaGame extends AppCompatActivity {
     private static TextView answer2;
     private static TextView answer3;
     private static TextView answer4;
-    private static Button startBtn;
-    private static int count = 0;
+    private RelativeLayout layout;
     private static int wrongCount=0;
-    private static int flash = 0;
-    private static ArrayList<TriviaQuestion> boom = questArray();
+    private static int NUMBER_OF_QUESTIONS=5;
+    private static int index = 0;
+    private static ArrayList<TriviaQuestion> QuestionsArray = getQuestArray();
     private Chronometer clock;
 
 
@@ -40,58 +36,68 @@ public class TriviaGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
-        quest = ((TextView) findViewById(R.id.quest));
-        answer1 = ((TextView) findViewById(R.id.answer1));
-        answer2 = ((TextView) findViewById(R.id.answer2));
-        answer3 = ((TextView) findViewById(R.id.answer3));
-        answer4 = ((TextView) findViewById(R.id.answer4));
-        startBtn = (Button) findViewById(R.id.startBtn);
+        quest = ((TextView)findViewById(R.id.quest));
+        answer1 = ((TextView)findViewById(R.id.answer1));
+        answer2 = ((TextView)findViewById(R.id.answer2));
+        answer3 = ((TextView)findViewById(R.id.answer3));
+        answer4 = ((TextView)findViewById(R.id.answer4));
         clock = (Chronometer) findViewById(R.id.clock);
-    }
+        layout = (RelativeLayout) findViewById(R.id.layout);
 
-    public void startGameClicked(View view) {
-        loadQuestionToScreen((questArray().get(0)));
+        nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
-        startBtn.setVisibility(View.INVISIBLE);
     }
 
     public void answerClicked(final View view) {
+        answer1.setClickable(false);
+        answer2.setClickable(false);
+        answer3.setClickable(false);
+        answer4.setClickable(false);
         final TextView b = (TextView) view;
         String text = b.getText().toString();
-        Log.d(MainActivity.TAG, "flash =" + flash);
-        Log.d(MainActivity.TAG, "array size = " + boom.size());
-        if (flash == 3) {
-            sendScore();
-            Log.d(MainActivity.TAG, "success");
-        }
-        Log.d(MainActivity.TAG, "correct = "+boom.get(flash).correctAnswer);
-        Log.d(MainActivity.TAG, text);
-        if (boom.get(flash).getCorrectAnswer() == text) {
-            count++;
-            flash++;
+        Log.d(MainActivity.TAG, "flash =" + index);
+        Log.d(MainActivity.TAG, "array size = " + QuestionsArray.size());
+        Log.d(MainActivity.TAG, "correct = "+QuestionsArray.get(index).correctAnswer);
+        Log.d(MainActivity.TAG, "my pick=" + text);
+        if (QuestionsArray.get(index).getCorrectAnswer().equals(text)) {
             view.setBackgroundColor(Color.GREEN);
-            changeColor(view);
         } else {
-            wrongCount++;
-            flash++;
             view.setBackgroundColor(Color.RED);
-            changeColor(view);
+            changeToGreen();
+            wrongCount++;
         }
+        index++;
+        nextQuestion(2000);
     }
-    public void changeColor(final View view) {
+
+    public void nextQuestion(int delay) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                try {
-                    loadQuestionToScreen(boom.get(flash));
-                    Log.d(MainActivity.TAG, "got here!");
-                    view.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (index == NUMBER_OF_QUESTIONS) {
+                    clock.stop();
+                    sendScore();
+                } else {
+
+                    try {
+                        Log.d(MainActivity.TAG, "got here!");
+                        answer1.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                        answer2.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                        answer3.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                        answer4.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                        answer1.setClickable(true);
+                        answer2.setClickable(true);
+                        answer3.setClickable(true);
+                        answer4.setClickable(true);
+                        loadQuestionToScreen(QuestionsArray.get(index));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }, 1500);
+
+        }, delay);
     }
 
     public void sendScore() {
@@ -113,16 +119,17 @@ public class TriviaGame extends AppCompatActivity {
         Log.d(MainActivity.TAG, "mistakes = "+wrongCount);
         return score < 0 ? 0 : score;
     }
-    public static ArrayList<TriviaQuestion> questArray() {
+    public static ArrayList<TriviaQuestion> getQuestArray() {
         ArrayList<TriviaQuestion> a = new ArrayList<>();
-        a.add(gene1());
-        a.add(gene2());
-        a.add(gene3());
-        a.add(gene4());
-        a.add(gene1());
-        a.add(gene2());
-        a.add(gene3());
-        a.add(gene4());
+        Generator gen = new Generator();
+        a.add(gen.gene1());
+        a.add(gen.gene2());
+        a.add(gen.gene3());
+        a.add(gen.gene4());
+        a.add(gen.gene1());
+        a.add(gen.gene2());
+        a.add(gen.gene3());
+        a.add(gen.gene4());
         Collections.shuffle(a);
         return a;
     }
@@ -135,5 +142,15 @@ public class TriviaGame extends AppCompatActivity {
         answer2.setText(m.getAnswerB());
         answer3.setText(m.getAnswerC());
         answer4.setText(m.getAnswerD());
+    }
+    private void changeToGreen() {
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            TextView v = (TextView)layout.getChildAt(i);
+            String text1 = v.getText().toString();
+            if (QuestionsArray.get(index).getCorrectAnswer().equals(text1)) {
+                Log.d(MainActivity.TAG, "yayyyy");
+                v.setBackgroundColor(Color.GREEN);
+            }
+        }
     }
 }

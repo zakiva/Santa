@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/layout"
     tools:context="com.example.zakiva.santa.TriviaGame">
 
     <Chronometer
@@ -95,16 +96,4 @@
         android:textSize="25dp"
         android:id="@+id/answer4" />
 
-    <Button
-        android:text="Start Game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/answer2"
-        android:layout_alignRight="@+id/quest"
-        android:layout_alignEnd="@+id/quest"
-        android:layout_marginRight="74dp"
-        android:layout_marginEnd="74dp"
-        android:layout_marginTop="30dp"
-        android:id="@+id/startBtn"
-        android:onClick="startGameClicked" />
 </RelativeLayout>
