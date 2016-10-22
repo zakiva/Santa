@@ -96,4 +96,15 @@
         android:textSize="25dp"
         android:id="@+id/answer4" />
 
+    <Button
+        android:text="50-50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/answer4"
+        android:layout_alignStart="@+id/answer4"
+        android:layout_marginBottom="23dp"
+        android:onClick="fiftyFifty"
+        android:id="@+id/btn50" />
+
 </RelativeLayout>
