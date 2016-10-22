@@ -91,6 +91,7 @@ public class TriviaGame extends AppCompatActivity {
         nextQuestion(3000);
     }
 
+    
     public void nextQuestion(int delay) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
