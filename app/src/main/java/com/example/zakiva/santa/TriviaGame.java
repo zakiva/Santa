@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,11 +26,14 @@ public class TriviaGame extends AppCompatActivity {
     private static TextView answer2;
     private static TextView answer3;
     private static TextView answer4;
+    private Button freeze;
     private RelativeLayout layout;
     private static int NUMBER_OF_QUESTIONS = 5;
     private static int wrongCount;
     private static int index;
     private static ArrayList<TriviaQuestion> questionsArray;
+    private static final int FREEZE_TIME = 5000;
+    private static long timeWhenStopped=0;
     private Chronometer clock;
     public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
 
@@ -47,6 +51,7 @@ public class TriviaGame extends AppCompatActivity {
         answer4 = ((TextView) findViewById(R.id.answer4));
         clock = (Chronometer) findViewById(R.id.clock);
         layout = (RelativeLayout) findViewById(R.id.layout);
+        freeze = (Button)findViewById(R.id.freeze);
 
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
@@ -124,7 +129,7 @@ public class TriviaGame extends AppCompatActivity {
         }, 2000);
     }
 
-    public Long calScore() {
+    public long calScore() {
         long elapsedMillis = ((SystemClock.elapsedRealtime() - clock.getBase()) / 1000);
         long score = 1000 - (wrongCount * 100) - elapsedMillis;
         Log.d(MainActivity.TAG, "score = " + score);
@@ -139,7 +144,7 @@ public class TriviaGame extends AppCompatActivity {
         return a;
     }
 
-    public static void loadQuestionToScreen(TriviaQuestion m) {
+    public void loadQuestionToScreen(TriviaQuestion m) {
         Log.d(MainActivity.TAG, "loadtoscren  ");
         Log.d(MainActivity.TAG, "queston  " + m.getQuestion());
         quest.setText(m.question);
@@ -182,4 +187,21 @@ public class TriviaGame extends AppCompatActivity {
         }
         view.setClickable(false);
         }
-}
+
+    public void freezeGame(View view) {
+        timeWhenStopped = clock.getBase() - SystemClock.elapsedRealtime();
+        clock.stop();
+        freeze.setClickable(false);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Log.d(MainActivity.TAG, "timewhenstop= "+timeWhenStopped);
+                Log.d(MainActivity.TAG, "base= "+clock.getBase());
+                Log.d(MainActivity.TAG, "system= "+SystemClock.elapsedRealtime());
+                clock.setBase(SystemClock.elapsedRealtime() +timeWhenStopped);
+                clock.start();
+            }
+        }, FREEZE_TIME);
+    }
+
+    }
