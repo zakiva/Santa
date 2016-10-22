@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
        // Infra.addSheet("c2", Generator.prepareCountriesData());
         //this must end before continue to first user interface !!!
-        Infra.getTimeCodeFromServer();
+        getTimeCodeFromServer();
+        getTriviaDataFromFirebase();
     }
 
     public static void setTimeCode(String timeCode) {

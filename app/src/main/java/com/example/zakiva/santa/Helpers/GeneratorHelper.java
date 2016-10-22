@@ -2,11 +2,14 @@ package com.example.zakiva.santa.Helpers;
 
 import android.util.Log;
 
+import com.example.zakiva.santa.MainActivity;
+import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by zakiva on 9/28/16.
@@ -17,6 +20,8 @@ public class GeneratorHelper {
     public static final String TAG = ">>>>>>>Debug: ";
 
     public static TriviaQuestion generateQuestionWithData (ArrayList<HashMap<String, Object>> data, String q, String questionKey, String answerKey) {
+
+        Log.d(TAG, "generateQuestionWithData: " + q);
 
         HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(data, questionKey, answerKey);
         String q$ = (String) questionHashFromData.get("question");
@@ -101,5 +106,34 @@ public class GeneratorHelper {
         Collections.shuffle(list);
 
         return list;
+    }
+
+    public static ArrayList<TriviaQuestion> generateQuestionsArray() {
+        Log.d(MainActivity.TAG, "generateQuestionsArray");
+
+        int ARRAY_SIZE = 8;
+        //IMPORTANT: when adding new generators must update this number:
+        int NUMBER_OF_GENERATORS = 4;
+        List <Integer> numbers = new ArrayList<>();
+        for(int i = 0; i < NUMBER_OF_GENERATORS; i++) {
+            numbers.add(i);
+        }
+        Collections.shuffle(numbers);
+        ArrayList<TriviaQuestion> array = new ArrayList<>();
+        Generator generator = new Generator();
+
+        for (int i = 0; i < ARRAY_SIZE; i++) {
+            Log.d(MainActivity.TAG, "generateQuestionsArray:  i,  random number = " + i + "," + numbers.get(i % NUMBER_OF_GENERATORS));
+            //add new generators down here AND update NUMBER_OF_GENERATORS above.
+            switch (numbers.get(i % NUMBER_OF_GENERATORS))  {
+                case 0: array.add(generator.bandToAlbum()); break;
+                case 1: array.add(generator.bandToYear()); break;
+                case 2: array.add(generator.countryToCapital()); break;
+                case 3: array.add(generator.gene1()); break;
+            }
+        }
+        Log.d(MainActivity.TAG, "generateQuestionsArray:  array.size = "+array.size());
+
+        return array;
     }
 }

@@ -12,11 +12,13 @@ import android.widget.Chronometer;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.zakiva.santa.Helpers.GeneratorHelper;
 import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class TriviaGame extends AppCompatActivity {
     private static TextView quest;
@@ -28,14 +30,15 @@ public class TriviaGame extends AppCompatActivity {
     private static int NUMBER_OF_QUESTIONS=5;
     private static int wrongCount;
     private static int index;
-    private static ArrayList<TriviaQuestion> QuestionsArray = getQuestArray();
+    private static ArrayList<TriviaQuestion> QuestionsArray;
     private Chronometer clock;
-
+    public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
+        QuestionsArray = getQuestArray();
         wrongCount = 0;
         index = 0;
         quest = ((TextView)findViewById(R.id.quest));
@@ -49,6 +52,11 @@ public class TriviaGame extends AppCompatActivity {
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
+    }
+
+    public static void addSheetToDataHash (String name, ArrayList<HashMap<String,Object>> data) {
+        dataHash.put(name, data);
+        Log.d(MainActivity.TAG, "TRIVIAGAME: putting in dataHash -> name: " + name);
     }
 
     public void answerClicked(final View view) {
@@ -122,17 +130,8 @@ public class TriviaGame extends AppCompatActivity {
         return score < 0 ? 0 : score;
     }
     public static ArrayList<TriviaQuestion> getQuestArray() {
-        ArrayList<TriviaQuestion> a = new ArrayList<>();
-        Generator gen = new Generator();
-        a.add(gen.gene1());
-        a.add(gen.gene2());
-        a.add(gen.gene3());
-        a.add(gen.gene4());
-        a.add(gen.gene1());
-        a.add(gen.gene2());
-        a.add(gen.gene3());
-        a.add(gen.gene4());
-        Collections.shuffle(a);
+        ArrayList<TriviaQuestion> a = GeneratorHelper.generateQuestionsArray();
+        Log.d(MainActivity.TAG, "getQuestArray:  a.size = "+a.size());
         return a;
     }
 

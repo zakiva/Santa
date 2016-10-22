@@ -2,6 +2,7 @@ package com.example.zakiva.santa.Models;
 
 import com.example.zakiva.santa.Helpers.GeneratorHelper;
 import com.example.zakiva.santa.Trivia;
+import com.example.zakiva.santa.TriviaGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,21 +79,28 @@ public class Generator {
         return new TriviaQuestion("33", "בסדרה זו מה המספר הבא "+pro.toString()+" ?", s,getNumericAnswers(n).get(0), getNumericAnswers(n).get(1),s, getNumericAnswers(n).get(2));
     }
     public TriviaQuestion bandToAlbum () {
-        return GeneratorHelper.generateQuestionWithData(prepareBandsData(), "איזה מהאלבומים הבאים שייך ללהקת #$#?","name", "albums");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("bands"), "איזה מהאלבומים הבאים שייך ללהקת #$#?","name", "albums");
     }
 
     public TriviaQuestion bandToYear () {
-        return GeneratorHelper.generateQuestionWithData(prepareBandsData(), "באיזו שנה הוקמה להקת #$#?","name", "year");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("bands"), "באיזו שנה הוקמה להקת #$#?","name", "year");
     }
 
     public TriviaQuestion countryToCapital () {
-        return GeneratorHelper.generateQuestionWithData(prepareCountriesData(), "מהי עיר הבירה של #$#?","name", "capital");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("countries"), "מהי עיר הבירה של #$#?","name", "capital");
     }
 
 
     public TriviaQuestion inventionToInventor() {
-        return GeneratorHelper.generateQuestionWithData(Trivia.dataHash.get("inventions"), "מי המציא את ה#$#?", "name", "inventor");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "מי המציא את ה#$#?", "name", "inventor");
     }
+
+
+
+
+    /*
+
+    COMMENTING OUT THESE EXAMPLE METHODS - WE NOW USE REAL DATA
 
 
     //this method is just an example of preparing the data - to be removed
@@ -162,4 +170,6 @@ public class Generator {
 
         return new ArrayList<HashMap<String, Object>> (Arrays.asList(d1, d2, d3, d4, d5, d6));
     }
+    */
+
 }

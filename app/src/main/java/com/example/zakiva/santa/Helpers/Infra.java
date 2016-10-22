@@ -165,6 +165,8 @@ public class Infra {
     }
 
     public static void getTriviaDataFromFirebase() {
+        //must initialize data hash before puttint data inside
+        TriviaGame.dataHash = new HashMap<>();
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("triviaDataSheets");
         ValueEventListener triviaDataListener = new ValueEventListener() {
             @Override
@@ -179,7 +181,7 @@ public class Infra {
 
                 for (String sheet : triviaSheets) {
                     ArrayList<HashMap<String, Object>> lst = (ArrayList<HashMap<String, Object>>) data.get(sheet);
-                    Trivia.addSheetToDataHash(sheet, lst);
+                    TriviaGame.addSheetToDataHash(sheet, lst);
                 }
 
 
