@@ -142,7 +142,7 @@ public class TriviaGame extends AppCompatActivity {
     }
 
     public static ArrayList<TriviaQuestion> getQuestArray() {
-        ArrayList<TriviaQuestion> a = GeneratorHelper.generateQuestionsArray();
+        ArrayList<TriviaQuestion> a = GeneratorHelper.generateQuestionsArray(NUMBER_OF_QUESTIONS);
         Log.d(MainActivity.TAG, "getQuestArray:  a.size = "+a.size());
         return a;
     }
@@ -220,7 +220,7 @@ public class TriviaGame extends AppCompatActivity {
         for (TextView v : a) {
             v.setVisibility(View.INVISIBLE);
         }
-        view.setClickable(false);
+        //view.setClickable(false);
         }
 
     public void freezeGame(View view) {

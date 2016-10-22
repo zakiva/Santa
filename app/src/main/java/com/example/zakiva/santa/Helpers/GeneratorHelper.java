@@ -108,12 +108,12 @@ public class GeneratorHelper {
         return list;
     }
 
-    public static ArrayList<TriviaQuestion> generateQuestionsArray() {
+    public static ArrayList<TriviaQuestion> generateQuestionsArray(int number_of_questions) {
         Log.d(MainActivity.TAG, "generateQuestionsArray");
 
-        int ARRAY_SIZE = 8;
+        int ARRAY_SIZE = number_of_questions * 2;
         //IMPORTANT: when adding new generators must update this number:
-        int NUMBER_OF_GENERATORS = 4;
+        int NUMBER_OF_GENERATORS = 5;
         List <Integer> numbers = new ArrayList<>();
         for(int i = 0; i < NUMBER_OF_GENERATORS; i++) {
             numbers.add(i);
@@ -129,7 +129,9 @@ public class GeneratorHelper {
                 case 0: array.add(generator.bandToAlbum()); break;
                 case 1: array.add(generator.bandToYear()); break;
                 case 2: array.add(generator.countryToCapital()); break;
-                case 3: array.add(generator.gene1()); break;
+                case 3: array.add(generator.inventionToInventor()); break;
+                case 4: array.add(generator.gene1()); break;
+
             }
         }
         Log.d(MainActivity.TAG, "generateQuestionsArray:  array.size = "+array.size());
