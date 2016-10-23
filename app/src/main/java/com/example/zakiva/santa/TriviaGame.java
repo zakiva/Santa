@@ -28,12 +28,12 @@ public class TriviaGame extends AppCompatActivity {
     private static TextView answer4;
     private Button freeze;
     private RelativeLayout layout;
-    private static int NUMBER_OF_QUESTIONS = 5;
+    private static int NUMBER_OF_QUESTIONS;
     private static int wrongCount;
     private static int index;
     private static ArrayList<TriviaQuestion> questionsArray;
-    private static final int FREEZE_TIME = 5000;
-    private static long timeWhenStopped=0;
+    private static int FREEZE_TIME;
+    private static long timeWhenStopped;
     private Chronometer clock;
     public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
 
@@ -41,6 +41,9 @@ public class TriviaGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
+        NUMBER_OF_QUESTIONS = 5;
+        timeWhenStopped=0;
+        FREEZE_TIME = 5000;
         questionsArray = getQuestArray();
         wrongCount = 0;
         index = 0;
