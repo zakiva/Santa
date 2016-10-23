@@ -124,12 +124,7 @@ public class TriviaGame extends AppCompatActivity {
         final Intent intent = new Intent(TriviaGame.this, Score.class);
         intent.putExtra("score", calScore());
         intent.putExtra("game", "trivia");
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                startActivity(intent);
-            }
-        }, 1500);
+        startActivity(intent);
     }
 
     public long calScore() {
