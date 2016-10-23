@@ -204,4 +204,11 @@ public class TriviaGame extends AppCompatActivity {
         }, FREEZE_TIME);
     }
 
+    public void skipQuest(View view) {
+        index++;
+        NUMBER_OF_QUESTIONS++;
+        nextQuestion(1000);
+        Log.d(MainActivity.TAG, "AVADA KADBRA!"+NUMBER_OF_QUESTIONS);
+        view.setClickable(false);
     }
+}

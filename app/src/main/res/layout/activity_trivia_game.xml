@@ -106,14 +106,26 @@
         android:layout_marginBottom="23dp"
         android:onClick="fiftyFifty"
         android:id="@+id/btn50" />
+
+    <Button
+        android:text="skip question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/skipBtn"
+        android:onClick="skipQuest"
+        android:layout_alignBaseline="@+id/freeze"
+        android:layout_alignBottom="@+id/freeze"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <Button
         android:text="Freeze"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="11dp"
         android:onClick="freezeGame"
-        android:id="@+id/freeze" />
+        android:id="@+id/freeze"
+        android:layout_alignBaseline="@+id/btn50"
+        android:layout_alignBottom="@+id/btn50"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
