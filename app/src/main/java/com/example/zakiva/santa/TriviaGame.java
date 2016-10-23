@@ -64,6 +64,7 @@ public class TriviaGame extends AppCompatActivity {
     }
 
     public void answerClicked(final View view) {
+
         answer1.setClickable(false);
         answer2.setClickable(false);
         answer3.setClickable(false);
@@ -75,14 +76,16 @@ public class TriviaGame extends AppCompatActivity {
         Log.d(MainActivity.TAG, "correct = " + questionsArray.get(index).correctAnswer);
         Log.d(MainActivity.TAG, "my pick=" + text);
         if (questionsArray.get(index).getCorrectAnswer().equals(text)) {
-            view.setBackgroundColor(Color.GREEN);
+            changeToGray(view);
+            changeToGreenDelayed(view);
         } else {
-            view.setBackgroundColor(Color.RED);
+            changeToGray(view);
+            changeToRedDelayed(view);
             changeToGreen();
             wrongCount++;
         }
         index++;
-        nextQuestion(2000);
+        nextQuestion(3000);
     }
 
     public void nextQuestion(int delay) {
@@ -126,7 +129,7 @@ public class TriviaGame extends AppCompatActivity {
             public void run() {
                 startActivity(intent);
             }
-        }, 2000);
+        }, 1500);
     }
 
     public long calScore() {
@@ -153,26 +156,58 @@ public class TriviaGame extends AppCompatActivity {
         answer3.setText(m.getAnswerC());
         answer4.setText(m.getAnswerD());
     }
+    public ArrayList<TextView> getAnswerArray(){
+        ArrayList<TextView> a = new ArrayList<>();
+        a.add(answer1);
+        a.add(answer2);
+        a.add(answer3);
+        a.add(answer4);
+        return a;
+    }
 
-    private void changeToGreen() {
+    public void changeToGray(View view) {
+        ArrayList<TextView> ans=getAnswerArray();
+        for (TextView t :ans){
+            if (t!=view){
+                t.setBackgroundColor(Color.GRAY);
+            }
+        }
+    }
+    public void changeToRedDelayed(final View view){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                view.setBackgroundColor(Color.RED);
+            }
+        }, 650);
+    }
+    public void changeToGreenDelayed(final View view){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                view.setBackgroundColor(Color.GREEN);
+            }
+        }, 1000);
+    }
+    public void changeToGreen() {
         for (int i = 0; i < layout.getChildCount(); i++) {
-            TextView v = (TextView) layout.getChildAt(i);
+            final TextView v = (TextView) layout.getChildAt(i);
             String text1 = v.getText().toString();
             if (questionsArray.get(index).getCorrectAnswer().equals(text1)) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
                 Log.d(MainActivity.TAG, "yayyyy");
                 v.setBackgroundColor(Color.GREEN);
+                    }
+                }, 1000);
             }
         }
     }
 
     public void fiftyFifty(View view) {
-
-        ArrayList<TextView> a = new ArrayList<>();
         TriviaQuestion q = questionsArray.get(index);
-        a.add(answer1);
-        a.add(answer2);
-        a.add(answer3);
-        a.add(answer4);
+        ArrayList<TextView> a=getAnswerArray();
         int m=0;
         for (TextView v : a) {
             if (v.getText().toString().equals(q.getCorrectAnswer())) {
