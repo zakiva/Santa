@@ -37,7 +37,12 @@ public class DrawingGame extends AppCompatActivity {
     private Button restart;
     private Button undo;
     private Button doneButton;
+    private Button replaceHelper;
+    private Button flashHelper;
+    private Button clueHelper;
     private MainDrawingView v;
+    private int flashHelperLength;
+    private ArrayList<Integer> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +55,18 @@ public class DrawingGame extends AppCompatActivity {
 
     //flow
     public void initFields () {
-        MILLISECONDS = 6000;
+        MILLISECONDS = 4000;
+        flashHelperLength = 2000;
         pen = (Button) findViewById(R.id.pen);
         eraser = (Button) findViewById(R.id.eraser);
         restart = (Button) findViewById(R.id.restart);
         undo = (Button) findViewById(R.id.undo);
         doneButton = (Button) findViewById(R.id.doneButton);
+        flashHelper = (Button) findViewById(R.id.flashHelperButton);
+        replaceHelper = (Button) findViewById(R.id.replaceDrawingHelperButton);
+        clueHelper = (Button) findViewById(R.id.clueHelperButton);
         v = (MainDrawingView) findViewById(R.id.single_touch_view);
-        ArrayList<Integer> images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
+        images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
         Collections.shuffle(images);
         randomImage = images.get(0);
     }
@@ -66,6 +75,7 @@ public class DrawingGame extends AppCompatActivity {
         //show the source image
         v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
         final TextView stopper = (TextView) findViewById(R.id.stopper);
+        stopper.setVisibility(View.VISIBLE);
 
 
         new CountDownTimer(MILLISECONDS, 100) {
@@ -93,17 +103,17 @@ public class DrawingGame extends AppCompatActivity {
         restart.setVisibility(View.VISIBLE);
         undo.setVisibility(View.VISIBLE);
         doneButton.setVisibility(View.VISIBLE);
+        replaceHelper.setVisibility(View.VISIBLE);
+        clueHelper.setVisibility(View.VISIBLE);
+        flashHelper.setVisibility(View.VISIBLE);
     }
 
     //listeners
     public void doneButtonClicked(View view) {
 
         v.setAllowDrawing(false);
-        pen.setVisibility(View.GONE);
-        eraser.setVisibility(View.GONE);
-        restart.setVisibility(View.GONE);
-        undo.setVisibility(View.GONE);
-        doneButton.setVisibility(View.GONE);
+
+        hideButtons();
 
         Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
         Bitmap coloredBitmap = Drawing.convertBlackToColor(bitmap);
@@ -121,6 +131,17 @@ public class DrawingGame extends AppCompatActivity {
                 startActivity(intent);
             }
         }, 2000);
+    }
+
+    public void hideButtons () {
+        pen.setVisibility(View.GONE);
+        eraser.setVisibility(View.GONE);
+        restart.setVisibility(View.GONE);
+        undo.setVisibility(View.GONE);
+        doneButton.setVisibility(View.GONE);
+        replaceHelper.setVisibility(View.GONE);
+        clueHelper.setVisibility(View.GONE);
+        flashHelper.setVisibility(View.GONE);
     }
 
     public void drawingModeClicked(View view) {
@@ -141,7 +162,7 @@ public class DrawingGame extends AppCompatActivity {
 
     public void restartDrawClicked(View view) {
         // change: pass it arguments instead
-        showAlertDialog();
+        showAlertDialogForRestart();
     }
 
     public void undoButtonClicked(View view) {
@@ -165,7 +186,7 @@ public class DrawingGame extends AppCompatActivity {
     }
 
     //make this function generic by passing it arguments (and move to INFRA)
-    public void showAlertDialog () {
+    public void showAlertDialogForRestart () {
 
         AlertDialog alertDialog = new AlertDialog.Builder(DrawingGame.this).create();
         alertDialog.setTitle("התחל מחדש                     ");
@@ -185,5 +206,31 @@ public class DrawingGame extends AppCompatActivity {
                 });
 
         alertDialog.show();
+    }
+
+    public void flashHelperButtonClicked(View view) {
+        v.setAllowDrawing(false);
+        replaceHelper.setClickable(false);
+        v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            public void run()
+            {
+                v.setBackgroundColor(Color.WHITE);
+                v.setAllowDrawing(true);
+                replaceHelper.setClickable(true);
+            }
+        }, flashHelperLength);
+    }
+
+    public void replaceDrawingButtonHelperClicked(View view) {
+        v.restartDrawing();
+        hideButtons();
+        randomImage = images.get(1);
+        startGame();
+    }
+
+    public void clueHelperButtonClicked(View view) {
     }
 }
