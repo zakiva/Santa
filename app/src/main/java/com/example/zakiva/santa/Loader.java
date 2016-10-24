@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
@@ -20,6 +23,9 @@ public class Loader extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loader);
         loader = this;
+
+        ImageView imageView = (ImageView) findViewById(R.id.loader_gif);
+        Glide.with(this).load(R.drawable.loading_dots).crossFade().into(imageView);
 
         Log.d(TAG, " oncreatre ");
 
