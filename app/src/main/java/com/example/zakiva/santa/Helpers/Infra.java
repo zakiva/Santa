@@ -213,6 +213,8 @@ public class Infra {
                     TriviaGame.addSheetToDataHash(sheet, lst);
                 }
 
+                Loader.increase();
+
 
                 //Sheet s = dataSnapshot.getValue(GenericTypeIndicator);
                // Log.d(TAG, "s is ourssssssssss");

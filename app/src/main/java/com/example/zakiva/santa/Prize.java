@@ -33,6 +33,7 @@ public class Prize extends AppCompatActivity {
         prizeChosen = p;
         if (prizeA != null)
             colorPrizes();
+        Loader.increase();
     }
 
     public void initFields () {

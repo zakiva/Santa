@@ -29,23 +29,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
-        //set the real user email instead
-        ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail");
-
-       // Infra.addSheet("c2", Generator.prepareCountriesData());
-        //this must end before continue to first user interface !!!
-        getTimeCodeFromServer();
-        getTriviaDataFromFirebase();
     }
 
     public static void setTimeCode(String timeCode) {
         MainActivity.timeCode = timeCode;
-        initInfra(((Santa) activity.getApplication()).getGlobalEmail(), timeCode);
+        initInfra(((Santa) Loader.loader.getApplication()).getGlobalEmail(), timeCode);
         initUserFields(INIT_CANDIES_NUMBER);
     }
 
     public static void setCandies(long c) {
         candies = c;
+        Loader.increase();
         //Log.d(TAG, "setCandies = " + c);
     }
 

@@ -17,11 +17,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Google" />
         <activity android:name=".Trivia" />
@@ -48,8 +44,15 @@
         <activity android:name=".DrawingGame" />
         <activity android:name=".Score" />
         <activity android:name=".Prize" />
-        <activity android:name=".Games"></activity>
-        <activity android:name=".TriviaGame"></activity>
+        <activity android:name=".Games" />
+        <activity android:name=".TriviaGame" />
+        <activity android:name=".Loader">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
