@@ -56,14 +56,25 @@
         android:layout_height="80dp"
         android:text="Windis Prize"
         android:textAllCaps="false"
-        android:id="@+id/stop"
+        android:id="@+id/windisPrizeButton"
         android:onClick="windisPrizeClicked"
         android:layout_below="@id/prizeA"
         android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:text=""
+        android:text="see prize information"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/windisPrizeButton"
+        android:onClick="seePrizeInformationClicked"
+        android:layout_marginTop="10dp"
+        android:id="@+id/prizeInformation" />
+
+    <TextView
+        android:text="00:00:00"
         android:textSize="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

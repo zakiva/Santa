@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zakiva.santa.Helpers.Infra;
 
@@ -83,7 +84,16 @@ public class Prize extends AppCompatActivity {
     }
 
     public void windisPrizeClicked(View view) {
-        startActivity(new Intent(Prize.this, Games.class));
+
+        if (prizeChosen.equals("NONE")) {
+            Toast toast = Toast.makeText(this, "First choose a prize mateee!!!", Toast.LENGTH_SHORT);
+            TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+            v.setTextColor(Color.WHITE);
+            toast.show();
+        }
+        else {
+            startActivity(new Intent(Prize.this, Games.class));
+        }
     }
 
     public static void setCountDown () {
@@ -133,5 +143,9 @@ public class Prize extends AppCompatActivity {
                 //what happens when time is 00:00:00?
             }
         }.start();
+    }
+
+    public void seePrizeInformationClicked(View view) {
+        startActivity(new Intent(Prize.this, PrizeInformation.class));
     }
 }
