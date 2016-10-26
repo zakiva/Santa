@@ -15,6 +15,8 @@ import android.util.Log;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import java.text.ParseException;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = ">>>>>>>Debug: ";
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setTimeCode(String timeCode) {
         MainActivity.timeCode = timeCode;
+        Prize.setCountDown();
         initInfra(((Santa) Loader.loader.getApplication()).getGlobalEmail(), timeCode);
         initUserFields(INIT_CANDIES_NUMBER);
     }
