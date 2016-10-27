@@ -79,11 +79,11 @@ public class Generator {
         return new TriviaQuestion("33", "בסדרה זו מה המספר הבא "+pro.toString()+" ?", s,getNumericAnswers(n).get(0), getNumericAnswers(n).get(1),s, getNumericAnswers(n).get(2));
     }
     public TriviaQuestion bandToAlbum () {
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("bands"), "איזה מהאלבומים הבאים שייך ללהקת #$#?","name", "albums");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelBands"), "איזה מהאלבומים הבאים שייך ללהקת #$#?","name", "albums");
     }
 
     public TriviaQuestion bandToYear () {
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("bands"), "באיזו שנה הוקמה להקת #$#?","name", "year");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldBands"), "באיזו שנה הוקמה להקת #$#?","name", "year");
     }
 
     public TriviaQuestion countryToCapital () {
