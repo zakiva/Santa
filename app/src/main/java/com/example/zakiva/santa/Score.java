@@ -1,8 +1,10 @@
 package com.example.zakiva.santa;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -20,6 +22,7 @@ public class Score extends AppCompatActivity {
     ProgressBar expBar;
     long score;
     String gameType;
+    double mProgressStatus = 0;
     long EXP_SIZE = 2000;
 
     @Override
@@ -31,7 +34,7 @@ public class Score extends AppCompatActivity {
             Infra.addGameToUser(gameType, score);
         displayScore();
         displayCandies();
-        displayExp();
+        calcAndDisplayExp();
     }
 
     @Override
@@ -103,21 +106,110 @@ public class Score extends AppCompatActivity {
         startActivity(new Intent(Score.this, Prize.class));
     }
 
-    public void displayExp () {
+
+
+
+    public void calcAndDisplayExp () {
         long exp = MainActivity.exp;
+        mProgressStatus = exp;
         if (extras != null && score != -1) {
             exp += score;
             if (exp > EXP_SIZE) {
-                expSizeReached();
                 exp %= EXP_SIZE;
+                Infra.addExpToUser(exp);
+                expSizeReached(exp);
             }
-            Infra.addExpToUser(exp);
+            else {
+                Infra.addExpToUser(exp);
+                showProgressAnimation(exp);
+            }
         }
-        expTextView.setText("exp: " + exp);
-        expBar.setProgress((int)exp);
+        else {
+            expBar.setProgress((int)exp);
+            expTextView.setText("" + exp);
+        }
     }
 
-    public void expSizeReached () {
+    void showProgressAnimation (final long newExp) {
+
+        final Handler mHandler = new Handler();
+
+        // Start lengthy operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                double delta = 0.01;
+                while (mProgressStatus < newExp) {
+
+                    //set "frames rate"
+                    mProgressStatus += delta;
+                    delta += 0.000003;
+
+                    /*
+                    if (newExp - mProgressStatus < 100)
+                        mProgressStatus += 0.08;
+                    else
+                        mProgressStatus += 0.04;
+                        */
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            expBar.setProgress((int) mProgressStatus);
+                            expTextView.setText("" + (int) mProgressStatus);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    public void expSizeReached (long newExp) {
         //add more candies.. tell the user WOW..
+        //show complete animation before new progress animation
+
+        mProgressStatus = 0;
+        showProgressAnimation(newExp);
     }
 }
+
+
+
+/*
+
+
+
+
+
+public class MyActivity extends Activity {
+    private static final int PROGRESS = 0x1;
+
+    private ProgressBar mProgress;
+    private int mProgressStatus = 0;
+
+    protected void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+
+        setContentView(R.layout.progressbar_activity);
+
+        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
+
+        Handler mHandler = new Handler();
+
+        // Start lengthy operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus < 100) {
+                    mProgressStatus = doWork();
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mProgress.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+}
+
+*/
