@@ -8,8 +8,10 @@
 
     <TextView
         android:text="99999 candies"
-        android:layout_alignParentTop="true"
         android:textSize="15dp"
+        android:layout_below="@+id/expBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/candies" />
@@ -26,25 +28,27 @@
         android:id="@+id/score" />
 
     <TextView
-        android:text="score"
+        android:text="exp"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:visibility="visible"
         android:textSize="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/expBar"
+        android:layout_below="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/exp" />
 
     <Button
-        android:text="Play! (400 candies)"
+        android:text="Play! (100 candies)"
         android:layout_width="wrap_content"
         android:textAllCaps="false"
         android:layout_height="wrap_content"
         android:onClick="playButtonClicked"
-        android:layout_below="@+id/exp"
+        android:layout_below="@+id/candies"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/playButton" />
 
     <Button
@@ -56,6 +60,15 @@
         android:layout_alignParentTop="true"
         android:onClick="homeScreenButtonClicked"
         android:id="@+id/homeScreen" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/expBar" />
 
 
 </RelativeLayout>

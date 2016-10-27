@@ -5,18 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.Infra;
 
 public class Score extends AppCompatActivity {
 
-    static int TRY_CANDIES_PRICE = 400;
+    static int TRY_CANDIES_PRICE = 100;
     Bundle extras;
     TextView scoreTextView;
     TextView candiesTextView;
+    TextView expTextView;
+    ProgressBar expBar;
     long score;
     String gameType;
+    long EXP_SIZE = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,7 @@ public class Score extends AppCompatActivity {
             Infra.addGameToUser(gameType, score);
         displayScore();
         displayCandies();
+        displayExp();
     }
 
     @Override
@@ -38,12 +43,15 @@ public class Score extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         displayCandies();
+        //displayExp();
     }
 
     public void initFields () {
         extras = getIntent().getExtras();
         scoreTextView = ((TextView) findViewById(R.id.score));
         candiesTextView = ((TextView) findViewById(R.id.candies));
+        expTextView = ((TextView) findViewById(R.id.exp));
+        expBar = ((ProgressBar) findViewById(R.id.expBar));
         score = extras.getLong("score");
         gameType = extras.getString("game");
     }
@@ -93,5 +101,23 @@ public class Score extends AppCompatActivity {
 
     public void homeScreenButtonClicked(View view) {
         startActivity(new Intent(Score.this, Prize.class));
+    }
+
+    public void displayExp () {
+        long exp = MainActivity.exp;
+        if (extras != null && score != -1) {
+            exp += score;
+            if (exp > EXP_SIZE) {
+                expSizeReached();
+                exp %= EXP_SIZE;
+            }
+            Infra.addExpToUser(exp);
+        }
+        expTextView.setText("exp: " + exp);
+        expBar.setProgress((int)exp);
+    }
+
+    public void expSizeReached () {
+        //add more candies.. tell the user WOW..
     }
 }

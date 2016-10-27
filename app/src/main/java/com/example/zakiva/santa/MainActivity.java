@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static String timeCode;
     private static Activity activity;
     public static long candies;
+    public static long exp;
     //public static String prize;
     public static long INIT_CANDIES_NUMBER = 3000;
 
@@ -37,13 +38,21 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.timeCode = timeCode;
         Prize.setCountDown();
         initInfra(((Santa) Loader.loader.getApplication()).getGlobalEmail(), timeCode);
-        initUserFields(INIT_CANDIES_NUMBER);
+        //this is done here - only after setting the time code and init infra with global email
+        initUserFieldsPerCompetition(INIT_CANDIES_NUMBER);
+        getUserAttributesFromFirebase();
     }
 
     public static void setCandies(long c) {
         candies = c;
         Loader.increase();
         //Log.d(TAG, "setCandies = " + c);
+    }
+
+    public static void setExp(long e) {
+        exp = e;
+        Loader.increase();
+        Log.d(TAG, "setExp from main activieyt  = " + e);
     }
 
     public static String getTimeCode () {

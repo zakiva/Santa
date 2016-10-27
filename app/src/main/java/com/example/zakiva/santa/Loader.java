@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
+import static com.example.zakiva.santa.Helpers.Infra.getUserAttributesFromFirebase;
 
 public class Loader extends AppCompatActivity {
 
@@ -34,7 +35,7 @@ public class Loader extends AppCompatActivity {
 
 
         //set the real user email instead
-        ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail");
+        ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail1");
         //this must end before continue to first user interface !!!
 
         Log.d(TAG, " start loadrss  ");
@@ -48,11 +49,12 @@ public class Loader extends AppCompatActivity {
 
     public static void increase () {
         counter++;
+        Log.d(TAG, " increased, now counter = " + counter);
         loader.startApp();
     }
 
     public void startApp  () {
-        if (counter == 3)
+        if (counter == 4)
             startActivity(new Intent(Loader.this, MainActivity.class));
     }
 }

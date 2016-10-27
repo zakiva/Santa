@@ -76,9 +76,9 @@ public class Infra {
         myDatabase.child("users").child(userEmail).child("competitions").child(timeCode).child("candies").setValue(candies);
     }
 
-    //init candies, prize, etc.
+    //init candies, prize, etc. only fields per competion - using time code
     //set/retrieve data from firebase and set the global vars.
-    public static void initUserFields (final long candies) {
+    public static void initUserFieldsPerCompetition (final long candies) {
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users/" + userEmail + "/competitions/" + timeCode);
         ValueEventListener userListener = new ValueEventListener() {
@@ -116,6 +116,57 @@ public class Infra {
                     Prize.setPrizeChosen(prize);
                 }
 
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+            }
+        };
+        myRef.addValueEventListener(userListener);
+    }
+
+    public static void addExpToUser (long exp) {
+        myDatabase.child("users").child(userEmail).child("attributes").child("exp").setValue(exp);
+    }
+
+    //init exp - per user NOT per competition
+    //set/retrieve data from firebase and set the global vars.
+    public static void getUserAttributesFromFirebase () {
+
+        Log.d(TAG, " getUserAttributesFromFirebase ");
+
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users/" + userEmail + "/attributes");
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d(TAG, " getUserAttributesFromFirebase  on data chagned ");
+
+
+                // need this for the first time only (?)
+                if (dataSnapshot.getValue() == null) {
+                    Log.d(TAG, " getUserAttributesFromFirebase  value  == null ");
+                    addExpToUser(0);
+                    return;
+                }
+
+                //exp
+
+                Object e = ((Map) dataSnapshot.getValue()).get("exp");
+
+                if (e == null) {
+                    Log.d(TAG, " getUserAttributesFromFirebase  e = null");
+
+                    addExpToUser(0);
+                    MainActivity.setExp(0);
+                }
+                else {
+                    Log.d(TAG, " getUserAttributesFromFirebase  else ");
+
+                    long exp = (long) e;
+                    MainActivity.setExp(exp);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
