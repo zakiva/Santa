@@ -92,7 +92,7 @@ public class Generator {
 
 
     public TriviaQuestion inventionToInventor() {
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "מי המציא את ה#$#?", "name", "inventor");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "מי המציא את #$#?", "name", "inventor");
     }
 
 
