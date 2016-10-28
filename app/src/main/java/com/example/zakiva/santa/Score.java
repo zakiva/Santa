@@ -1,7 +1,11 @@
 package com.example.zakiva.santa;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +28,8 @@ public class Score extends AppCompatActivity {
     String gameType;
     double mProgressStatus = 0;
     long EXP_SIZE = 2000;
+    Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class Score extends AppCompatActivity {
     }
 
     public void initFields () {
+        activity = this;
         extras = getIntent().getExtras();
         scoreTextView = ((TextView) findViewById(R.id.score));
         candiesTextView = ((TextView) findViewById(R.id.candies));
@@ -112,6 +119,8 @@ public class Score extends AppCompatActivity {
     public void calcAndDisplayExp () {
         long exp = MainActivity.exp;
         mProgressStatus = exp;
+        expBar.setProgress((int)exp);
+        expTextView.setText("" + exp);
         if (extras != null && score != -1) {
             exp += score;
             if (exp > EXP_SIZE) {
@@ -121,29 +130,32 @@ public class Score extends AppCompatActivity {
             }
             else {
                 Infra.addExpToUser(exp);
-                showProgressAnimation(exp);
+                showProgressAnimation(exp, false, 0);
             }
         }
         else {
-            expBar.setProgress((int)exp);
-            expTextView.setText("" + exp);
+            //its the first time we are here (not retry). init views anyway above in this method
         }
     }
 
-    void showProgressAnimation (final long newExp) {
+    void showProgressAnimation (final long newExp, final boolean expReached, final long expAfterSize) {
+
+        Log.d(MainActivity.TAG, " showProgressAnimation  -- newEXP , exp reached, expAfterSize " + newExp +"," + expReached + "," + expAfterSize);
 
         final Handler mHandler = new Handler();
 
         // Start lengthy operation in a background thread
         new Thread(new Runnable() {
             public void run() {
-                double delta = 0.01;
+                double delta = 0.05;
                 while (mProgressStatus < newExp) {
 
                     //set "frames rate"
                     mProgressStatus += delta;
-                    delta += 0.000003;
+                    //we can play with this too:
+                    //delta += 0.000003;
 
+                    //another option instead of delta
                     /*
                     if (newExp - mProgressStatus < 100)
                         mProgressStatus += 0.08;
@@ -154,10 +166,26 @@ public class Score extends AppCompatActivity {
                     mHandler.post(new Runnable() {
                         public void run() {
                             expBar.setProgress((int) mProgressStatus);
-                            expTextView.setText("" + (int) mProgressStatus);
                         }
                     });
                 }
+
+
+                Log.d(MainActivity.TAG, "if (expReached): ");
+
+                // have to run this on the main thread, not in the background
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        if (expReached) {
+                            showAlertDialogForExpSizeReached(expAfterSize);
+                        }
+                        else {
+                            expTextView.setText("" + (int) mProgressStatus);
+                        }
+                    }
+                });
+
             }
         }).start();
     }
@@ -165,51 +193,26 @@ public class Score extends AppCompatActivity {
     public void expSizeReached (long newExp) {
         //add more candies.. tell the user WOW..
         //show complete animation before new progress animation
+        Log.d(MainActivity.TAG, "expSizeReached: ");
+        showProgressAnimation(EXP_SIZE, true, newExp);
+    }
 
-        mProgressStatus = 0;
-        showProgressAnimation(newExp);
+    //make this function generic by passing it arguments (and move to INFRA)
+    public void showAlertDialogForExpSizeReached (final long newExp) {
+
+        Log.d(MainActivity.TAG, "showAlertDialogForExpSizeReached ");
+
+        AlertDialog alertDialog = new AlertDialog.Builder(Score.this).create();
+        alertDialog.setTitle("congratrs!!");
+        alertDialog.setMessage("you've reached the EXP SIZE");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        mProgressStatus = 0;
+                        showProgressAnimation(newExp, false, 0);
+                    }
+                });
+        alertDialog.show();
     }
 }
-
-
-
-/*
-
-
-
-
-
-public class MyActivity extends Activity {
-    private static final int PROGRESS = 0x1;
-
-    private ProgressBar mProgress;
-    private int mProgressStatus = 0;
-
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-
-        setContentView(R.layout.progressbar_activity);
-
-        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
-
-        Handler mHandler = new Handler();
-
-        // Start lengthy operation in a background thread
-        new Thread(new Runnable() {
-            public void run() {
-                while (mProgressStatus < 100) {
-                    mProgressStatus = doWork();
-
-                    // Update the progress bar
-                    mHandler.post(new Runnable() {
-                        public void run() {
-                            mProgress.setProgress(mProgressStatus);
-                        }
-                    });
-                }
-            }
-        }).start();
-    }
-}
-
-*/
