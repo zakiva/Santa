@@ -33,8 +33,12 @@ public class GeneratorHelper {
             q$ = (String) questionHashFromData.get("question" + i);
             q = q.replace("#" + i + "#", q$);
         }
-
-        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
+        boolean male = false;
+        if(questionHashFromData.get("male")!=null){
+            if (Integer.parseInt(questionHashFromData.get("male").toString())==1)
+                male = true;
+        }
+        TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3),male);
         return question;
     }
 
@@ -49,6 +53,7 @@ public class GeneratorHelper {
 
         String rightAnswer = chooseStringFromField(rightAnswerHash, answerKey);
         result.put("rightAnswer", rightAnswer);
+        result.put("male",rightAnswerHash.get("male"));
         ArrayList<String> answers = new ArrayList<>();
         answers.add(rightAnswer);
 
@@ -144,7 +149,7 @@ public class GeneratorHelper {
 
         int ARRAY_SIZE = number_of_questions * 2;
         //IMPORTANT: when adding new generators must update this number:
-        int NUMBER_OF_GENERATORS = 6;
+        int NUMBER_OF_GENERATORS = 41;
         List <Integer> numbers = new ArrayList<>();
         for(int i = 0; i < NUMBER_OF_GENERATORS; i++) {
             numbers.add(i);
@@ -157,12 +162,64 @@ public class GeneratorHelper {
             Log.d(MainActivity.TAG, "generateQuestionsArray:  i,  random number = " + i + "," + numbers.get(i % NUMBER_OF_GENERATORS));
             //add new generators down here AND update NUMBER_OF_GENERATORS above.
             switch (numbers.get(i % NUMBER_OF_GENERATORS))  {
-                case 0: array.add(generator.bandToAlbum()); break;
-                case 1: array.add(generator.bandToYear()); break;
-                case 2: array.add(generator.countryToCapital()); break;
-                case 3: array.add(generator.inventionToInventor()); break;
-                case 4: array.add(generator.plusSeq()); break;
-                case 5: array.add(generator.maleActorToCharacter()); break;
+
+                case 0: array.add(generator.israelBandToAlbum()); break;
+                case 1: array.add(generator.worldBandToAlbum()); break;
+                case 2: array.add(generator.israelBandToYear()); break;
+                case 3: array.add(generator.worldBandToYear()); break;
+                case 4: array.add(generator.israelBandToMembers()); break;
+                case 5: array.add(generator.worldBandToMembers()); break;
+
+                case 6: array.add(generator.inventionToInventor()); break;
+                case 7: array.add(generator.inventionToCountry()); break;
+                case 8: array.add(generator.inventionToYear()); break;
+                case 9: array.add(generator.yearToInvention()); break;
+
+                case 10: array.add(generator.bookToAuthor()); break;
+                case 11: array.add(generator.authorToCountry()); break;
+
+                case 12: array.add(generator.sonToFather()); break;
+
+                case 13: array.add(generator.quoteToPerson()); break;
+
+                case 14: array.add(generator.wifeToHusband()); break;
+                case 15: array.add(generator.husbandToWife()); break;
+
+                case 16: array.add(generator.teamToChampionships()); break;
+
+                case 17: array.add(generator.hostToYear()); break;
+                case 18: array.add(generator.winnerToYear()); break;
+
+                case 19: array.add(generator.leaderToYears()); break;
+                case 20: array.add(generator.yearsToLeader()); break;
+
+                case 21: array.add(generator.brandToYear()); break;
+                case 22: array.add(generator.founderToBrand()); break;
+                case 23: array.add(generator.countryToBrand()); break;
+
+                case 24: array.add(generator.capitalToCountry()); break;
+                case 25: array.add(generator.coinToCountry()); break;
+                case 26: array.add(generator.countryToCapital()); break;
+                case 27: array.add(generator.countryToContinent()); break;
+
+                case 28: array.add(generator.songToSinger()); break;
+
+                case 29: array.add(generator.defenseMinisterToEvent()); break;
+                case 30: array.add(generator.generalToEvent()); break;
+                case 31: array.add(generator.primeMinisterToEvent()); break;
+                case 32: array.add(generator.eventToYear()); break;
+                case 33: array.add(generator.yearToEvent()); break;
+
+                case 34: array.add(generator.albumToSinger()); break;
+                case 35: array.add(generator.bornToSinger()); break;
+                case 36: array.add(generator.countryToSinger()); break;
+
+                case 37: array.add(generator.femaleActorToCharacter()); break;
+                case 38: array.add(generator.characterToFemaleActor()); break;
+                case 39: array.add(generator.maleActorToCharacter()); break;
+                case 40: array.add(generator.characterToMaleActor()); break;
+
+
             }
         }
         Log.d(MainActivity.TAG, "generateQuestionsArray:  array.size = "+array.size());

@@ -12,11 +12,12 @@ public class TriviaQuestion {
     public String answerB;
     public String answerC;
     public String answerD;
+    public boolean male;
 
 
     public TriviaQuestion() {}
 
-    public TriviaQuestion(String key, String q, String ca, String a, String b, String c, String d) {
+    public TriviaQuestion(String key, String q, String ca, String a, String b, String c, String d,boolean m) {
         this.key = key;
         this.question = q;
         this.correctAnswer = ca;
@@ -24,6 +25,7 @@ public class TriviaQuestion {
         this.answerB = b;
         this.answerC = c;
         this.answerD = d;
+        this.male = m;
     }
 
     public String getAnswerC() {
@@ -80,5 +82,13 @@ public class TriviaQuestion {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public boolean getMale() {
+        return male;
+    }
+
+    public void setMale(boolean m) {
+        this.male = male;
     }
 }

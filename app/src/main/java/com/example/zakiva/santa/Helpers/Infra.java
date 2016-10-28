@@ -50,8 +50,8 @@ public class Infra {
     }
     */
 
-    public static void addTriviaQuestion (String key, String q, String ca, String a, String b, String c, String d) {
-        TriviaQuestion triviaQuestion = new TriviaQuestion(key, q, ca, a, b, c, d);
+    public static void addTriviaQuestion (String key, String q, String ca, String a, String b, String c, String d,boolean m) {
+        TriviaQuestion triviaQuestion = new TriviaQuestion(key, q, ca, a, b, c, d,m);
         myDatabase.child("triviaQuestions").child(key).setValue(triviaQuestion);
     }
 
