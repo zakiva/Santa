@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class DrawingGame extends AppCompatActivity {
     private MainDrawingView v;
     private int flashHelperLength;
     private ArrayList<Integer> images;
+    private RelativeLayout activityBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class DrawingGame extends AppCompatActivity {
         images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
         Collections.shuffle(images);
         randomImage = images.get(0);
+        activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
+        activityBackground.getBackground().setAlpha(0);
     }
 
     public void startGame () {
@@ -232,5 +236,9 @@ public class DrawingGame extends AppCompatActivity {
     }
 
     public void clueHelperButtonClicked(View view) {
+    }
+
+    public void changeBackgroundOpacity (int opacaity) {
+        activityBackground.getBackground().setAlpha(opacaity);
     }
 }
