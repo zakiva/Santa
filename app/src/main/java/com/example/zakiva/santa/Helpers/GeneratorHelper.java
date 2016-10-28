@@ -19,14 +19,14 @@ public class GeneratorHelper {
 
     public static final String TAG = ">>>>>>>Debug: ";
 
-    public static TriviaQuestion generateQuestionWithData (ArrayList<HashMap<String, Object>> data, String q, String questionKey, String answerKey) {
+    public static TriviaQuestion generateQuestionWithData(ArrayList<HashMap<String, Object>> data, String q, String questionKey, String answerKey) {
 
         Log.d(TAG, "generateQuestionWithData: " + q);
 
         HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(data, questionKey, answerKey);
         String q$ = (String) questionHashFromData.get("question");
         String right = (String) questionHashFromData.get("rightAnswer");
-        ArrayList <String> answers = (ArrayList<String>) questionHashFromData.get("answers");
+        ArrayList<String> answers = (ArrayList<String>) questionHashFromData.get("answers");
 
         q = q.replace("#$#", q$);
 
@@ -37,7 +37,7 @@ public class GeneratorHelper {
     public static HashMap<String, Object> buildQuestionHashFromData(ArrayList<HashMap<String, Object>> data, String questionKey, String answerKey) {
         HashMap<String, Object> result = new HashMap<>();
         Collections.shuffle(data);
-        HashMap<String, Object>  rightAnswerHash = data.get(0);
+        HashMap<String, Object> rightAnswerHash = data.get(0);
         result.put("question", (String) rightAnswerHash.get(questionKey));
         String rightAnswer = chooseStringFromField(rightAnswerHash, answerKey);
         result.put("rightAnswer", rightAnswer);
@@ -47,7 +47,7 @@ public class GeneratorHelper {
         int i = 1, k = 0;
 
         while (answers.size() < 4) {
-            HashMap<String, Object>  answerHash = data.get(i);
+            HashMap<String, Object> answerHash = data.get(i);
             String answer = chooseStringFromField(answerHash, answerKey);
 
             if (!(answers.contains(answer)))
@@ -65,7 +65,7 @@ public class GeneratorHelper {
         return result;
     }
 
-    public static String chooseStringFromField (HashMap<String, Object> hash, String key) {
+    public static String chooseStringFromField(HashMap<String, Object> hash, String key) {
 
         if (hash.get(key).getClass().equals(String.class))
             return (String) hash.get(key);
@@ -76,7 +76,7 @@ public class GeneratorHelper {
     }
 
 
-    public static void printSheet (String name, ArrayList<HashMap<String, Object>> sheet) {
+    public static void printSheet(String name, ArrayList<HashMap<String, Object>> sheet) {
         Log.d(TAG, "#####################SHEET NAME = " + name + "#####################");
         for (HashMap<String, Object> hash : sheet) {
             printHash(hash);
@@ -90,22 +90,45 @@ public class GeneratorHelper {
         }
         Log.d(TAG, line);
     }
-    public static ArrayList<String> getNumericAnswers(int n) {
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < 15; i++) {
-            int test = n - 10 + (int) (Math.random() * (n + 10));
-            if (test > 4)
+
+    public static ArrayList<String> getNumericAnswers(int n,int diff) {
+        ArrayList<String> list = new ArrayList<>();
+        int test = (n - diff) + (int) (Math.random() * (n + diff));
+        for (int i = 0; i < 10; i++) {
+            if (test==n) {
+                test = (n - diff) + (int) (Math.random() * (n + diff));
+            } else {
+                list.add(String.valueOf(test + diff));
+                list.add(String.valueOf(test - diff));
                 list.add(String.valueOf(test));
-
-            else
-                list.add(0, String.valueOf(test + 1));
-            list.add(1, String.valueOf(test + 2));
-            list.add(2, String.valueOf(test + 3));
+            }
         }
-
         Collections.shuffle(list);
-
         return list;
+    }
+    public static ArrayList<Integer> returnSidra(int range, String type) {
+        int a1 = (int) (Math.random() * range), diff = 1 + (int) (Math.random() * range), t = a1;
+        ArrayList<Integer> seq = new ArrayList<Integer>();
+        seq.add(a1);
+        while (seq.size() < 4) {
+            switch (type) {
+                case "plusSeq":
+                    t = t + diff;
+                    break;
+                case "plusPlusSeq":
+                    t = t + diff;
+                    diff--;
+                    break;
+                case "minusSeq":
+                    t = t - diff;
+                    break;
+                case "minusMinusSeq":
+                    t = t+diff;
+                    diff--;
+            }
+            seq.add(t);
+        }
+        return seq;
     }
 
     public static ArrayList<TriviaQuestion> generateQuestionsArray(int number_of_questions) {
@@ -130,7 +153,7 @@ public class GeneratorHelper {
                 case 1: array.add(generator.bandToYear()); break;
                 case 2: array.add(generator.countryToCapital()); break;
                 case 3: array.add(generator.inventionToInventor()); break;
-                case 4: array.add(generator.gene1()); break;
+                case 4: array.add(generator.plusSeq()); break;
 
             }
         }
