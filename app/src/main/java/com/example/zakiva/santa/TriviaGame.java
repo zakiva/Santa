@@ -27,6 +27,8 @@ public class TriviaGame extends AppCompatActivity {
     private static TextView answer3;
     private static TextView answer4;
     private Button freeze;
+    private Button fifty_fifty;
+    private Button skip_quest;
     private RelativeLayout layout;
     private static int NUMBER_OF_QUESTIONS;
     private static int wrongCount;
@@ -55,7 +57,8 @@ public class TriviaGame extends AppCompatActivity {
         clock = (Chronometer) findViewById(R.id.clock);
         layout = (RelativeLayout) findViewById(R.id.layout);
         freeze = (Button)findViewById(R.id.freeze);
-
+        fifty_fifty = (Button)findViewById(R.id.btn50);
+        skip_quest = (Button)findViewById(R.id.skipBtn);
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
@@ -68,10 +71,7 @@ public class TriviaGame extends AppCompatActivity {
 
     public void answerClicked(final View view) {
 
-        answer1.setClickable(false);
-        answer2.setClickable(false);
-        answer3.setClickable(false);
-        answer4.setClickable(false);
+        disableEnableViews(false);
         final TextView b = (TextView) view;
         String text = b.getText().toString();
         Log.d(MainActivity.TAG, "flash =" + index);
@@ -110,10 +110,7 @@ public class TriviaGame extends AppCompatActivity {
                         answer2.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
                         answer3.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
                         answer4.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                        answer1.setClickable(true);
-                        answer2.setClickable(true);
-                        answer3.setClickable(true);
-                        answer4.setClickable(true);
+                        disableEnableViews(true);
                         loadQuestionToScreen(questionsArray.get(index));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -244,5 +241,14 @@ public class TriviaGame extends AppCompatActivity {
         nextQuestion(1000);
         Log.d(MainActivity.TAG, "AVADA KADBRA!"+NUMBER_OF_QUESTIONS);
         view.setClickable(false);
+    }
+    public void disableEnableViews(boolean flag){
+        answer1.setClickable(flag);
+        answer2.setClickable(flag);
+        answer3.setClickable(flag);
+        answer4.setClickable(flag);
+        freeze.setClickable(flag);
+        fifty_fifty.setClickable(flag);
+        skip_quest.setClickable(flag);
     }
 }
