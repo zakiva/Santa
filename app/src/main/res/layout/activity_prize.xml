@@ -3,84 +3,194 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+    <ImageView
+        android:id="@+id/mainIconPrizeSection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/prize_section"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="בחר פרס"
-        android:layout_below="@+id/chronometer"
+        android:text="prize section"
+        android:layout_below="@+id/mainIconPrizeSection"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:textAllCaps="false"
+        android:layout_marginTop="15dp"
         android:textColor="@android:color/black"
-        android:textSize="25dp"
-        android:id="@+id/title" />
+        android:textSize="24dp"
+        android:id="@+id/mainTitle" />
 
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:textColor="@android:color/black"
-        android:text="פרס 1"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="choose a prize below"
+        android:layout_below="@+id/mainTitle"
+        android:layout_centerHorizontal="true"
         android:textAllCaps="false"
-        android:layout_marginRight="45dp"
-        android:layout_below="@id/title"
-        android:textSize="25dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="16dp"
+        android:id="@+id/secondaryTitle" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
         android:tag="a"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_toRightOf="@+id/prizesSeparator"
+        android:background="@drawable/rectangle"
         android:onClick="prizeClicked"
-        android:id="@+id/prizeA"
-        android:textAlignment="center" />
+        android:layout_marginTop="38dp"
+        android:layout_below="@id/secondaryTitle"
+        android:id="@+id/prizeA">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="a"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/culinary_disable"
+            android:onClick="prizeClicked"
+            android:id="@+id/prizeAIcon"/>
 
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:textColor="@android:color/black"
-        android:gravity="center"
-        android:layout_toLeftOf="@id/prizeA"
-        android:layout_marginRight="40dp"
-        android:text="פרס 2"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="a"
+            android:gravity="center"
+            android:text="Moses meal"
+            android:layout_marginTop="58dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#aaaaaa"
+            android:onClick="prizeClicked"
+            android:id="@+id/prizeALabel"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="15dp"
+        android:layout_height="90dp"
+        android:layout_below="@+id/secondaryTitle"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:layout_marginTop="38dp"
+        android:id="@+id/prizesSeparator" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
         android:tag="b"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/prizesSeparator"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/rectangle"
         android:onClick="prizeClicked"
-        android:layout_marginTop="40dp"
-        android:textAllCaps="false"
-        android:layout_below="@id/title"
-        android:textSize="25dp"
-        android:id="@+id/prizeB" />
+        android:layout_marginTop="38dp"
+        android:layout_below="@id/secondaryTitle"
+        android:id="@+id/prizeB">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="b"
+            android:text="Xbox One"
+            android:gravity="center"
+            android:layout_marginTop="58dp"
+            android:textColor="#aaaaaa"
+            android:layout_centerHorizontal="true"
+            android:onClick="prizeClicked"
+            android:id="@+id/prizeBLabel"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="b"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/gadget_disable"
+        android:onClick="prizeClicked"
+        android:id="@+id/prizeBIcon"/>
+
+
+    </RelativeLayout>
+
+
+
+
 
     <Button
-        android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
         android:text="Windis Prize"
+        android:background="@drawable/cta_rectangle"
         android:textAllCaps="false"
+        android:textColor="#ffffff"
         android:id="@+id/windisPrizeButton"
         android:onClick="windisPrizeClicked"
         android:layout_below="@id/prizeA"
-        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:text="see prize information"
-        android:textSize="20dp"
+        android:text="    see prize information    "
+        android:textSize="15dp"
+        android:textColor="#9254ff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/windisPrizeButton"
         android:onClick="seePrizeInformationClicked"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/prizeInformation" />
 
     <TextView
-        android:text="00:00:00"
-        android:textSize="25dp"
+        android:text="To End Of Competition"
+        android:textSize="15dp"
+        android:textColor="#303030"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:id="@+id/stopper" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/toEndLabel" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/toEndLabel"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/timeBox">
+
+        <TextView
+            android:text="00:00:00"
+            android:textSize="17dp"
+            android:textColor="#303030"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/countdownIcon"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stopper" />
+
+        <ImageView
+            android:id="@+id/countdownIcon"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_prize"
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>

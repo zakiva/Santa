@@ -1,7 +1,9 @@
 package com.example.zakiva.santa;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.CountDownTimer;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +25,17 @@ import java.util.Date;
 
 public class Prize extends AppCompatActivity {
 
-    private static Button prizeA;
-    private static Button prizeB;
+    private static RelativeLayout prizeA;
+    private static RelativeLayout prizeB;
+    private static ImageView prizeAIcon;
+    private static ImageView prizeBIcon;
+    private static TextView prizeALabel;
+    private static TextView prizeBLabel;
     public static String prizeChosen;
     private static TextView stopper;
     private static CountDownTimer timer;
     public static long milisecondsToEndOfCompetition;
+    private static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +60,41 @@ public class Prize extends AppCompatActivity {
     }
 
     public void initFields () {
-        prizeA = (Button) findViewById(R.id.prizeA);
-        prizeB = (Button) findViewById(R.id.prizeB);
+        activity = this;
+        prizeA = (RelativeLayout) findViewById(R.id.prizeA);
+        prizeB = (RelativeLayout) findViewById(R.id.prizeB);
+        prizeAIcon = (ImageView) findViewById(R.id.prizeAIcon);
+        prizeBIcon = (ImageView) findViewById(R.id.prizeBIcon);
+        prizeALabel = (TextView) findViewById(R.id.prizeALabel);
+        prizeBLabel = (TextView) findViewById(R.id.prizeBLabel);
         stopper = (TextView) findViewById(R.id.stopper);
     }
 
     public static void colorPrizes () {
         if (prizeChosen.equals("NONE")) {
-            prizeB.setBackgroundColor(Color.GRAY);
-            prizeA.setBackgroundColor(Color.GRAY);
+            prizeALabel.setTextColor(Color.parseColor("#aaaaaa"));
+            prizeBLabel.setTextColor(Color.parseColor("#aaaaaa"));
+            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.culinary_disable, null));
+            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.gadget_disable, null));
+            ((GradientDrawable) prizeA.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
+            ((GradientDrawable) prizeB.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
             return;
         }
         if (prizeChosen.equals("a")) {
-            prizeA.setBackgroundColor(Color.BLUE);
-            prizeB.setBackgroundColor(Color.GRAY);
+            prizeALabel.setTextColor(Color.parseColor("#9254ff"));
+            prizeBLabel.setTextColor(Color.parseColor("#aaaaaa"));
+            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.culinary_enable, null));
+            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.gadget_disable, null));
+            ((GradientDrawable) prizeA.getBackground()).setStroke(1, Color.parseColor("#9254ff"));
+            ((GradientDrawable) prizeB.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
         }
         else {
-            prizeB.setBackgroundColor(Color.BLUE);
-            prizeA.setBackgroundColor(Color.GRAY);
+            prizeALabel.setTextColor(Color.parseColor("#aaaaaa"));
+            prizeBLabel.setTextColor(Color.parseColor("#9254ff"));
+            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.culinary_disable, null));
+            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.gadget_enable, null));
+            ((GradientDrawable) prizeA.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
+            ((GradientDrawable) prizeB.getBackground()).setStroke(1, Color.parseColor("#9254ff"));
         }
     }
 
