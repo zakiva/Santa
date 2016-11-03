@@ -38,6 +38,7 @@ public class TriviaGame extends AppCompatActivity {
     private static long timeWhenStopped;
     private Chronometer clock;
     public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
+    private static HashMap<String,Boolean> enableHelpers,disableHelpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,12 @@ public class TriviaGame extends AppCompatActivity {
         questionsArray = getQuestArray();
         wrongCount = 0;
         index = 0;
+        enableHelpers = new HashMap<>();
+        disableHelpers = new HashMap<>();
+        initDisableEnable(disableHelpers,false,false,false);
+        initDisableEnable(enableHelpers,true,true,true);
+        Log.d(MainActivity.TAG, "enable = " + enableHelpers);
+        Log.d(MainActivity.TAG, "disable = " + disableHelpers);
         quest = ((TextView) findViewById(R.id.quest));
         answer1 = ((TextView) findViewById(R.id.answer1));
         answer2 = ((TextView) findViewById(R.id.answer2));
@@ -62,6 +69,7 @@ public class TriviaGame extends AppCompatActivity {
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
+
     }
 
     public static void addSheetToDataHash (String name, ArrayList<HashMap<String,Object>> data) {
@@ -71,7 +79,7 @@ public class TriviaGame extends AppCompatActivity {
 
     public void answerClicked(final View view) {
 
-        disableEnableViews(false);
+        disableEnableViews(false,disableHelpers);
         final TextView b = (TextView) view;
         String text = b.getText().toString();
         Log.d(MainActivity.TAG, "flash =" + index);
@@ -93,6 +101,7 @@ public class TriviaGame extends AppCompatActivity {
 
     
     public void nextQuestion(int delay) {
+        Log.d(MainActivity.TAG, "enable = " + enableHelpers);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -110,7 +119,7 @@ public class TriviaGame extends AppCompatActivity {
                         answer2.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
                         answer3.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
                         answer4.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                        disableEnableViews(true);
+                        disableEnableViews(true,enableHelpers);
                         loadQuestionToScreen(questionsArray.get(index));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -216,13 +225,15 @@ public class TriviaGame extends AppCompatActivity {
         for (TextView v : a) {
             v.setVisibility(View.INVISIBLE);
         }
-        //view.setClickable(false);
-        }
+        enableHelpers.put("fifty",false);
+        disableEnableViews(true,enableHelpers);
+    }
 
     public void freezeGame(View view) {
+        enableHelpers.put("freeze",false);
+        disableEnableViews(true,enableHelpers);
         timeWhenStopped = clock.getBase() - SystemClock.elapsedRealtime();
         clock.stop();
-        freeze.setClickable(false);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -236,19 +247,26 @@ public class TriviaGame extends AppCompatActivity {
     }
 
     public void skipQuest(View view) {
+        enableHelpers.put("skip",false);
+        disableEnableViews(false,disableHelpers);
         index++;
         NUMBER_OF_QUESTIONS++;
         nextQuestion(1000);
         Log.d(MainActivity.TAG, "AVADA KADBRA!"+NUMBER_OF_QUESTIONS);
-        view.setClickable(false);
     }
-    public void disableEnableViews(boolean flag){
+
+    public void disableEnableViews(boolean flag, HashMap<String,Boolean> helpers){
         answer1.setClickable(flag);
         answer2.setClickable(flag);
         answer3.setClickable(flag);
         answer4.setClickable(flag);
-        freeze.setClickable(flag);
-        fifty_fifty.setClickable(flag);
-        skip_quest.setClickable(flag);
+        freeze.setClickable(helpers.get("freeze"));
+        fifty_fifty.setClickable(helpers.get("fifty"));
+        skip_quest.setClickable(helpers.get("skip"));
+    }
+    public void initDisableEnable(HashMap helpers,boolean fifty,boolean skip, boolean freeze) {
+        helpers.put("fifty",fifty);
+        helpers.put("skip",skip);
+        helpers.put("freeze",freeze);
     }
 }
