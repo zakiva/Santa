@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.Infra;
+import com.vungle.publisher.VunglePub;
 
 public class Score extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class Score extends AppCompatActivity {
     long EXP_SIZE = 2000;
     Activity activity;
 
+    final VunglePub vunglePub = VunglePub.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,18 @@ public class Score extends AppCompatActivity {
         displayScore();
         displayCandies();
         calcAndDisplayExp();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        vunglePub.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vunglePub.onResume();
     }
 
     @Override
@@ -113,8 +127,15 @@ public class Score extends AppCompatActivity {
         startActivity(new Intent(Score.this, Prize.class));
     }
 
-
-
+    public void videoAdButtonClicked(View view) {
+        if (vunglePub.isAdPlayable()) {
+            vunglePub.playAd();
+        }
+        else {
+            // Ad is not ready
+            Log.d("Oops: ", "Can't load video!");
+        }
+    }
 
     public void calcAndDisplayExp () {
         long exp = MainActivity.exp;
