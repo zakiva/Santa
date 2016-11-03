@@ -19,26 +19,34 @@ public class GeneratorHelper {
 
     public static final String TAG = ">>>>>>>Debug: ";
 
-    public static TriviaQuestion generateQuestionWithData(ArrayList<HashMap<String, Object>> data, String q, String questionKey, String answerKey) {
+    public static TriviaQuestion generateQuestionWithData(ArrayList<HashMap<String, Object>> data, String q, String [] questionKeys, String answerKey) {
 
         Log.d(TAG, "generateQuestionWithData: " + q);
 
-        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(data, questionKey, answerKey);
-        String q$ = (String) questionHashFromData.get("question");
+        HashMap<String, Object> questionHashFromData = GeneratorHelper.buildQuestionHashFromData(data, questionKeys, answerKey);
         String right = (String) questionHashFromData.get("rightAnswer");
         ArrayList<String> answers = (ArrayList<String>) questionHashFromData.get("answers");
 
-        q = q.replace("#$#", q$);
+        String q$;
+
+        for (int i = 0; i < questionKeys.length; i++) {
+            q$ = (String) questionHashFromData.get("question" + i);
+            q = q.replace("#" + i + "#", q$);
+        }
 
         TriviaQuestion question = new TriviaQuestion("someKey", q, right, answers.get(0), answers.get(1), answers.get(2), answers.get(3));
         return question;
     }
 
-    public static HashMap<String, Object> buildQuestionHashFromData(ArrayList<HashMap<String, Object>> data, String questionKey, String answerKey) {
+    public static HashMap<String, Object> buildQuestionHashFromData(ArrayList<HashMap<String, Object>> data, String [] questionKeys, String answerKey) {
         HashMap<String, Object> result = new HashMap<>();
         Collections.shuffle(data);
         HashMap<String, Object> rightAnswerHash = data.get(0);
-        result.put("question", (String) rightAnswerHash.get(questionKey));
+
+        for (int i = 0; i < questionKeys.length; i++) {
+            result.put("question" + i, (String) rightAnswerHash.get(questionKeys[i]));
+        }
+
         String rightAnswer = chooseStringFromField(rightAnswerHash, answerKey);
         result.put("rightAnswer", rightAnswer);
         ArrayList<String> answers = new ArrayList<>();
@@ -136,7 +144,7 @@ public class GeneratorHelper {
 
         int ARRAY_SIZE = number_of_questions * 2;
         //IMPORTANT: when adding new generators must update this number:
-        int NUMBER_OF_GENERATORS = 5;
+        int NUMBER_OF_GENERATORS = 6;
         List <Integer> numbers = new ArrayList<>();
         for(int i = 0; i < NUMBER_OF_GENERATORS; i++) {
             numbers.add(i);
@@ -154,7 +162,7 @@ public class GeneratorHelper {
                 case 2: array.add(generator.countryToCapital()); break;
                 case 3: array.add(generator.inventionToInventor()); break;
                 case 4: array.add(generator.plusSeq()); break;
-
+                case 5: array.add(generator.maleActorToCharacter()); break;
             }
         }
         Log.d(MainActivity.TAG, "generateQuestionsArray:  array.size = "+array.size());

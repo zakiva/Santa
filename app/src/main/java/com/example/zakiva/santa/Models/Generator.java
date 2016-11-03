@@ -64,20 +64,29 @@ public class Generator {
         return new TriviaQuestion("33", "בסדרה זו מה המספר הבא "+sidra+" ?", s,getNumericAnswers(n,5).get(0), getNumericAnswers(n,5).get(1),s, getNumericAnswers(n,5).get(2));
     }
     public TriviaQuestion bandToAlbum () {
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelBands"), "איזה מהאלבומים הבאים שייך ללהקת #$#?","name", "albums");
+        String [] q = {"name"};
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelBands"), "איזה מהאלבומים הבאים שייך ללהקת #0#?", q, "albums");
     }
 
     public TriviaQuestion bandToYear () {
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldBands"), "באיזו שנה הוקמה להקת #$#?","name", "year");
+        String [] q = {"name"};
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldBands"), "באיזו שנה הוקמה להקת #0#?", q, "year");
     }
 
     public TriviaQuestion countryToCapital () {
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("countries"), "מהי עיר הבירה של #$#?","name", "capital");
+        String [] q = {"name"};
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("countries"), "מהי עיר הבירה של #0#?", q, "capital");
     }
 
 
     public TriviaQuestion inventionToInventor() {
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "מי המציא את #$#?", "name", "inventor");
+        String [] q = {"name"};
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "מי המציא את #0#?", q, "inventor");
+    }
+
+    public TriviaQuestion maleActorToCharacter() {
+        String [] q = {"actor", "type", "name"};
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("maleActors"), "איזו דמות גילם #0# ב#1# #2#?", q, "character");
     }
 
 
