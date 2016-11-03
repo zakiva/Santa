@@ -74,6 +74,16 @@
         android:onClick="homeScreenButtonClicked"
         android:id="@+id/homeScreen" />
 
+    <Button
+        android:text="Play ad"
+        android:layout_width="wrap_content"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="videoAdButtonClicked"
+        android:layout_toLeftOf="@+id/homeScreen"
+        android:id="@+id/videoAd" />
+
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"

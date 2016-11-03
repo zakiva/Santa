@@ -8,6 +8,8 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.zakiva.santa.Helpers.VungleAds;
+import com.vungle.publisher.VunglePub;
 
 import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
@@ -18,6 +20,7 @@ public class Loader extends AppCompatActivity {
     public static final String TAG = ">>>>>>>Debug: ";
     private static int counter = 0;
     public static Loader loader;
+    final VunglePub vunglePub = VunglePub.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +28,16 @@ public class Loader extends AppCompatActivity {
         setContentView(R.layout.activity_loader);
         loader = this;
 
+        // Initiate Vungle
+        VungleAds vungleAds = new VungleAds();
+        vungleAds.vungleInit(Loader.this);
+
         ImageView imageView = (ImageView) findViewById(R.id.loader_gif);
         Glide.with(this).load(R.drawable.loading_dots).crossFade().into(imageView);
 
         Log.d(TAG, " oncreatre ");
 
         Log.d(TAG, " this = null  " + this == null ? "yes" : "no");
-
-
 
         //set the real user email instead
         ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail1");
@@ -44,8 +49,25 @@ public class Loader extends AppCompatActivity {
         getTriviaDataFromFirebase();
 
         Log.d(TAG, " finish oncreatre ");
-
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        vunglePub.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vunglePub.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        vunglePub.clearEventListeners();
+    };
 
     public static void increase () {
         counter++;
