@@ -48,8 +48,8 @@ dependencies {
     //compile 'com.fyber.mediation:vungle:4.0.2-r2@aar'
     //compile 'com.google.dagger:dagger:2.7'
     //compile 'javax.inject:javax.inject:1'
-
-
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:24.0.+"
     testCompile 'junit:junit:4.12'
 }
 

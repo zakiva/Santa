@@ -1,15 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffff"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="1dp"
+        android:background="#fff"
+        app:title=" "
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:background="@drawable/indecator_enable"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:id="@+id/hallOfFameButton"
+                android:layout_marginRight="25dp"
+                android:layout_toLeftOf="@+id/settingsButton"
+                android:onClick="hallOfFameClicked"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/survey"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:id="@+id/settingsButton"
+                android:onClick="settingsClicked"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_shadow"/>
+
 
     <ImageView
         android:id="@+id/mainIconPrizeSection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/prize_section"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="35dp"
+        android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
         />
 
