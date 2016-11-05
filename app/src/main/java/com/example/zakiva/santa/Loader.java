@@ -8,8 +8,8 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.zakiva.santa.Helpers.VungleAds;
-import com.vungle.publisher.VunglePub;
+//import com.example.zakiva.santa.Helpers.VungleAds;
+//import com.vungle.publisher.VunglePub;
 
 import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
@@ -20,7 +20,7 @@ public class Loader extends AppCompatActivity {
     public static final String TAG = ">>>>>>>Debug: ";
     private static int counter = 0;
     public static Loader loader;
-    final VunglePub vunglePub = VunglePub.getInstance();
+    //final VunglePub vunglePub = VunglePub.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class Loader extends AppCompatActivity {
         loader = this;
 
         // Initiate Vungle
-        VungleAds vungleAds = new VungleAds();
-        vungleAds.vungleInit(Loader.this);
+        //VungleAds vungleAds = new VungleAds();
+        //vungleAds.vungleInit(Loader.this);
 
         ImageView imageView = (ImageView) findViewById(R.id.loader_gif);
         Glide.with(this).load(R.drawable.loading_dots).crossFade().into(imageView);
@@ -51,7 +51,7 @@ public class Loader extends AppCompatActivity {
         Log.d(TAG, " finish oncreatre ");
     }
 
-    @Override
+/*    @Override
     protected void onPause() {
         super.onPause();
         vunglePub.onPause();
@@ -67,7 +67,7 @@ public class Loader extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         vunglePub.clearEventListeners();
-    };
+    };*/
 
     public static void increase () {
         counter++;
