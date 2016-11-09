@@ -38,11 +38,11 @@ public class TriviaTester {
                     int n = new Random().nextInt(3);
 
                     if (n == 0)
-                        Trivia.loadQuestionToScreen(generator.bandToAlbum());
+                        Trivia.loadQuestionToScreen(generator.israelBandToAlbum());
                     else if (n == 1)
                         Trivia.loadQuestionToScreen(generator.countryToCapital());
                     else
-                        Trivia.loadQuestionToScreen(generator.bandToYear());
+                        Trivia.loadQuestionToScreen(generator.worldBandToAlbum());
                 }
             }, 9000);
         }

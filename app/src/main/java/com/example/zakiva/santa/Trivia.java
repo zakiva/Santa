@@ -47,7 +47,7 @@ public class Trivia extends AppCompatActivity {
         stopper = (Chronometer) findViewById(R.id.chronometer);
 
         //small test
-        addTriviaQuestion("1", "כמה פעמים זכתה ברזיל במונדיאל?", "5", "4", "5", "6", "7");
+        addTriviaQuestion("1", "כמה פעמים זכתה ברזיל במונדיאל?", "5", "4", "5", "6", "7",true);
         displayTriviaQuestion("1");
     }
 
@@ -79,7 +79,7 @@ public class Trivia extends AppCompatActivity {
 
         Generator generator = new Generator ();
 
-        loadQuestionToScreen(generator.inventionToInventor());
+        loadQuestionToScreen(generator.maleActorToCharacter());
         /*
 
         int n = new Random().nextInt(3);
