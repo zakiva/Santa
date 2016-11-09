@@ -238,4 +238,7 @@ public class Score extends AppCompatActivity {
                 });
         alertDialog.show();
     }
+
+    public void shareScoreButtonClicked(View view) {
+    }
 }

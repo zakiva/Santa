@@ -2,102 +2,358 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#ffff"
     android:layout_height="match_parent"
-    android:background="@color/com_facebook_blue"
     >
 
-    <TextView
-        android:text="99999 candies"
-        android:textSize="15dp"
-        android:layout_below="@+id/expBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+    <RelativeLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="1dp"
+            app:title=" "
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SHARE SCORE"
+                    android:textColor="#9254ff"
+                    android:textSize="16dp"
+                    android:onClick="shareScoreButtonClicked"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"/>
+
+                <Button
+                    android:text="Home (remove?)"
+                    android:layout_width="wrap_content"
+                    android:textAllCaps="false"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="wrap_content"
+                    android:onClick="homeScreenButtonClicked"
+                    android:id="@+id/homeScreen" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <View android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="3dp"
+            android:background="@drawable/toolbar_shadow"/>
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/mainIconScoreSection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/candies" />
+        android:background="@drawable/score_section"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/toolbarLayout"/>
+
+    <TextView
+        android:text="your score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/mainIconScoreSection"
+        android:visibility="visible"
+        android:textSize="13dp"
+        android:textColor="#303030"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scoreTitle" />
 
     <TextView
         android:text="score"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-        android:visibility="gone"
-        android:textSize="30dp"
+        android:layout_below="@+id/scoreTitle"
+        android:visibility="visible"
+        android:textSize="36dp"
+        android:layout_marginTop="-5dp"
+        android:textStyle="bold"
+        android:textColor="#303030"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/score" />
 
-    <TextView
-        android:text="exp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:visibility="visible"
-        android:textSize="15dp"
-        android:layout_marginRight="7dp"
-        android:layout_toLeftOf="@+id/expBar"
-        android:layout_below="@+id/score"
+    <RelativeLayout
+        android:id="@+id/messageRectangle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/exp" />
+        android:background="@drawable/rectangle_score_message"
+        android:layout_below="@id/score"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:text="2000 Exp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:visibility="visible"
-        android:textSize="15dp"
-        android:layout_marginLeft="7dp"
-        android:layout_toRightOf="@+id/expBar"
-        android:layout_below="@+id/score"
+        <TextView
+            android:id="@+id/messageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You are in the top 100 wowhoh motherfuckerr!! congraitonsmannn"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="#9254ff"
+            >
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/expBarBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/messageRectangle"
+        >
+
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_toRightOf="@+id/exp"
+            android:layout_toLeftOf="@+id/maxValueLabel"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:progressDrawable="@drawable/custom_progressbar"
+            android:minHeight="10dp"
+            android:maxHeight="10dp"
+            android:max="2000"
+            android:id="@+id/expBar" />
+
+        <TextView
+            android:text="exp"
+            android:layout_alignParentLeft="true"
+            android:visibility="visible"
+            android:textSize="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="#aaaaaa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exp" />
+
+        <TextView
+            android:text="2000 Exp"
+            android:visibility="visible"
+            android:textSize="15dp"
+            android:textColor="#aaaaaa"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/maxValueLabel" />
+    </RelativeLayout>
+
+
+   <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/maxValueLabel" />
+        android:layout_below="@+id/expBarBox"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/candiesBox">
+
+        <ImageView
+            android:id="@+id/candiesScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/candis_score"
+            />
+
+        <TextView
+            android:text="99999 candies"
+            android:textSize="15dp"
+            android:textColor="#303030"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/candiesScore"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/candies" />
+
+    </RelativeLayout>
 
     <Button
         android:text="Play! (100 candies)"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:textAllCaps="false"
-        android:layout_height="wrap_content"
+        android:background="@drawable/cta_rectangle"
         android:onClick="playButtonClicked"
-        android:layout_below="@+id/candies"
+        android:layout_below="@+id/candiesBox"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/playButton" />
 
-    <Button
-        android:text="Home"
-        android:layout_width="wrap_content"
-        android:textAllCaps="false"
-        android:layout_alignParentRight="true"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="homeScreenButtonClicked"
-        android:id="@+id/homeScreen" />
-
-    <Button
-        android:text="Play ad"
-        android:layout_width="wrap_content"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="videoAdButtonClicked"
-        android:layout_toLeftOf="@+id/homeScreen"
-        android:id="@+id/videoAd" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
+    <TextView
+        android:id="@+id/getExtraCandiesLabel"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:progressDrawable="@drawable/custom_progressbar"
-        android:layout_below="@+id/score"
-        android:minHeight="10dp"
-        android:maxHeight="10dp"
-        android:max="2000"
-        android:minWidth="150dp"
-        android:maxWidth="150dp"
+        android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/expBar" />
+        android:layout_below="@id/playButton"
+        android:text="Invite friends and watch videos to get more candis!"
+        android:textSize="15dp"
+        android:textColor="#303030"
+        android:layout_marginTop="30dp"/>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:id="@+id/getExtraCandiesBox"
+        android:layout_below="@+id/getExtraCandiesLabel">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/inviteBox"
+            android:layout_height="wrap_content">
+
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/inviteCircle"
+                android:onClick="inviteFriendClicked"
+                android:background="@drawable/circle_extra_candies">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginBottom="19dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="19dp"
+                    android:background="@drawable/invite_friend"
+                    android:onClick="inviteFriendClicked"
+                    android:id="@+id/inviteFriend" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/smallCandiesBoxInvite"
+                android:layout_below="@+id/inviteCircle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/smallExtraCandiesIconInvite"
+                    android:background="@drawable/candis_help"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+100"
+                    android:layout_toRightOf="@id/smallExtraCandiesIconInvite"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#303030"
+                    android:textSize="12dp"/>
+
+            </RelativeLayout>
+
+
+       </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/inviteBox"
+            android:layout_marginLeft="30dp"
+            android:id="@+id/videoBox">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/videoCircle"
+                android:onClick="videoAdButtonClicked"
+                android:background="@drawable/circle_extra_candies">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginBottom="23dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/video"
+                    android:onClick="videoAdButtonClicked"
+                    android:id="@+id/videoAd" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/smallCandiesBoxVideo"
+                android:layout_below="@+id/videoCircle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/smallExtraCandiesIconVideo"
+                    android:background="@drawable/candis_help"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+100"
+                    android:layout_toRightOf="@id/smallExtraCandiesIconVideo"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#303030"
+                    android:textSize="12dp"/>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
