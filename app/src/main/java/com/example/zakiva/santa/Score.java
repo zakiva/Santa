@@ -5,15 +5,21 @@ import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.provider.SyncStateContract;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Helpers.Infra;
 //import com.vungle.publisher.VunglePub;
 
@@ -30,6 +36,11 @@ public class Score extends AppCompatActivity {
     double mProgressStatus = 0;
     long EXP_SIZE = 2000;
     Activity activity;
+    ImageView mainIcon;
+    TextView scoreTitle;
+    RelativeLayout messageBox;
+    Button playButton;
+    TextView shareScore;
 
     //final VunglePub vunglePub = VunglePub.getInstance();
 
@@ -38,11 +49,55 @@ public class Score extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
         initFields();
+        displayScreenAccordingToScore();
         if (score != -1)
             Infra.addGameToUser(gameType, score);
-        displayScore();
         displayCandies();
         calcAndDisplayExp();
+    }
+
+    public void displayScreenAccordingToScore () {
+        if (score != -1) {
+            //set main icon to score section
+            mainIcon.setBackground(ResourcesCompat.getDrawable(this.getResources(), R.drawable.score_section, null));
+
+            //show score labels
+            scoreTextView.setText("Your score is: " + score);
+            scoreTextView.setVisibility(View.VISIBLE);
+            scoreTitle.setVisibility(View.VISIBLE);
+
+            //set message box below score
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            p.setMargins((int) Drawing.convertDpToPixel(15, this), (int) Drawing.convertDpToPixel(20, this), (int) Drawing.convertDpToPixel(15, this), (int) Drawing.convertDpToPixel(0, this));
+            p.addRule(RelativeLayout.BELOW, R.id.score);
+            messageBox.setLayoutParams(p);
+
+            //set text of CTA to retry
+            playButton.setText("Retry! (100 candis)");
+
+            //show share score
+            shareScore.setVisibility(View.VISIBLE);
+        }
+        else {
+
+            //don't show score labels
+            scoreTextView.setVisibility(View.GONE);
+            scoreTitle.setVisibility(View.GONE);
+
+            //set main icon according to game type
+            switch (gameType) {
+                case "trivia":
+                    mainIcon.setBackground(ResourcesCompat.getDrawable(this.getResources(), R.drawable.trivia_section, null));
+                    break;
+                case "drawing":
+                    mainIcon.setBackground(ResourcesCompat.getDrawable(this.getResources(), R.drawable.drawdis_section, null));
+                    break;
+                default:
+                    return;
+            }
+        }
+
     }
 
 /*    @Override
@@ -76,25 +131,19 @@ public class Score extends AppCompatActivity {
         candiesTextView = ((TextView) findViewById(R.id.candies));
         expTextView = ((TextView) findViewById(R.id.exp));
         expBar = ((ProgressBar) findViewById(R.id.expBar));
+        mainIcon = ((ImageView) findViewById(R.id.mainIconScoreSection));;
+        scoreTitle = ((TextView) findViewById(R.id.scoreTitle));;
         score = extras.getLong("score");
         gameType = extras.getString("game");
+        messageBox = ((RelativeLayout) findViewById(R.id.messageRectangle));
+        playButton = ((Button) findViewById(R.id.playButton));
+        shareScore = ((TextView) findViewById(R.id.shareScoreOnBar));
     }
 
     public void displayCandies () {
         candiesTextView.setText(MainActivity.candies + " candies");
     }
 
-    public void displayScore () {
-        if (extras != null) {
-            if (score != -1) {
-                ((TextView) findViewById(R.id.score)).setText("Your score is: " + score);
-                 scoreTextView.setVisibility(View.VISIBLE);
-            }
-            else {
-                scoreTextView.setVisibility(View.GONE);
-            }
-        }
-    }
 
     public void playButtonClicked(View v) {
         if (extras == null)
