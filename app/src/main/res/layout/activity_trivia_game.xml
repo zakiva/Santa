@@ -24,27 +24,26 @@
     <RelativeLayout
         android:id="@+id/timeLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_below="@+id/topLine"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true">
 
 
         <Chronometer
             android:id="@+id/clock"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_toRightOf="@+id/PicTime"
-            android:text="Chronometer"
             android:layout_marginLeft="5dp"
-            android:textColor="#4169E1"
-            android:textSize="20dp" />
+            android:textColor="#aaaaaa"
+            android:textSize="20sp" />
 
 
         <ImageView
             android:id="@+id/PicTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             app:srcCompat="@drawable/time_trivia" />
 
     </RelativeLayout>
@@ -52,22 +51,25 @@
 
     <TextView
         android:id="@+id/quest"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/timeLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:textAlignment="center"
-        android:text="Who directed Pulp Fiction?"
+        android:gravity="center"
+        android:text="XXX XXX XXX XXX XXX XXX XXX?"
         android:textAllCaps="false"
         android:textColor="#303030"
-        android:textSize="30sp" />
+        android:textSize="27sp" />
 
     <View android:id="@+id/primerdivisor1"
         android:layout_height="1dp"
         android:layout_width="fill_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_below="@id/quest"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
         android:background="#dddddd" />
 
     <TextView
@@ -75,12 +77,12 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_below="@id/primerdivisor1"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:gravity="center"
         android:onClick="answerClicked"
         android:tag="a"
-        android:text="Quentin Tarantino"
+        android:text="XXX XXX"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -91,7 +93,9 @@
         android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:layout_below="@id/answer1"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="#dddddd" />
 
     <TextView
@@ -99,12 +103,13 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_below="@+id/primerdivisor2"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:onClick="answerClicked"
         android:tag="b"
         android:textAlignment="center"
-        android:text="Christopher Nolan"
+        android:gravity="center"
+        android:text="XXXX XXXXX"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:textColor="#9254ff"
@@ -114,7 +119,9 @@
         android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:layout_below="@id/answer2"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="#dddddd" />
 
     <TextView
@@ -122,12 +129,13 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_below="@+id/primerdivisor3"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:onClick="answerClicked"
         android:tag="c"
         android:textAlignment="center"
-        android:text="Martin Scorsese"
+        android:gravity="center"
+        android:text="XXXXX XXXXXX"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:textColor="#9254ff"
@@ -137,7 +145,9 @@
         android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:layout_below="@id/answer3"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="#dddddd" />
 
 
@@ -146,60 +156,35 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_below="@id/primerdivisor4"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:onClick="answerClicked"
         android:tag="d"
-        android:text="Micha Becker"
-        android:textStyle="bold"
+        android:text="XXX XXXXXXXX"
+        android:gravity="center"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#9254ff"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <View android:id="@+id/primerdivisor5"
-        android:layout_height="1dp"
+    <View
+        android:id="@+id/primerdivisor5"
         android:layout_width="fill_parent"
+        android:layout_height="1dp"
         android:layout_below="@id/answer4"
-        android:layout_marginTop="17dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
         android:background="#dddddd" />
-
-    <Button
-        android:id="@+id/skipBtn"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:onClick="skipQuest"
-        android:text="skip question"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="Freeze"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:onClick="freezeGame"
-        android:id="@+id/freeze"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/btn50"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:onClick="fiftyFifty"
-        android:text="50-50"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <RelativeLayout
         android:id="@+id/candyBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/primerdivisor5"
         android:layout_marginLeft="14dp"
-        android:layout_below="@+id/primerdivisor5">
+        android:layout_marginTop="33dp">
 
         <ImageView
             android:id="@+id/candy"
@@ -209,15 +194,149 @@
             app:srcCompat="@drawable/candis_game" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/text700"
             android:layout_width="45dp"
-            android:layout_height="27dp"
+            android:layout_height="15dp"
             android:layout_toRightOf="@id/candy"
-            android:text="700 Candies"
+            android:gravity="center"
+            android:text="700"
+            android:textColor="#030330"
             android:textSize="12sp"
-            android:textColor="#030330"/>
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/candiesText"
+            android:layout_width="45dp"
+            android:layout_height="15dp"
+            android:layout_below="@id/text700"
+            android:layout_toRightOf="@id/candy"
+            android:gravity="center"
+            android:text="Candies"
+            android:textColor="#030330"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
 
+        <RelativeLayout
+            android:id="@+id/bottomBox"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rectangle_trivia">
+
+
+            <Button
+                android:id="@+id/skipBtn"
+                android:layout_width="36dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="55dp"
+                android:background="@drawable/next_enable"
+                android:onClick="skipQuest" />
+
+            <Button
+                android:id="@+id/freeze"
+                android:layout_width="33dp"
+                android:layout_height="21dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/extra_time_enable"
+                android:onClick="freezeGame" />
+
+            <Button
+                android:id="@+id/btn50"
+                android:layout_width="33dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="55dp"
+                android:background="@drawable/split_enable"
+                android:onClick="fiftyFifty" />
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/circlesBox"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+    >
+
+        <RelativeLayout
+            android:id="@+id/circle1"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_toLeftOf="@id/circle2"
+            android:gravity="center"
+            android:background="@drawable/circle_trivia">
+
+            <ImageView
+                android:id="@+id/ch1"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/candis_help" />
+
+            <TextView
+                android:layout_width="21dp"
+                android:layout_height="13dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ch1"
+                android:text="100"
+                android:textColor="#303030"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/circle2"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="70dp"
+            android:gravity="center"
+            android:background="@drawable/circle_trivia">
+
+            <ImageView
+                android:id="@+id/ch2"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/candis_help" />
+
+            <TextView
+                android:layout_width="21dp"
+                android:layout_height="13dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ch2"
+                android:text="100"
+                android:textColor="#303030"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/circle3"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/circle2"
+            android:background="@drawable/circle_trivia"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ch"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/candis_help" />
+
+            <TextView
+                android:layout_width="21dp"
+                android:layout_height="13dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ch"
+                android:text="100"
+                android:textColor="#303030"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>
