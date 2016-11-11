@@ -25,7 +25,7 @@
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:background="@drawable/indecator_enable"
+                    android:background="@drawable/ic_ac_nav_hall_of_fame"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:id="@+id/hallOfFameButton"
@@ -36,7 +36,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/survey"
+                    android:background="@drawable/ic_ac_nav_more"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"

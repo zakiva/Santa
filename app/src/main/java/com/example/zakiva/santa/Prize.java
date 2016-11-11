@@ -184,5 +184,6 @@ public class Prize extends AppCompatActivity {
     }
 
     public void hallOfFameClicked(View view) {
+        startActivity(new Intent(Prize.this, HallOfFame.class));
     }
 }

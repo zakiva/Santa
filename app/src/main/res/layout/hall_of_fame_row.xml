@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="#ffff"
+android:id="@+id/full_row_hall_of_fame"
+android:clickable="true">
+
+    <View android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_height="1dp"
+        android:id="@+id/topLine"
+        android:background="@drawable/toolbar_shadow"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textSize="17sp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/name"
+        android:textColor="#9254ff"
+        android:textStyle="bold"
+        android:layout_below="@+id/topLine"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="won PS4"
+        android:textSize="15sp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/prize"
+        android:textColor="#303030"
+        android:textStyle="bold"
+        android:layout_below="@+id/name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="'I can't believe lorem ipsum...'"
+        android:textSize="15sp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/response"
+        android:textColor="#303030"
+        android:layout_below="@+id/prize"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="May 30"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/date"
+        android:layout_marginBottom="15dp"
+        android:textColor="#aaaaaa"
+        android:layout_below="@+id/response"/>
+
+</RelativeLayout>

@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#ffff"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="1dp"
+            app:title=" "
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+      </android.support.v7.widget.Toolbar>
+
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="backToPrizeClicked"
+            android:background="@drawable/ic_ac_nav_back"
+            android:id="@+id/homeScreen" />
+
+
+        <View android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="2dp"
+            android:background="@drawable/toolbar_shadow"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/hallOfFameHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/hall_of_fame_header"
+        android:layout_below="@+id/toolbarLayout">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hall Of Fame"
+            android:layout_centerHorizontal="true"
+            android:textSize="24sp"
+            android:textColor="#303030"
+            android:layout_marginTop="118dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum the winners "
+            android:layout_centerHorizontal="true"
+            android:textSize="15sp"
+            android:textColor="#303030"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="10dp"/>
+
+    </RelativeLayout>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/hallOfFameHeader"
+        android:id="@+id/lineBelowHeader"
+        android:background="@drawable/toolbar_shadow"/>
+
+
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/winnersList"
+        android:layout_below="@+id/lineBelowHeader" />
+    
+
+</RelativeLayout>
+
