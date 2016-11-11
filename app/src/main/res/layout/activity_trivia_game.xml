@@ -1,131 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/layout"
+    android:background="#ffff"
     tools:context="com.example.zakiva.santa.TriviaGame">
 
-    <Chronometer
-        android:id="@+id/clock"
-        android:textColor="#4169E1"
-        android:textSize="20dp"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:title=""
+        android:minHeight="1dp" />
+
+    <View
+        android:id="@+id/topLine"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_shadow"/>
+
+    <RelativeLayout
+        android:id="@+id/timeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Chronometer" />
+        android:layout_below="@+id/topLine"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true">
+
+
+        <Chronometer
+            android:id="@+id/clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/PicTime"
+            android:text="Chronometer"
+            android:layout_marginLeft="5dp"
+            android:textColor="#4169E1"
+            android:textSize="20dp" />
+
+
+        <ImageView
+            android:id="@+id/PicTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/time_trivia" />
+
+    </RelativeLayout>
+
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chronometer"
+        android:id="@+id/quest"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/timeLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:text="Who directed Pulp Fiction?"
         android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="25dp"
-        android:id="@+id/quest" />
+        android:textColor="#303030"
+        android:textSize="30sp" />
 
-    <TextView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:textAllCaps="false"
-        android:layout_marginRight="45dp"
+    <View android:id="@+id/primerdivisor1"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
         android:layout_below="@id/quest"
-        android:textSize="25dp"
-        android:tag="a"
-        android:onClick="answerClicked"
+        android:layout_marginTop="17dp"
+        android:background="#dddddd" />
+
+    <TextView
         android:id="@+id/answer1"
-        android:textAlignment="center" />
-
-    <TextView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/primerdivisor1"
+        android:layout_marginTop="17dp"
+        android:background="#ffffff"
         android:gravity="center"
-        android:layout_marginRight="45dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:textAllCaps="false"
-        android:tag="b"
         android:onClick="answerClicked"
+        android:tag="a"
+        android:text="Quentin Tarantino"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#9254ff"
+        android:textSize="20sp" />
+
+    <View android:id="@+id/primerdivisor2"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
         android:layout_below="@id/answer1"
-        android:textSize="25dp"
-        android:id="@+id/answer2" />
+        android:layout_marginTop="17dp"
+        android:background="#dddddd" />
 
     <TextView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center"
-        android:layout_toLeftOf="@id/answer1"
-        android:layout_marginRight="40dp"
+        android:id="@+id/answer2"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@+id/primerdivisor2"
+        android:layout_marginTop="17dp"
+        android:background="#ffffff"
+        android:onClick="answerClicked"
+        android:tag="b"
+        android:textAlignment="center"
+        android:text="Christopher Nolan"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textColor="#9254ff"
+        android:textSize="20sp" />
+
+    <View android:id="@+id/primerdivisor3"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/answer2"
+        android:layout_marginTop="17dp"
+        android:background="#dddddd" />
+
+    <TextView
+        android:id="@+id/answer3"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@+id/primerdivisor3"
+        android:layout_marginTop="17dp"
+        android:background="#ffffff"
+        android:onClick="answerClicked"
         android:tag="c"
-        android:onClick="answerClicked"
-        android:layout_marginTop="40dp"
+        android:textAlignment="center"
+        android:text="Martin Scorsese"
+        android:textStyle="bold"
         android:textAllCaps="false"
-        android:layout_below="@id/quest"
-        android:textSize="25dp"
-        android:id="@+id/answer3" />
+        android:textColor="#9254ff"
+        android:textSize="20sp" />
+
+    <View android:id="@+id/primerdivisor4"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/answer3"
+        android:layout_marginTop="17dp"
+        android:background="#dddddd" />
+
 
     <TextView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center"
-        android:tag="d"
-        android:layout_toLeftOf="@id/answer1"
-        android:layout_marginRight="40dp"
+        android:id="@+id/answer4"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/primerdivisor4"
+        android:layout_marginTop="17dp"
+        android:background="#ffffff"
         android:onClick="answerClicked"
-        android:layout_marginTop="30dp"
+        android:tag="d"
+        android:text="Micha Becker"
+        android:textStyle="bold"
+        android:textAlignment="center"
         android:textAllCaps="false"
-        android:layout_below="@id/answer3"
-        android:textSize="25dp"
-        android:id="@+id/answer4" />
+        android:textColor="#9254ff"
+        android:textSize="20sp" />
+
+    <View android:id="@+id/primerdivisor5"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/answer4"
+        android:layout_marginTop="17dp"
+        android:background="#dddddd" />
 
     <Button
-        android:text="50-50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/answer4"
-        android:layout_alignStart="@+id/answer4"
-        android:layout_marginBottom="23dp"
-        android:onClick="fiftyFifty"
-        android:id="@+id/btn50" />
-
-    <Button
-        android:text="skip question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/skipBtn"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
         android:onClick="skipQuest"
-        android:layout_alignBaseline="@+id/freeze"
-        android:layout_alignBottom="@+id/freeze"
+        android:text="skip question"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
         android:text="Freeze"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
         android:onClick="freezeGame"
         android:id="@+id/freeze"
-        android:layout_alignBaseline="@+id/btn50"
-        android:layout_alignBottom="@+id/btn50"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btn50"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:onClick="fiftyFifty"
+        android:text="50-50"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:id="@+id/candyBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="14dp"
+        android:layout_below="@+id/primerdivisor5">
+
+        <ImageView
+            android:id="@+id/candy"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@drawable/candis_game" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="45dp"
+            android:layout_height="27dp"
+            android:layout_toRightOf="@id/candy"
+            android:text="700 Candies"
+            android:textSize="12sp"
+            android:textColor="#030330"/>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

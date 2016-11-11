@@ -62,7 +62,6 @@ public class TriviaGame extends AppCompatActivity {
         answer3 = ((TextView) findViewById(R.id.answer3));
         answer4 = ((TextView) findViewById(R.id.answer4));
         clock = (Chronometer) findViewById(R.id.clock);
-        layout = (RelativeLayout) findViewById(R.id.layout);
         freeze = (Button)findViewById(R.id.freeze);
         fifty_fifty = (Button)findViewById(R.id.btn50);
         skip_quest = (Button)findViewById(R.id.skipBtn);
@@ -92,7 +91,7 @@ public class TriviaGame extends AppCompatActivity {
         } else {
             changeToGray(view);
             changeToRedDelayed(view);
-            changeToGreen();
+            changeToGreen(view);
             wrongCount++;
         }
         index++;
@@ -115,10 +114,10 @@ public class TriviaGame extends AppCompatActivity {
                         answer3.setVisibility(View.VISIBLE);
                         answer4.setVisibility(View.VISIBLE);
                         Log.d(MainActivity.TAG, "got here!");
-                        answer1.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                        answer2.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                        answer3.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                        answer4.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                        answer1.setTextColor(Color.parseColor("#9254ff"));
+                        answer2.setTextColor(Color.parseColor("#9254ff"));
+                        answer3.setTextColor(Color.parseColor("#9254ff"));
+                        answer4.setTextColor(Color.parseColor("#9254ff"));
                         disableEnableViews(true,enableHelpers);
                         loadQuestionToScreen(questionsArray.get(index));
                     } catch (Exception e) {
@@ -173,8 +172,8 @@ public class TriviaGame extends AppCompatActivity {
     public void changeToGray(View view) {
         ArrayList<TextView> ans=getAnswerArray();
         for (TextView t :ans){
-            if (t!=view){
-                t.setBackgroundColor(Color.GRAY);
+            if (t != view) {
+                t.setTextColor(Color.parseColor("#dddddd"));
             }
         }
     }
@@ -182,7 +181,8 @@ public class TriviaGame extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                view.setBackgroundColor(Color.RED);
+                TextView tv = (TextView) view;
+                tv.setTextColor(Color.parseColor("#f34444"));
             }
         }, 650);
     }
@@ -190,20 +190,20 @@ public class TriviaGame extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                view.setBackgroundColor(Color.GREEN);
-            }
+TextView tv = (TextView) view;
+            tv.setTextColor(Color.parseColor("#49c358"));}
         }, 1000);
     }
-    public void changeToGreen() {
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            final TextView v = (TextView) layout.getChildAt(i);
-            String text1 = v.getText().toString();
+    public void changeToGreen(View view) {
+        ArrayList<TextView> ans = getAnswerArray();
+        for (final TextView t : ans) {
+            String text1 = t.getText().toString();
             if (questionsArray.get(index).getCorrectAnswer().equals(text1)) {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                Log.d(MainActivity.TAG, "yayyyy");
-                v.setBackgroundColor(Color.GREEN);
+                        Log.d(MainActivity.TAG, "yayyyy");
+                        t.setTextColor(Color.parseColor("#49c358"));
                     }
                 }, 1000);
             }
