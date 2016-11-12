@@ -104,7 +104,7 @@ public class Generator {
     }
     public TriviaQuestion yearToInvention() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזה שנה הומצא #0#?", q, "year");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזו שנה הומצא #0#?", q, "year");
     }
     public TriviaQuestion inventionToInventor() {
         String[] q = {"name"};
@@ -178,7 +178,7 @@ public class Generator {
     }
     public TriviaQuestion brandToYear() {
         String[] q = {"brand"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "באיזה שנה נוסד המותג #0#?",q, "year");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "באיזו שנה נוסד המותג #0#?",q, "year");
     }
     public TriviaQuestion founderToBrand() {
         String[] q = {"brand"};
@@ -257,7 +257,7 @@ public class Generator {
     }
     public TriviaQuestion bornToSinger() {
         String[] q = {"name"};
-        TriviaQuestion tq = GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("singers"), "באיזה שנה נולד הזמר #0#?",q, "born");
+        TriviaQuestion tq = GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("singers"), "באיזו שנה נולד הזמר #0#?",q, "born");
         if(tq.getMale()){
             return tq;
         }
@@ -303,7 +303,7 @@ public class Generator {
     }*/
     public TriviaQuestion maleActorToCharacter() {
         String [] q = {"actor", "type", "name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("maleActors"), "איזו דמות גילם #0# ב#1# #2#?",q, "character");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("maleActors"), "איזה דמות גילם #0# ב#1# #2#?",q, "character");
     }
     public TriviaQuestion femaleActorToCharacter() {
         String [] q = {"actor", "type", "name"};
