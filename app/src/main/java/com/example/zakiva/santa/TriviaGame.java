@@ -2,6 +2,7 @@ package com.example.zakiva.santa;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -226,11 +227,13 @@ TextView tv = (TextView) view;
             v.setVisibility(View.INVISIBLE);
         }
         enableHelpers.put("fifty",false);
+        view.setBackgroundResource(R.drawable.split_disable);
         disableEnableViews(true,enableHelpers);
     }
 
     public void freezeGame(View view) {
         enableHelpers.put("freeze",false);
+        view.setBackgroundResource(R.drawable.extra_time_disable);
         disableEnableViews(true,enableHelpers);
         timeWhenStopped = clock.getBase() - SystemClock.elapsedRealtime();
         clock.stop();
@@ -248,6 +251,7 @@ TextView tv = (TextView) view;
 
     public void skipQuest(View view) {
         enableHelpers.put("skip",false);
+        view.setBackgroundResource(R.drawable.next_disable);
         disableEnableViews(false,disableHelpers);
         index++;
         NUMBER_OF_QUESTIONS++;
