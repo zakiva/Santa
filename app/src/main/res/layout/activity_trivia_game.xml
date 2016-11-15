@@ -178,46 +178,6 @@
         android:layout_marginTop="20dp"
         android:background="#dddddd" />
 
-    <RelativeLayout
-        android:id="@+id/candyBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/primerdivisor5"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="33dp">
-
-        <ImageView
-            android:id="@+id/candy"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="5dp"
-            app:srcCompat="@drawable/candis_game" />
-
-        <TextView
-            android:id="@+id/text700"
-            android:layout_width="45dp"
-            android:layout_height="15dp"
-            android:layout_toRightOf="@id/candy"
-            android:gravity="center"
-            android:text="700"
-            android:textColor="#030330"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/candiesText"
-            android:layout_width="45dp"
-            android:layout_height="15dp"
-            android:layout_below="@id/text700"
-            android:layout_toRightOf="@id/candy"
-            android:gravity="center"
-            android:text="Candies"
-            android:textColor="#030330"
-            android:textSize="12sp" />
-
-    </RelativeLayout>
-
-
         <RelativeLayout
             android:id="@+id/bottomBox"
             android:layout_width="match_parent"
@@ -262,42 +222,17 @@
         android:id="@+id/circlesBox"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-    >
-
-        <RelativeLayout
-            android:id="@+id/circle1"
-            android:layout_width="60dp"
-            android:layout_height="20dp"
-            android:layout_toLeftOf="@id/circle2"
-            android:gravity="center"
-            android:background="@drawable/circle_trivia">
-
-            <ImageView
-                android:id="@+id/ch1"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:background="@drawable/candis_help" />
-
-            <TextView
-                android:layout_width="21dp"
-                android:layout_height="13dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/ch1"
-                android:text="100"
-                android:textColor="#303030"
-                android:textSize="12sp" />
-        </RelativeLayout>
+        android:layout_alignParentBottom="true">
 
         <RelativeLayout
             android:id="@+id/circle2"
             android:layout_width="60dp"
             android:layout_height="20dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="73dp"
             android:layout_marginRight="70dp"
-            android:gravity="center"
-            android:background="@drawable/circle_trivia">
+            android:background="@drawable/circle_trivia"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/ch2"
@@ -314,6 +249,30 @@
                 android:textColor="#303030"
                 android:textSize="12sp" />
         </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/circle1"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@id/circle2"
+                android:background="@drawable/circle_trivia"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ch1"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:background="@drawable/candis_help" />
+
+                <TextView
+                    android:layout_width="21dp"
+                    android:layout_height="13dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/ch1"
+                    android:text="100"
+                    android:textColor="#303030"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/circle3"
@@ -338,5 +297,44 @@
                 android:textColor="#303030"
                 android:textSize="12sp" />
         </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/candyBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomBox"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/candy"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@drawable/candis_game" />
+
+        <TextView
+            android:id="@+id/text700"
+            android:layout_width="45dp"
+            android:layout_height="15dp"
+            android:layout_toRightOf="@id/candy"
+            android:gravity="center"
+            android:text="700"
+            android:textColor="#030330"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/candiesText"
+            android:layout_width="45dp"
+            android:layout_height="15dp"
+            android:layout_below="@id/text700"
+            android:layout_toRightOf="@id/candy"
+            android:gravity="center"
+            android:text="Candies"
+            android:textColor="#030330"
+            android:textSize="12sp" />
+
     </RelativeLayout>
 </RelativeLayout>
