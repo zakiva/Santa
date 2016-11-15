@@ -45,15 +45,15 @@ public class TriviaGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
         NUMBER_OF_QUESTIONS = 5;
-        timeWhenStopped=0;
+        timeWhenStopped = 0;
         FREEZE_TIME = 5000;
         questionsArray = getQuestArray();
         wrongCount = 0;
         index = 0;
         enableHelpers = new HashMap<>();
         disableHelpers = new HashMap<>();
-        initDisableEnable(disableHelpers,false,false,false);
-        initDisableEnable(enableHelpers,true,true,true);
+        initDisableEnable(disableHelpers, false, false, false);
+        initDisableEnable(enableHelpers, true, true, true);
         Log.d(MainActivity.TAG, "enable = " + enableHelpers);
         Log.d(MainActivity.TAG, "disable = " + disableHelpers);
         quest = ((TextView) findViewById(R.id.quest));
@@ -62,12 +62,24 @@ public class TriviaGame extends AppCompatActivity {
         answer3 = ((TextView) findViewById(R.id.answer3));
         answer4 = ((TextView) findViewById(R.id.answer4));
         clock = (Chronometer) findViewById(R.id.clock);
-        freeze = (Button)findViewById(R.id.freeze);
-        fifty_fifty = (Button)findViewById(R.id.btn50);
-        skip_quest = (Button)findViewById(R.id.skipBtn);
+        freeze = (Button) findViewById(R.id.freeze);
+        fifty_fifty = (Button) findViewById(R.id.btn50);
+        skip_quest = (Button) findViewById(R.id.skipBtn);
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
+        clockToSec();
+    }
+        public void clockToSec(){
+            clock.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                @Override
+                public void onChronometerTick(Chronometer chronometer) {
+                    long timeNow = SystemClock.elapsedRealtime()- clock.getBase();
+                    int time= (int)timeNow/1000;
+                    clock.setText(String.valueOf(time));
+                }
+            });
+
 
     }
 
