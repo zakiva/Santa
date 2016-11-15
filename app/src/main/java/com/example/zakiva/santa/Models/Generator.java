@@ -104,7 +104,12 @@ public class Generator {
     }
     public TriviaQuestion yearToInvention() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזו שנה הומצא #0#?", q, "year");
+        TriviaQuestion tq = GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזו שנה הומצא #0#?", q, "year");
+        if(tq.getMale()){
+            return tq;
+        }
+        tq.setQuestion(tq.getQuestion().replace("הומצא","הומצאה"));
+        return tq;
     }
     public TriviaQuestion inventionToInventor() {
         String[] q = {"name"};
@@ -112,12 +117,13 @@ public class Generator {
     }
     public TriviaQuestion inventionToCountry() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזו מדינה הומצא #0#?", q, "country");
-    }
-    public TriviaQuestion inventionToYear() {
-        String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזו שנה הומצא #0#?", q, "year");
-    }
+        TriviaQuestion tq = GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזו מדינה הומצא #0#?", q, "country");
+        if(tq.getMale()){
+            return tq;
+        }
+        tq.setQuestion(tq.getQuestion().replace("הומצא","הומצאה"));
+        return tq;
+}
    public TriviaQuestion inventionWhoFirst() {
         return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("inventions"), "איזו מההמצאות הבאות הומצאה קודם?","name", "year",false);
     }
@@ -187,10 +193,6 @@ public class Generator {
     public TriviaQuestion countryToBrand() {
         String[] q = { "brand"};
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "באיזו מדינה נוסד המותג #0# ?",q, "country");
-    }
-    public TriviaQuestion capitalToCountry () {
-        String[] q = {"capital"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("countries"), "באיזו מדינה נמצאת העיר #0#?",q, "name");
     }
     public TriviaQuestion coinToCountry () {
         String[] q = {"name"};

@@ -79,7 +79,7 @@ public class Trivia extends AppCompatActivity {
         Generator generator = new Generator ();
 
 
-        loadQuestionToScreen(generator.mostNorth());
+        loadQuestionToScreen(generator.inventionToCountry());
         /*
 
         int n = new Random().nextInt(3);

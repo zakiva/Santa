@@ -217,7 +217,7 @@ public class GeneratorHelper {
 
         int ARRAY_SIZE = number_of_questions * 2;
         //IMPORTANT: when adding new generators must update this number:
-        int NUMBER_OF_GENERATORS = 59;
+        int NUMBER_OF_GENERATORS = 57;
         List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_GENERATORS; i++) {
             numbers.add(i);
@@ -239,7 +239,7 @@ public class GeneratorHelper {
                 case 5:array.add(generator.worldBandToMembers());break;
                 case 6:array.add(generator.inventionToInventor());break;
                 case 7:array.add(generator.inventionToCountry());break;
-                case 8:array.add(generator.inventionToYear());break;
+                case 8:array.add(generator.mostChampionships());break;
                 case 9:array.add(generator.yearToInvention());break;
                 case 10:array.add(generator.bookToAuthor());break;
                 case 11:array.add(generator.authorToCountry());break;
@@ -255,7 +255,7 @@ public class GeneratorHelper {
                 case 21:array.add(generator.brandToYear());break;
                 case 22:array.add(generator.founderToBrand());break;
                 case 23:array.add(generator.countryToBrand());break;
-                case 24:array.add(generator.capitalToCountry());break;
+                case 24:array.add(generator.leastChampionships());break;
                 case 25:array.add(generator.coinToCountry());break;
                 case 26:array.add(generator.countryToCapital());break;
                 case 27:array.add(generator.countryToContinent());break;
@@ -288,8 +288,6 @@ public class GeneratorHelper {
                 case 54:array.add(generator.countryMostPop());break;
                 case 55:array.add(generator.mostNorth());break;
                 case 56:array.add(generator.mostSouth());break;
-                case 57:array.add(generator.leastChampionships());break;
-                case 58:array.add(generator.mostChampionships());break;
 
             }
         }
