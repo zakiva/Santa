@@ -17,5 +17,12 @@
         android:textSize="25dp"
         android:id="@+id/title" />
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewExample"
+        android:layout_below="@+id/title"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="30dp" />
 
 </RelativeLayout>
