@@ -71,7 +71,7 @@
         android:text="your score"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/mainIconScoreSection"
+        android:layout_below="@id/toolbarLayout"
         android:visibility="gone"
         android:textSize="13dp"
         android:textColor="#303030"
@@ -85,7 +85,7 @@
         android:layout_below="@+id/scoreTitle"
         android:visibility="gone"
         android:textSize="36dp"
-        android:layout_marginTop="-5dp"
+        android:layout_marginTop="0dp"
         android:textStyle="bold"
         android:textColor="#303030"
         android:layout_width="wrap_content"
@@ -233,7 +233,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/getExtraCandiesBox"
         android:layout_below="@+id/getExtraCandiesLabel">
 
@@ -251,17 +251,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/inviteCircle"
                 android:onClick="inviteFriendClicked"
-                android:background="@drawable/circle_extra_candies">
+                android:background="@drawable/btn_score">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginBottom="19dp"
-                    android:layout_marginLeft="19dp"
-                    android:layout_marginRight="19dp"
                     android:background="@drawable/invite_friend"
                     android:onClick="inviteFriendClicked"
                     android:id="@+id/inviteFriend" />
@@ -308,17 +304,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/videoCircle"
                 android:onClick="videoAdButtonClicked"
-                android:background="@drawable/circle_extra_candies">
+                android:background="@drawable/btn_score">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginBottom="23dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
                     android:background="@drawable/video"
                     android:onClick="videoAdButtonClicked"
                     android:id="@+id/videoAd" />

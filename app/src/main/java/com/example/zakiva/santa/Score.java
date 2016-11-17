@@ -58,8 +58,9 @@ public class Score extends AppCompatActivity {
 
     public void displayScreenAccordingToScore () {
         if (score != -1) {
-            //set main icon to score section
-            mainIcon.setBackground(ResourcesCompat.getDrawable(this.getResources(), R.drawable.score_section, null));
+            //set main icon to score section - remove icon
+            mainIcon.setVisibility(View.GONE);
+            //mainIcon.setBackground(ResourcesCompat.getDrawable(this.getResources(), R.drawable.score_section, null));
 
             //show score labels
             scoreTextView.setText("Your score is: " + score);
