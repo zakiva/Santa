@@ -2,7 +2,7 @@ package com.example.zakiva.santa;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -80,8 +80,7 @@ public class TriviaGame extends AppCompatActivity {
                     clock.setText(String.valueOf(time));
                 }
             });
-
-
+            addFont();
     }
 
     public static void addSheetToDataHash (String name, ArrayList<HashMap<String,Object>> data) {
@@ -284,5 +283,13 @@ TextView tv = (TextView) view;
         helpers.put("fifty",fifty);
         helpers.put("skip",skip);
         helpers.put("freeze",freeze);
+    }
+    public void addFont(){
+        Typeface openSans = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/OpenSansHebrew-Regular.ttf");
+        answer1.setTypeface(openSans);
+        answer2.setTypeface(openSans);
+        answer3.setTypeface(openSans);
+        answer4.setTypeface(openSans);
+        quest.setTypeface(openSans);
     }
 }
