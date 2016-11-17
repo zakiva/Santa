@@ -288,6 +288,15 @@ public class Score extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void inviteFriendClicked(View view) {
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String shareBodyText = "You are invited to download Windis!";
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Windis");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+        startActivity(Intent.createChooser(intent, "Choose sharing method"));
+    }
+    
     public void shareScoreButtonClicked(View view) {
     }
 }
