@@ -69,18 +69,6 @@ public class TriviaGame extends AppCompatActivity {
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
-        clockToSec();
-    }
-        public void clockToSec(){
-            clock.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-                @Override
-                public void onChronometerTick(Chronometer chronometer) {
-                    long timeNow = SystemClock.elapsedRealtime()- clock.getBase();
-                    int time= (int)timeNow/1000;
-                    clock.setText(String.valueOf(time));
-                }
-            });
-            addFont();
     }
 
     public static void addSheetToDataHash (String name, ArrayList<HashMap<String,Object>> data) {
