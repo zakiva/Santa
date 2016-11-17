@@ -154,7 +154,7 @@ public class Generator {
     }
     public TriviaQuestion quoteToPerson() {
         String[] q = {"quote"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("quotes"), "מי אמר #0#?",q, "name");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("quotes"), "מי אמר \"#0#\"?",q, "name");
     }
     public TriviaQuestion wifeToHusband() {
         String[] q = {"husband"};
