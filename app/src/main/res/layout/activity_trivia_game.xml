@@ -337,4 +337,14 @@
             android:textSize="12sp" />
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/bonus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        app:srcCompat="@drawable/bonus_screen" />
+
 </RelativeLayout>
