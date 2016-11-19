@@ -217,7 +217,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="12dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/toEndLabel" />
 
@@ -225,7 +225,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/toEndLabel"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="6dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/timeBox">
 

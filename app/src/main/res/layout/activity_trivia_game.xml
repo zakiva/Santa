@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffff"
+    android:id="@+id/parentLayout"
     tools:context="com.example.zakiva.santa.TriviaGame">
 
     <RelativeLayout
@@ -326,6 +327,16 @@
             android:textSize="12sp" />
 
     </RelativeLayout>
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/activityBackground"
+        android:background="#000000" />
 
     <ImageView
         android:id="@+id/bonus"

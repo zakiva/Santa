@@ -125,7 +125,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/gameName"
                 android:text="Drawdis"
-                android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="20dp"
                 android:layout_centerHorizontal="true"

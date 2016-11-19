@@ -29,6 +29,7 @@ public class TriviaGame extends AppCompatActivity {
     private static TextView answer2;
     private static TextView answer3;
     private static TextView answer4;
+    private RelativeLayout activityBackground;
     private Button freeze;
     private Button fifty_fifty;
     private Button skip_quest;
@@ -48,6 +49,8 @@ public class TriviaGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
+        activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
+        activityBackground.getBackground().setAlpha(0);
         NUMBER_OF_QUESTIONS = 5;
         timeWhenStopped = 0;
         FREEZE_TIME = 5000;
@@ -294,13 +297,19 @@ TextView tv = (TextView) view;
             @Override
             public void run() {
                 bonusRound.setVisibility(View.VISIBLE);
+                changeBackgroundOpacity(220);
             }
         },2000);
         handler.postDelayed(new Runnable() {
             public void run() {
                 bonusRound.setVisibility(View.GONE);
+                changeBackgroundOpacity(0);
             }
-        }, 3700);
-        nextQuestion(5000);
+        }, 5700);
+        nextQuestion(5700);
+    }
+
+    public void changeBackgroundOpacity (int opacity) {
+        activityBackground.getBackground().setAlpha(opacity);
     }
 }

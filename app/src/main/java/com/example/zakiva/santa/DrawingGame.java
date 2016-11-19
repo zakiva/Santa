@@ -238,7 +238,7 @@ public class DrawingGame extends AppCompatActivity {
     public void clueHelperButtonClicked(View view) {
     }
 
-    public void changeBackgroundOpacity (int opacaity) {
-        activityBackground.getBackground().setAlpha(opacaity);
+    public void changeBackgroundOpacity (int opacity) {
+        activityBackground.getBackground().setAlpha(opacity);
     }
 }
