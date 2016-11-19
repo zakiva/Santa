@@ -9,9 +9,89 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="@dimen/buttonGamesShadow"
+            android:layout_marginLeft="@dimen/buttonGamesShadow"
+            android:layout_marginRight="@dimen/buttonGamesShadow"
+            android:background="@drawable/shadow_above"
+            android:layout_alignParentTop="true"
+            ></View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonGamesShadow"
+            android:layout_marginLeft="@dimen/buttonGamesShadow"
+            android:layout_marginRight="@dimen/buttonGamesShadow"
+            android:background="@drawable/shadow_below"
+            android:layout_alignParentBottom="true"
+            ></View>
+
+        <View
+            android:layout_width="@dimen/buttonGamesShadow"
+            android:layout_height="match_parent"
+            android:background="@drawable/shadow_left"
+            android:layout_marginBottom="@dimen/buttonGamesShadow"
+            android:layout_marginTop="@dimen/buttonGamesShadow"
+            android:layout_alignParentLeft="true"
+            ></View>
+
+        <View
+            android:layout_width="@dimen/buttonGamesShadow"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/buttonGamesShadow"
+            android:layout_marginTop="@dimen/buttonGamesShadow"
+            android:background="@drawable/shadow_right"
+            android:layout_alignParentRight="true"
+            ></View>
+
+        <View
+            android:layout_width="@dimen/buttonGamesShadowCorner"
+            android:layout_height="@dimen/buttonGamesShadowCorner"
+            android:layout_marginTop="@dimen/buttonGamesShadowCornerDelta"
+            android:layout_marginLeft="@dimen/buttonGamesShadowCornerDelta"
+            android:background="@drawable/shadow_corner_al"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            ></View>
+
+        <View
+            android:layout_width="@dimen/buttonGamesShadowCorner"
+            android:layout_height="@dimen/buttonGamesShadowCorner"
+            android:layout_marginTop="@dimen/buttonGamesShadowCornerDelta"
+            android:layout_marginRight="@dimen/buttonGamesShadowCornerDelta"
+            android:background="@drawable/shadow_corner_ar"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            ></View>
+
+        <View
+            android:layout_width="@dimen/buttonGamesShadowCorner"
+            android:layout_height="@dimen/buttonGamesShadowCorner"
+            android:layout_marginBottom="@dimen/buttonGamesShadowCornerDelta"
+            android:layout_marginLeft="@dimen/buttonGamesShadowCornerDelta"
+            android:background="@drawable/shadow_corner_bl"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            ></View>
+
+        <View
+            android:layout_width="@dimen/buttonGamesShadowCorner"
+            android:layout_height="@dimen/buttonGamesShadowCorner"
+            android:layout_marginBottom="@dimen/buttonGamesShadowCornerDelta"
+            android:layout_marginRight="@dimen/buttonGamesShadowCornerDelta"
+            android:background="@drawable/shadow_corner_br"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            ></View>
+
+        <RelativeLayout
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/buttonGamesShadow"
+            android:layout_marginRight="@dimen/buttonGamesShadow"
+            android:layout_marginLeft="@dimen/buttonGamesShadow"
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
             android:background="#dddddd"
             android:gravity="center"
             android:textAllCaps="false"
@@ -31,7 +111,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="92dp"
+            android:layout_marginLeft="@dimen/buttonGamesShadow"
+            android:layout_marginRight="@dimen/buttonGamesShadow"
             android:layout_below="@+id/iconSection"
             android:background="#ffffff"
             android:tag=""
@@ -58,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
-                android:text="coming soon"
+                android:text="Lorem ipsum the coming soon"
                 android:layout_below="@+id/gameName"
                 android:layout_marginTop="10dp"
                 android:textAllCaps="false"
