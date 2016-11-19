@@ -7,7 +7,7 @@ android:id="@+id/full_row_hall_of_fame"
 android:clickable="true">
 
     <View android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_height="1dp"
         android:id="@+id/topLine"
         android:background="@drawable/toolbar_shadow"/>
@@ -21,7 +21,7 @@ android:clickable="true">
         android:id="@+id/name"
         android:textColor="#9254ff"
         android:textStyle="bold"
-        android:layout_below="@+id/topLine"/>
+        android:layout_alignParentTop="true"/>
 
     <TextView
         android:layout_width="wrap_content"

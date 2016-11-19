@@ -300,4 +300,8 @@ public class Score extends AppCompatActivity {
     
     public void shareScoreButtonClicked(View view) {
     }
+
+    public void backFromScoreClicked(View view) {
+
+    }
 }

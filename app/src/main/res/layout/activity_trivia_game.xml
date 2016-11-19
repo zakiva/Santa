@@ -7,27 +7,14 @@
     android:background="#ffff"
     tools:context="com.example.zakiva.santa.TriviaGame">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:title=""
-        android:minHeight="1dp" />
-
-    <View
-        android:id="@+id/topLine"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_height="3dp"
-        android:background="@drawable/toolbar_shadow"/>
-
     <RelativeLayout
         android:id="@+id/timeLayout"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_below="@+id/topLine"
-        android:layout_marginTop="5dp"
         android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true">
 
 

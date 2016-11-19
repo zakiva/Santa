@@ -16,7 +16,7 @@
             android:background="#fff"
             app:title=" "
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="53dp">
 
 
             <RelativeLayout
@@ -51,8 +51,8 @@
 
         <View android:layout_width="match_parent"
             android:layout_below="@+id/toolbar"
-            android:layout_height="3dp"
-            android:background="@drawable/toolbar_shadow"/>
+            android:layout_height="8dp"
+            android:background="@drawable/shadow_below"/>
 
     </RelativeLayout>
 

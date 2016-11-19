@@ -91,4 +91,7 @@ public class Games extends AppCompatActivity {
         intent.putExtra("score", (long) -1);
         startActivity(intent);
     }
+
+    public void backToPrizeClicked(View view) {
+    }
 }

@@ -16,7 +16,7 @@
             android:minHeight="1dp"
             app:title=" "
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="53dp">
 
 
             <RelativeLayout
@@ -36,24 +36,25 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"/>
 
-                <Button
-                    android:text="Home (remove?)"
-                    android:layout_width="wrap_content"
-                    android:textAllCaps="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_height="wrap_content"
-                    android:onClick="homeScreenButtonClicked"
-                    android:id="@+id/homeScreen" />
-
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
 
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="backFromScoreClicked"
+            android:background="@drawable/ic_ac_nav_back"
+            android:id="@+id/homeScreen" />
+
 
         <View android:layout_width="match_parent"
             android:layout_below="@+id/toolbar"
-            android:layout_height="3dp"
-            android:background="@drawable/toolbar_shadow"/>
+            android:layout_height="8dp"
+            android:background="@drawable/shadow_below"/>
 
     </RelativeLayout>
 
