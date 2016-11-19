@@ -1,5 +1,6 @@
 package com.example.zakiva.santa;
 
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ public class TriviaGame extends AppCompatActivity {
     private Button freeze;
     private Button fifty_fifty;
     private Button skip_quest;
+    private ImageView bonusRound;
     private RelativeLayout layout;
     private static int NUMBER_OF_QUESTIONS;
     private static int wrongCount;
@@ -66,6 +69,7 @@ public class TriviaGame extends AppCompatActivity {
         freeze = (Button) findViewById(R.id.freeze);
         fifty_fifty = (Button) findViewById(R.id.btn50);
         skip_quest = (Button) findViewById(R.id.skipBtn);
+        bonusRound = (ImageView) findViewById(R.id.bonus);
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
@@ -95,7 +99,12 @@ public class TriviaGame extends AppCompatActivity {
             wrongCount++;
         }
         index++;
-        nextQuestion(3000);
+        if(index == NUMBER_OF_QUESTIONS-1) {
+           bonusRoundMethod();
+        }
+        else{
+                nextQuestion(3000);
+            }
     }
 
     
@@ -107,7 +116,7 @@ public class TriviaGame extends AppCompatActivity {
                 if (index == NUMBER_OF_QUESTIONS) {
                     clock.stop();
                     sendScore();
-                } else {
+                }else{
                     try {
                         answer1.setVisibility(View.VISIBLE);
                         answer2.setVisibility(View.VISIBLE);
@@ -125,7 +134,6 @@ public class TriviaGame extends AppCompatActivity {
                     }
                 }
             }
-
         }, delay);
     }
 
@@ -279,5 +287,20 @@ TextView tv = (TextView) view;
         answer3.setTypeface(openSans);
         answer4.setTypeface(openSans);
         quest.setTypeface(openSans);
+    }
+    public void bonusRoundMethod(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bonusRound.setVisibility(View.VISIBLE);
+            }
+        },2000);
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                bonusRound.setVisibility(View.GONE);
+            }
+        }, 3700);
+        nextQuestion(5000);
     }
 }
