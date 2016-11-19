@@ -2,9 +2,12 @@ package com.example.zakiva.santa.Helpers;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.zakiva.santa.MainActivity;
 import com.example.zakiva.santa.R;
 
 /**
@@ -21,6 +24,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
+        Log.d(MainActivity.TAG, "instantiateItem" + position);
         CustomPagerEnum customPagerEnum = CustomPagerEnum.values()[position];
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(customPagerEnum.getLayoutResId(), collection, false);
@@ -45,6 +49,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+        Log.d(MainActivity.TAG, "getPageTitle" + position);
         CustomPagerEnum customPagerEnum = CustomPagerEnum.values()[position];
         return mContext.getString(customPagerEnum.getTitleResId());
     }
