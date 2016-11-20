@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.provider.SyncStateContract;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +24,10 @@ import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Helpers.Infra;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 //import com.vungle.publisher.VunglePub;
 
 public class Score extends AppCompatActivity {
@@ -289,13 +296,47 @@ public class Score extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void inviteFriendClicked(View view) {
+    public void shareViaAllAppsPossible(View view) {
         Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         intent.setType("text/plain");
         String shareBodyText = "You are invited to download Windis!";
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Windis");
         intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
         startActivity(Intent.createChooser(intent, "Choose sharing method"));
+    }
+
+public boolean isContainMultipleStrings(String word, String [] subWords){
+    for (String s : subWords)
+    {
+        if (word.contains(s))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+    public void inviteFriendClicked(View view) {
+        //List of apps that we would like to let the user share with
+        String [] apps = new String[] {"sms", "mms", "whatsapp", "facebook", "mail", "twit", "google+", "hangout", "viber"};
+        List<Intent> targetedShareIntents = new ArrayList<Intent>();
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(share, 0);
+        if (!resInfo.isEmpty()){
+            for (ResolveInfo info : resInfo) {
+                Intent targetedShare = new Intent(android.content.Intent.ACTION_SEND);
+                targetedShare.setType("text/plain"); // put here your mime type
+                if (isContainMultipleStrings(info.activityInfo.packageName.toLowerCase(), apps) || isContainMultipleStrings(info.activityInfo.name.toLowerCase(), apps)) {
+                    targetedShare.putExtra(Intent.EXTRA_TEXT, "You are invited to download Windis!");
+                    targetedShare.setPackage(info.activityInfo.packageName);
+                    targetedShareIntents.add(targetedShare);
+                }
+            }
+            Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Choose sharing method");
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[]{}));
+            startActivity(chooserIntent);
+        }
     }
     
     public void shareScoreButtonClicked(View view) {
