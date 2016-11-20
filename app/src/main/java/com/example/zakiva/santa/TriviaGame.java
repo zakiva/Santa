@@ -36,6 +36,10 @@ public class TriviaGame extends AppCompatActivity {
     private ImageView bonusRound;
     private RelativeLayout layout;
     private static int NUMBER_OF_QUESTIONS;
+    private int timeForGreen;
+    private int timeForRed;
+    private int timeForNextQuestion;
+    private int timeForSkipQuestion;
     private static int wrongCount;
     private static int index;
     private static ArrayList<TriviaQuestion> questionsArray;
@@ -57,6 +61,10 @@ public class TriviaGame extends AppCompatActivity {
         questionsArray = getQuestArray();
         wrongCount = 0;
         index = 0;
+        timeForNextQuestion = 3000;
+        timeForRed = 650;
+        timeForGreen = 1000;
+        timeForSkipQuestion=1000;
         enableHelpers = new HashMap<>();
         disableHelpers = new HashMap<>();
         initDisableEnable(disableHelpers, false, false, false);
@@ -108,9 +116,8 @@ public class TriviaGame extends AppCompatActivity {
         else{
                 nextQuestion(3000);
             }
+        nextQuestion(timeForNextQuestion);
     }
-
-    
     public void nextQuestion(int delay) {
         Log.d(MainActivity.TAG, "enable = " + enableHelpers);
         Handler handler = new Handler();
@@ -195,7 +202,7 @@ public class TriviaGame extends AppCompatActivity {
                 TextView tv = (TextView) view;
                 tv.setTextColor(Color.parseColor("#f34444"));
             }
-        }, 650);
+        }, timeForRed);
     }
     public void changeToGreenDelayed(final View view){
         Handler handler = new Handler();
@@ -203,7 +210,7 @@ public class TriviaGame extends AppCompatActivity {
             public void run() {
 TextView tv = (TextView) view;
             tv.setTextColor(Color.parseColor("#49c358"));}
-        }, 1000);
+        }, timeForGreen);
     }
     public void changeToGreen(View view) {
         ArrayList<TextView> ans = getAnswerArray();
@@ -216,7 +223,7 @@ TextView tv = (TextView) view;
                         Log.d(MainActivity.TAG, "yayyyy");
                         t.setTextColor(Color.parseColor("#49c358"));
                     }
-                }, 1000);
+                }, timeForGreen);
             }
         }
     }
@@ -265,7 +272,7 @@ TextView tv = (TextView) view;
         disableEnableViews(false,disableHelpers);
         index++;
         NUMBER_OF_QUESTIONS++;
-        nextQuestion(1000);
+        nextQuestion(timeForSkipQuestion);
         Log.d(MainActivity.TAG, "AVADA KADBRA!"+NUMBER_OF_QUESTIONS);
     }
 
