@@ -39,6 +39,8 @@ public class TriviaGame extends AppCompatActivity {
     private static int wrongCount;
     private static int index;
     private static ArrayList<TriviaQuestion> questionsArray;
+    private int timeForAnswer;
+    private int timeForBonus;
     private static int FREEZE_TIME;
     private static long timeWhenStopped;
     private Chronometer clock;
@@ -53,6 +55,8 @@ public class TriviaGame extends AppCompatActivity {
         activityBackground.getBackground().setAlpha(0);
         NUMBER_OF_QUESTIONS = 5;
         timeWhenStopped = 0;
+        timeForBonus = 5700;
+        timeForAnswer = 2000;
         FREEZE_TIME = 5000;
         questionsArray = getQuestArray();
         wrongCount = 0;
@@ -299,16 +303,15 @@ TextView tv = (TextView) view;
                 bonusRound.setVisibility(View.VISIBLE);
                 changeBackgroundOpacity(220);
             }
-        },2000);
+        },timeForAnswer);
         handler.postDelayed(new Runnable() {
             public void run() {
                 bonusRound.setVisibility(View.GONE);
                 changeBackgroundOpacity(0);
             }
-        }, 5700);
-        nextQuestion(5700);
+        }, timeForBonus);
+        nextQuestion(timeForBonus);
     }
-
     public void changeBackgroundOpacity (int opacity) {
         activityBackground.getBackground().setAlpha(opacity);
     }
