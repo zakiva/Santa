@@ -30,9 +30,12 @@ public class TriviaGame extends AppCompatActivity {
     private static TextView answer3;
     private static TextView answer4;
     private RelativeLayout activityBackground;
-    private Button freeze;
-    private Button fifty_fifty;
-    private Button skip_quest;
+    private ImageView freeze;
+    private ImageView fifty_fifty;
+    private ImageView skip_quest;
+    private RelativeLayout freezeBox;
+    private RelativeLayout fiftyFiftyBox;
+    private RelativeLayout skipQuestBox;
     private ImageView bonusRound;
     private RelativeLayout layout;
     private static int NUMBER_OF_QUESTIONS;
@@ -81,10 +84,13 @@ public class TriviaGame extends AppCompatActivity {
         answer3 = ((TextView) findViewById(R.id.answer3));
         answer4 = ((TextView) findViewById(R.id.answer4));
         clock = (Chronometer) findViewById(R.id.clock);
-        freeze = (Button) findViewById(R.id.freeze);
-        fifty_fifty = (Button) findViewById(R.id.btn50);
-        skip_quest = (Button) findViewById(R.id.skipBtn);
+        freeze = (ImageView) findViewById(R.id.freeze);
+        fifty_fifty = (ImageView) findViewById(R.id.btn50);
+        skip_quest = (ImageView) findViewById(R.id.skipBtn);
         bonusRound = (ImageView) findViewById(R.id.bonus);
+        fiftyFiftyBox = (RelativeLayout) findViewById(R.id.fiftyBox);
+        skipQuestBox = (RelativeLayout) findViewById(R.id.skipBox);
+        freezeBox = (RelativeLayout) findViewById(R.id.freezeBox);
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
@@ -248,13 +254,13 @@ TextView tv = (TextView) view;
             v.setVisibility(View.INVISIBLE);
         }
         enableHelpers.put("fifty",false);
-        view.setBackgroundResource(R.drawable.split_disable);
+        fifty_fifty.setBackgroundResource(R.drawable.split_disable);
         disableEnableViews(true,enableHelpers);
     }
 
     public void freezeGame(View view) {
         enableHelpers.put("freeze",false);
-        view.setBackgroundResource(R.drawable.extra_time_disable);
+        freeze.setBackgroundResource(R.drawable.extra_time_disable);
         disableEnableViews(true,enableHelpers);
         timeWhenStopped = clock.getBase() - SystemClock.elapsedRealtime();
         clock.stop();
@@ -272,7 +278,7 @@ TextView tv = (TextView) view;
 
     public void skipQuest(View view) {
         enableHelpers.put("skip",false);
-        view.setBackgroundResource(R.drawable.next_disable);
+        skip_quest.setBackgroundResource(R.drawable.next_disable);
         disableEnableViews(false,disableHelpers);
         index++;
         NUMBER_OF_QUESTIONS++;
@@ -286,8 +292,11 @@ TextView tv = (TextView) view;
         answer3.setClickable(flag);
         answer4.setClickable(flag);
         freeze.setClickable(helpers.get("freeze"));
+        freezeBox.setClickable(helpers.get("freeze"));
         fifty_fifty.setClickable(helpers.get("fifty"));
+        fiftyFiftyBox.setClickable(helpers.get("fifty"));
         skip_quest.setClickable(helpers.get("skip"));
+        skipQuestBox.setClickable(helpers.get("skip"));
     }
     public void initDisableEnable(HashMap helpers,boolean fifty,boolean skip, boolean freeze) {
         helpers.put("fifty",fifty);
@@ -308,18 +317,20 @@ TextView tv = (TextView) view;
             @Override
             public void run() {
                 bonusRound.setVisibility(View.VISIBLE);
-                changeBackgroundOpacity(220);
+                changeBackgroundOpacity(220, View.VISIBLE);
             }
         },timeForAnswer);
         handler.postDelayed(new Runnable() {
             public void run() {
                 bonusRound.setVisibility(View.GONE);
-                changeBackgroundOpacity(0);
+                changeBackgroundOpacity(0, View.GONE);
             }
         }, timeForBonus);
         nextQuestion(timeForBonus);
     }
-    public void changeBackgroundOpacity (int opacity) {
+
+    public void changeBackgroundOpacity (int opacity, int visible) {
         activityBackground.getBackground().setAlpha(opacity);
+        activityBackground.setVisibility(visible);
     }
 }

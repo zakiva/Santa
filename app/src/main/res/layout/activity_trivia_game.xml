@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/timeLayout"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/topLine"
         android:gravity="center"
         android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
         <Chronometer
             android:id="@+id/clock"
             android:layout_width="wrap_content"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/PicTime"
             android:layout_marginLeft="5dp"
             android:textColor="#aaaaaa"
@@ -31,8 +31,8 @@
 
         <ImageView
             android:id="@+id/PicTime"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             app:srcCompat="@drawable/time_trivia" />
 
@@ -65,11 +65,11 @@
     <TextView
         android:id="@+id/answer1"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/primerdivisor1"
-        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:gravity="center"
+        android:padding="20dp"
         android:onClick="answerClicked"
         android:tag="a"
         android:text="XXX XXX"
@@ -83,7 +83,6 @@
         android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:layout_below="@id/answer1"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#dddddd" />
@@ -91,9 +90,9 @@
     <TextView
         android:id="@+id/answer2"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/primerdivisor2"
-        android:layout_marginTop="20dp"
+        android:padding="20dp"
         android:background="#ffffff"
         android:onClick="answerClicked"
         android:tag="b"
@@ -109,7 +108,6 @@
         android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:layout_below="@id/answer2"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#dddddd" />
@@ -117,9 +115,9 @@
     <TextView
         android:id="@+id/answer3"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
         android:layout_below="@+id/primerdivisor3"
-        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:onClick="answerClicked"
         android:tag="c"
@@ -135,7 +133,6 @@
         android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:layout_below="@id/answer3"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#dddddd" />
@@ -144,9 +141,9 @@
     <TextView
         android:id="@+id/answer4"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
         android:layout_below="@id/primerdivisor4"
-        android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:onClick="answerClicked"
         android:tag="d"
@@ -165,8 +162,8 @@
         android:layout_below="@id/answer4"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
         android:background="#dddddd" />
+
 
         <RelativeLayout
             android:id="@+id/bottomBox"
@@ -174,65 +171,40 @@
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/rectangle_trivia">
-
-
-            <Button
-                android:id="@+id/skipBtn"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="55dp"
-                android:background="@drawable/next_enable"
-                android:onClick="skipQuest" />
-
-            <Button
-                android:id="@+id/freeze"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/extra_time_enable"
-                android:onClick="freezeGame" />
-
-            <Button
-                android:id="@+id/btn50"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="55dp"
-                android:background="@drawable/split_enable"
-                android:onClick="fiftyFifty" />
         </RelativeLayout>
 
+
+
     <RelativeLayout
-        android:id="@+id/circlesBox"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true">
+        android:id="@+id/freezeBox"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="freezeGame"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_height="70dp">
 
         <RelativeLayout
             android:id="@+id/circle2"
             android:layout_width="60dp"
             android:layout_height="20dp"
+            android:layout_marginTop="0dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="64dp"
-            android:layout_marginRight="64dp"
             android:background="@drawable/circle_trivia"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/ch2"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/candis_help" />
 
             <TextView
-                android:layout_width="21dp"
-                android:layout_height="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/ch2"
                 android:text="100"
@@ -240,54 +212,127 @@
                 android:textSize="12sp" />
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/freeze"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:background="@drawable/extra_time_enable"
+            android:onClick="freezeGame" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/fiftyBox"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:onClick="fiftyFifty">
+
         <RelativeLayout
-                android:id="@+id/circle1"
-                android:layout_width="60dp"
-                android:layout_height="20dp"
-                android:layout_toLeftOf="@id/circle2"
-                android:background="@drawable/circle_trivia"
-                android:gravity="center">
+            android:id="@+id/circle1"
+            android:layout_width="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="20dp"
+            android:background="@drawable/circle_trivia"
+            android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/ch1"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:background="@drawable/candis_help" />
+            <ImageView
+                android:id="@+id/ch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/candis_help" />
 
-                <TextView
-                    android:layout_width="21dp"
-                    android:layout_height="13dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/ch1"
-                    android:text="100"
-                    android:textColor="#303030"
-                    android:textSize="12sp" />
-            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ch1"
+                android:text="100"
+                android:textColor="#303030"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/btn50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/split_enable"
+            android:onClick="fiftyFifty" />
+
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/skipBox"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:paddingLeft="10dp"
+        android:onClick="skipQuest"
+        android:paddingRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp">
 
         <RelativeLayout
             android:id="@+id/circle3"
             android:layout_width="60dp"
+            android:layout_marginTop="0dp"
+            android:layout_centerHorizontal="true"
             android:layout_height="20dp"
-            android:layout_toRightOf="@id/circle2"
             android:background="@drawable/circle_trivia"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/ch"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/candis_help" />
 
             <TextView
-                android:layout_width="21dp"
-                android:layout_height="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/ch"
                 android:text="100"
                 android:textColor="#303030"
                 android:textSize="12sp" />
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/skipBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/next_enable"
+            android:onClick="skipQuest" />
+
     </RelativeLayout>
+
+
+
+
 
     <RelativeLayout
         android:id="@+id/candyBox"
@@ -330,11 +375,10 @@
 
 
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:id="@+id/activityBackground"
         android:background="#000000" />
 
