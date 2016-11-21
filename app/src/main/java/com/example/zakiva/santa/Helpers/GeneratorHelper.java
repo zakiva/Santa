@@ -7,11 +7,14 @@ import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 
@@ -22,6 +25,8 @@ import java.util.Set;
 public class GeneratorHelper {
 
     public static final String TAG = ">>>>>>>Debug: ";
+
+    private static int runIndex = 1;
 
     public static TriviaQuestion generateQuestionWithData(ArrayList<HashMap<String, Object>> data, String q, String[] questionKeys, String answerKey) {
 
@@ -222,14 +227,35 @@ public class GeneratorHelper {
         for (int i = 0; i < NUMBER_OF_GENERATORS; i++) {
             numbers.add(i);
         }
-        Collections.shuffle(numbers);
+        for (int i=0; i<5; i++){
+            Collections.shuffle(numbers);
+        }
         ArrayList<TriviaQuestion> array = new ArrayList<>();
         Generator generator = new Generator();
+        int indexForRandom, randomNumber;
+        HashSet <Integer> indexes = new HashSet<>();
+        int safe = 0;
 
         for (int i = 0; i < ARRAY_SIZE; i++) {
-            Log.d(MainActivity.TAG, "generateQuestionsArray:  i,  random number = " + i + "," + numbers.get(i % NUMBER_OF_GENERATORS));
+            Log.d(MainActivity.TAG, "AAA");
+            Log.d(MainActivity.TAG, "indexes size = " + indexes.size());
+
+
+            do {
+                Log.d(MainActivity.TAG, "BBB");
+                randomNumber = new Random().nextInt(50);
+                indexForRandom = (randomNumber + runIndex) % NUMBER_OF_GENERATORS;
+                safe++;
+            } while (indexes.contains(indexForRandom) && safe < 100);
+
+            safe = 0;
+
+            indexes.add(indexForRandom);
+
+            checkRandom(numbers.get(indexForRandom));
+            Log.d(MainActivity.TAG, "generateQuestionsArray:  i,  random number = " + i + "," + numbers.get((indexForRandom)));
             //add new generators down here AND update NUMBER_OF_GENERATORS above.
-            switch (numbers.get(i % NUMBER_OF_GENERATORS)) {
+            switch (numbers.get((indexForRandom))) {
 
                 case 0:array.add(generator.israelBandToAlbum());break;
                 case 1:array.add(generator.worldBandToAlbum());break;
@@ -292,8 +318,48 @@ public class GeneratorHelper {
             }
         }
         Log.d(MainActivity.TAG, "generateQuestionsArray:  array.size = " + array.size());
+        runIndex++;
+        printRandomCheck(); // for debugging the random
         return array;
+    }
 
-            }
+
+
+    // ########## random checker - start ##############
+
+    private static HashMap<Integer,Integer> randomChecker;
+    public static void checkRandom (int x) {
+        if (randomChecker == null)
+            randomChecker = new HashMap<Integer, Integer>();
+        if (randomChecker.get(x) != null)
+            randomChecker.put(x, randomChecker.get(x) + 1);
+        else
+            randomChecker.put(x, 1);
+    }
+
+    public static void printRandomCheck () {
+        Log.d(MainActivity.TAG, "runIndex = " + runIndex);
+
+        int[] result = new int[randomChecker.values().toArray().length];
+        for (int i = 0; i < randomChecker.values().toArray().length; i++) {
+            result[i] = ((Integer)(randomChecker.values().toArray())[i]).intValue();
         }
+        sortValue(randomChecker);
+    }
+
+    public static void sortValue(HashMap<?, Integer> t){
+        //Transfer as List and sort it
+        ArrayList<Map.Entry<?, Integer>> l = new ArrayList(t.entrySet());
+        Collections.sort(l, new Comparator<Map.Entry<?, Integer>>(){
+
+            public int compare(Map.Entry<?, Integer> o1, Map.Entry<?, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }});
+
+        Log.d(MainActivity.TAG, "randomChecker = " + l);
+    }
+
+    // ########## random checker  - end ##############
+
+}
 
