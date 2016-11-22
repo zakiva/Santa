@@ -1,28 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="#ffffff">
 
-
-
-    <TextView
+    <RelativeLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="prize information !! "
-        android:layout_below="@+id/chronometer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="25dp"
-        android:id="@+id/title" />
+        android:layout_height="wrap_content">
 
-    <ImageView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="53dp">
+    </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Gift's information"
+            android:textAllCaps="false"
+            android:textColor="#303030"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="backToPrizeClicked"
+            android:background="@drawable/ic_ac_nav_back"
+            android:id="@+id/homeScreen" />
+
+
+        <View android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow_below"/>
+
+    </RelativeLayout>
+
+    <TabHost
+        android:id="@+id/tabsBox"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewExample"
-        android:layout_below="@+id/title"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="30dp" />
+        android:layout_height="fill_parent"
+        android:theme="@style/TabWidgetTheme"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginBottom="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/fashionTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageViewExample"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tabsBox"
+                        android:layout_marginTop="30dp"
+                        android:adjustViewBounds="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/headlinesBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageViewExample">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="15dp">
+
+                            <TextView
+                                android:id="@+id/giftName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Name of the gift"
+                                android:textColor="#303030"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/companyName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/giftName"
+                                android:text="Comapny name"
+                                android:textColor="#303030"
+                                android:textSize="13sp" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="15dp">
+
+                            <TextView
+                                android:id="@+id/money"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:text="100$"
+                                android:textColor="#9254ff"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:id="@+id/worth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/money"
+                                android:text="Worth"
+                                android:textColor="#aaaaaa"
+                                android:textSize="13sp" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/headlinesBox"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="18dp"
+                        android:text="@string/info_prize"
+                        android:textColor="#303030"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/foodTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageViewExample2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tabsBox"
+                        android:layout_marginTop="30dp"
+                        android:adjustViewBounds="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/headlinesBox2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageViewExample">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="15dp">
+
+                            <TextView
+                                android:id="@+id/giftName2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Name of the gift"
+                                android:textColor="#303030"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/companyName2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/giftName2"
+                                android:text="Comapny name"
+                                android:textColor="#303030"
+                                android:textSize="13sp" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="15dp">
+
+                            <TextView
+                                android:id="@+id/money2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:text="100$"
+                                android:textColor="#9254ff"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:id="@+id/worth2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/money2"
+                                android:text="Worth"
+                                android:textColor="#aaaaaa"
+                                android:textSize="13sp" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/information2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/headlinesBox"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="18dp"
+                        android:text="@string/info_prize"
+                        android:textColor="#303030"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
 
 </RelativeLayout>
+
