@@ -222,7 +222,7 @@ public class GeneratorHelper {
 
         int ARRAY_SIZE = number_of_questions * 2;
         //IMPORTANT: when adding new generators must update this number:
-        int NUMBER_OF_GENERATORS = 57;
+        int NUMBER_OF_GENERATORS = 56;
         List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_GENERATORS; i++) {
             numbers.add(i);
@@ -284,36 +284,35 @@ public class GeneratorHelper {
                 case 24:array.add(generator.leastChampionships());break;
                 case 25:array.add(generator.coinToCountry());break;
                 case 26:array.add(generator.countryToCapital());break;
-                case 27:array.add(generator.countryToContinent());break;
-                case 28:array.add(generator.songToSinger());break;
-                case 29:array.add(generator.defenseMinisterToEvent());break;
-                case 30:array.add(generator.generalToEvent());break;
-                case 31:array.add(generator.primeMinisterToEvent());break;
-                case 32:array.add(generator.eventToYear());break;
-                case 33:array.add(generator.yearToEvent());break;
-                case 34:array.add(generator.albumToSinger());break;
-                case 35:array.add(generator.bornToSinger());break;
-                case 36:array.add(generator.countryToSinger());break;
-                case 37:array.add(generator.femaleActorToCharacter());break;
-                case 38:array.add(generator.characterToFemaleActor());break;
-                case 39:array.add(generator.maleActorToCharacter());break;
-                case 40:array.add(generator.characterToMaleActor());break;
-                case 41:array.add(generator.israelBandWhoFirst());break;
-                case 42:array.add(generator.worldBandWhoFirst());break;
-                case 43:array.add(generator.israelBandWhoLast());break;
-                case 44:array.add(generator.worldBandWhoLast());break;
-                case 45:array.add(generator.inventionWhoFirst());break;
-                case 46:array.add(generator.inventionWhoLast());break;
-                case 47:array.add(generator.brandWhoFirst());break;
-                case 48:array.add(generator.brandWhoLast());break;
-                case 49:array.add(generator.countryLeastArea());break;
-                case 50:array.add(generator.countryLeastGdp());break;
-                case 51:array.add(generator.countryLeastPop());break;
-                case 52:array.add(generator.countryMostArea());break;
-                case 53:array.add(generator.countryMostGdp());break;
-                case 54:array.add(generator.countryMostPop());break;
-                case 55:array.add(generator.mostNorth());break;
-                case 56:array.add(generator.mostSouth());break;
+                case 27:array.add(generator.songToSinger());break;
+                case 28:array.add(generator.defenseMinisterToEvent());break;
+                case 29:array.add(generator.generalToEvent());break;
+                case 30:array.add(generator.primeMinisterToEvent());break;
+                case 31:array.add(generator.eventToYear());break;
+                case 32:array.add(generator.yearToEvent());break;
+                case 33:array.add(generator.albumToSinger());break;
+                case 34:array.add(generator.bornToSinger());break;
+                case 35:array.add(generator.countryToSinger());break;
+                case 36:array.add(generator.femaleActorToCharacter());break;
+                case 37:array.add(generator.characterToFemaleActor());break;
+                case 38:array.add(generator.maleActorToCharacter());break;
+                case 39:array.add(generator.characterToMaleActor());break;
+                case 40:array.add(generator.israelBandWhoFirst());break;
+                case 41:array.add(generator.worldBandWhoFirst());break;
+                case 42:array.add(generator.israelBandWhoLast());break;
+                case 43:array.add(generator.worldBandWhoLast());break;
+                case 44:array.add(generator.inventionWhoFirst());break;
+                case 45:array.add(generator.inventionWhoLast());break;
+                case 46:array.add(generator.brandWhoFirst());break;
+                case 47:array.add(generator.brandWhoLast());break;
+                case 48:array.add(generator.countryLeastArea());break;
+                case 49:array.add(generator.countryLeastGdp());break;
+                case 50:array.add(generator.countryLeastPop());break;
+                case 51:array.add(generator.countryMostArea());break;
+                case 52:array.add(generator.countryMostGdp());break;
+                case 53:array.add(generator.countryMostPop());break;
+                case 54:array.add(generator.mostNorth());break;
+                case 55:array.add(generator.mostSouth());break;
 
             }
         }

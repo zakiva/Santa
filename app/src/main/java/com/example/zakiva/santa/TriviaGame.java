@@ -112,6 +112,7 @@ public class TriviaGame extends AppCompatActivity {
         clock.start();
         displayCandies();
         displayHelpersPrices();
+        addFont();
     }
 
     public void displayHelpersPrices () {
