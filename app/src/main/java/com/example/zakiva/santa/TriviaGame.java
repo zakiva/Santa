@@ -15,8 +15,10 @@ import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zakiva.santa.Helpers.GeneratorHelper;
+import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 
 import java.util.ArrayList;
@@ -43,6 +45,12 @@ public class TriviaGame extends AppCompatActivity {
     private int timeForRed;
     private int timeForNextQuestion;
     private int timeForSkipQuestion;
+    private int fiftyFiftyPrice;
+    private int freezeGamePrice;
+    private int skipQuestPrice;
+    private TextView freezePriceTextView;
+    private TextView fiftyFiftyPriceTextView;
+    private TextView skipQuestPriceTextView;
     private static int wrongCount;
     private static int index;
     private static ArrayList<TriviaQuestion> questionsArray;
@@ -51,6 +59,7 @@ public class TriviaGame extends AppCompatActivity {
     private static int FREEZE_TIME;
     private static long timeWhenStopped;
     private Chronometer clock;
+    private TextView candiesTextView;
     public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
     private static HashMap<String,Boolean> enableHelpers,disableHelpers;
 
@@ -60,6 +69,9 @@ public class TriviaGame extends AppCompatActivity {
         setContentView(R.layout.activity_trivia_game);
         activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
         activityBackground.getBackground().setAlpha(0);
+        skipQuestPrice = 200;
+        freezeGamePrice = 100;
+        fiftyFiftyPrice = 150;
         NUMBER_OF_QUESTIONS = 5;
         timeWhenStopped = 0;
         timeForBonus = 5700;
@@ -91,9 +103,21 @@ public class TriviaGame extends AppCompatActivity {
         fiftyFiftyBox = (RelativeLayout) findViewById(R.id.fiftyBox);
         skipQuestBox = (RelativeLayout) findViewById(R.id.skipBox);
         freezeBox = (RelativeLayout) findViewById(R.id.freezeBox);
+        candiesTextView = (TextView) findViewById(R.id.candiesNumber);
+        freezePriceTextView = (TextView) findViewById(R.id.freezePrice);
+        fiftyFiftyPriceTextView = (TextView) findViewById(R.id.fiftyFiftyPrice);
+        skipQuestPriceTextView = (TextView) findViewById(R.id.skipQuestPrice);
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
+        displayCandies();
+        displayHelpersPrices();
+    }
+
+    public void displayHelpersPrices () {
+        freezePriceTextView.setText(freezeGamePrice + "");
+        fiftyFiftyPriceTextView.setText(fiftyFiftyPrice + "");
+        skipQuestPriceTextView.setText(skipQuestPrice + "");
     }
 
     public static void addSheetToDataHash (String name, ArrayList<HashMap<String,Object>> data) {
@@ -239,6 +263,10 @@ TextView tv = (TextView) view;
     }
 
     public void fiftyFifty(View view) {
+        if (!updateCandies(fiftyFiftyPrice)) {
+            notifyNoCandies();
+            return;
+        }
         TriviaQuestion q = questionsArray.get(index);
         ArrayList<TextView> a=getAnswerArray();
         int m=0;
@@ -259,6 +287,10 @@ TextView tv = (TextView) view;
     }
 
     public void freezeGame(View view) {
+        if (!updateCandies(freezeGamePrice)) {
+            notifyNoCandies();
+            return;
+        }
         enableHelpers.put("freeze",false);
         freeze.setBackgroundResource(R.drawable.extra_time_disable);
         disableEnableViews(true,enableHelpers);
@@ -277,6 +309,10 @@ TextView tv = (TextView) view;
     }
 
     public void skipQuest(View view) {
+        if (!updateCandies(skipQuestPrice)) {
+            notifyNoCandies();
+            return;
+        }
         enableHelpers.put("skip",false);
         skip_quest.setBackgroundResource(R.drawable.next_disable);
         disableEnableViews(false,disableHelpers);
@@ -332,5 +368,26 @@ TextView tv = (TextView) view;
     public void changeBackgroundOpacity (int opacity, int visible) {
         activityBackground.getBackground().setAlpha(opacity);
         activityBackground.setVisibility(visible);
+    }
+
+    public boolean updateCandies (int price) {
+        if (MainActivity.candies < price)
+            return false;
+        long new_candies = MainActivity.candies - price;
+        Infra.addCandiesToUser(new_candies);
+        MainActivity.setCandies(new_candies);
+        displayCandies();
+        return true;
+    }
+
+    public void notifyNoCandies () {
+        Toast toast = Toast.makeText(this, "Need more candies mateee!!", Toast.LENGTH_SHORT);
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        v.setTextColor(Color.WHITE);
+        toast.show();
+    }
+
+    public void displayCandies() {
+        candiesTextView.setText(MainActivity.candies + "");
     }
 }

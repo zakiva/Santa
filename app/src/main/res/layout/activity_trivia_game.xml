@@ -203,6 +203,7 @@
                 android:background="@drawable/candis_help" />
 
             <TextView
+                android:id="@+id/freezePrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -255,6 +256,7 @@
                 android:background="@drawable/candis_help" />
 
             <TextView
+                android:id="@+id/fiftyFiftyPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -309,6 +311,7 @@
                 android:background="@drawable/candis_help" />
 
             <TextView
+                android:id="@+id/skipQuestPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -350,7 +353,7 @@
             app:srcCompat="@drawable/candis_game" />
 
         <TextView
-            android:id="@+id/text700"
+            android:id="@+id/candiesNumber"
             android:layout_width="45dp"
             android:layout_height="15dp"
             android:layout_toRightOf="@id/candy"
@@ -364,7 +367,7 @@
             android:id="@+id/candiesText"
             android:layout_width="45dp"
             android:layout_height="15dp"
-            android:layout_below="@id/text700"
+            android:layout_below="@id/candiesNumber"
             android:layout_toRightOf="@id/candy"
             android:gravity="center"
             android:text="Candies"
