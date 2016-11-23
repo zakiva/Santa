@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Helpers.Infra;
@@ -129,7 +131,15 @@ public class Score extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         displayCandies();
+        Log.d(MainActivity.TAG, ">>>>>>>>>>ON RESTART SCORE ");
         //displayExp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayCandies();
+        Log.d(MainActivity.TAG, ">>>>>>>>>>ON Resume SCORE ");
     }
 
     public void initFields () {
@@ -157,8 +167,10 @@ public class Score extends AppCompatActivity {
         if (extras == null)
             return;
 
-        if (!updateCandies()) // don't start game (and inform the user need more candies?)
+        if (!updateCandies()) { // don't start game (and inform the user need more candies?)
+            notifyNoCandies();
             return;
+        }
 
         switch (gameType) {
             case "trivia":
@@ -177,6 +189,8 @@ public class Score extends AppCompatActivity {
             return false;
         long new_candies = MainActivity.candies - TRY_CANDIES_PRICE;
         Infra.addCandiesToUser(new_candies);
+        MainActivity.setCandies(new_candies);
+        //displayCandies(); prefer not to use this.
         return true;
     }
 
@@ -337,6 +351,13 @@ public boolean isContainMultipleStrings(String word, String [] subWords){
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[]{}));
             startActivity(chooserIntent);
         }
+    }
+
+    public void notifyNoCandies () {
+        Toast toast = Toast.makeText(this, "Need more candies mateee!!", Toast.LENGTH_SHORT);
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        v.setTextColor(Color.WHITE);
+        toast.show();
     }
     
     public void shareScoreButtonClicked(View view) {
