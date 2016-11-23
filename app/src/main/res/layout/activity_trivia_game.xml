@@ -39,27 +39,13 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/quest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timeLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:text="XXX XXX XXX XXX XXX XXX XXX?"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="27sp" />
-
     <View android:id="@+id/primerdivisor1"
         android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_below="@id/quest"
-        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="160dp"
         android:background="#dddddd" />
 
     <TextView
@@ -163,6 +149,20 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#dddddd" />
+
+    <TextView
+        android:id="@+id/quest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="XXX XXX XXX XXX XXX XXX XXXX XXX XXX XXX XXX XXX XXX XXX XXXXX XXX XXXXX?"
+        android:textAllCaps="false"
+        android:textColor="#303030"
+        android:textSize="27sp" />
 
 
         <RelativeLayout
