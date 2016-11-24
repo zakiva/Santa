@@ -21,15 +21,25 @@
 
         </android.support.v7.widget.Toolbar>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="12dp"
+            android:onClick="backToPrizeClicked"
+            android:layout_alignParentLeft="true">
+
         <ImageView
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="backToPrizeClicked"
             android:background="@drawable/ic_ac_nav_back"
             android:id="@+id/homeScreen" />
+
+        </RelativeLayout>
+
 
 
         <View android:layout_width="match_parent"

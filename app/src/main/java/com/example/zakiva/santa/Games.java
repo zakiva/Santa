@@ -93,5 +93,6 @@ public class Games extends AppCompatActivity {
     }
 
     public void backToPrizeClicked(View view) {
+        startActivity(new Intent(Games.this, Prize.class));
     }
 }

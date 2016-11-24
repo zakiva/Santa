@@ -364,6 +364,6 @@ public boolean isContainMultipleStrings(String word, String [] subWords){
     }
 
     public void backFromScoreClicked(View view) {
-
+        startActivity(new Intent(Score.this, Games.class));
     }
 }

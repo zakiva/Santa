@@ -23,25 +23,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+                <RelativeLayout
+                    android:id="@+id/settingsBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="12dp"
+                    android:layout_alignParentRight="true"
+                    android:onClick="settingsClicked">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_ac_nav_more"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/settingsButton"
+                        android:onClick="settingsClicked"/>
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:layout_toLeftOf="@id/settingsBox"
+                android:onClick="hallOfFameClicked">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:background="@drawable/ic_ac_nav_hall_of_fame"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
                     android:id="@+id/hallOfFameButton"
-                    android:layout_marginRight="25dp"
-                    android:layout_toLeftOf="@+id/settingsButton"
                     android:onClick="hallOfFameClicked"/>
+            </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_ac_nav_more"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/settingsButton"
-                    android:onClick="settingsClicked"/>
 
             </RelativeLayout>
 
