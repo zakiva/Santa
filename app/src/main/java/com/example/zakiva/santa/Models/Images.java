@@ -41,7 +41,7 @@ public class Images {
         } else {
             SharedPreferences settings = yourActivity.getSharedPreferences("MY_DATA", 0);
             String Pic = settings.getString("IM1" + index, "NONE");
-            String name = settings.getString("IM1 " + index + " " + imageName, "NONE");
+            String name = settings.getString("IM1 " + index + " " + "imageName", "NONE");
             if (!Pic.equals("NONE") && name.equals(imageName)) {
                 byte[] imageAsBytes = Base64.decode(Pic.getBytes(), Base64.DEFAULT);
                 Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
@@ -74,9 +74,9 @@ public class Images {
         } else {
             SharedPreferences settings = yourActivity.getSharedPreferences("MY_DATA", 0);
             String Pic = settings.getString("IM1" + index, "NONE");
-            String name = settings.getString("IM1 " + index + " " + imageName, "NONE");
+            String name = settings.getString("IM1 " + index + " " + "imageName", "NONE");
             String Pic2 = settings.getString("IM1" + index2, "NONE");
-            String name2 = settings.getString("IM1 " + index2 + " " + imageName2, "NONE");
+            String name2 = settings.getString("IM1 " + index2 + " " + "imageName", "NONE");
             if ((!Pic.equals("NONE") && name.equals(imageName)) && (!Pic2.equals("NONE") && name2.equals(imageName2))) {
                 byte[] imageAsBytes = Base64.decode(Pic.getBytes(), Base64.DEFAULT);
                 Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
@@ -158,7 +158,7 @@ public class Images {
         SharedPreferences settings = yourActivity.getSharedPreferences("MY_DATA", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("IM1" + index, pic1);
-        editor.putString("IM1 " + index + " " + imageName, imageName);
+        editor.putString("IM1 " + index + " " + "imageName", imageName);
         editor.commit();
     }
 
