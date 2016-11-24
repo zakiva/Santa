@@ -217,17 +217,29 @@
         android:layout_below="@id/prizeA"
         android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:text="    see prize information    "
-        android:textSize="15dp"
-        android:textColor="#9254ff"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/windisPrizeButton"
         android:onClick="seePrizeInformationClicked"
-        android:layout_marginTop="15dp"
-        android:id="@+id/prizeInformation" />
+        android:layout_marginTop="3dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="12dp">
+
+        <TextView
+            android:text="see prize information"
+            android:textSize="15dp"
+            android:textColor="#9254ff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prizeInformation" />
+
+    </RelativeLayout>
+
+
 
     <TextView
         android:text="To End Of Competition"
