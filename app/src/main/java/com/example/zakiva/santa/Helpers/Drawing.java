@@ -49,21 +49,34 @@ public class Drawing {
     }
 
     public static Bitmap convertImageToBitmap(int image, Context context) {
+        Log.d(MainActivity.TAG, "inside convertImageToBitmap");
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
         Bitmap b = BitmapFactory.decodeResource(context.getResources(), image, options);
         return b;
     }
 
-    public static int[][] convertBitmapToMatrix(Bitmap bitmap) {
+    public static int[][] convertBitmapToMatrix(Bitmap originalBitmap) {
 
+
+        Bitmap bitmap = Bitmap.createScaledBitmap(originalBitmap, SIZE, SIZE, true);
+
+        Log.d(MainActivity.TAG, "convertBitmapToMatrix");
         int[][] matrix = new int[SIZE][SIZE];
         int h = bitmap.getHeight();
         int w = bitmap.getWidth();
+
+        Log.d(MainActivity.TAG, "SIZE = " + SIZE);
+        Log.d(MainActivity.TAG, "h = " + h);
+        Log.d(MainActivity.TAG, "w = " + w);
+
         int pixel, alpha;
 
         //Log.d(MainActivity.TAG, "from convertBitmapToMatrix h = " + h);
         //Log.d(MainActivity.TAG, "from convertBitmapToMatrix w = " + w);
+
+        Log.d(MainActivity.TAG, "for loop:");
+
 
         for (int i = 0; i < h; i += JUMP) {
             for (int j = 0; j < w; j += JUMP) {
@@ -91,6 +104,8 @@ public class Drawing {
                 }
             }
         }
+        Log.d(MainActivity.TAG, "return matrix...");
+
         return matrix;
     }
 
@@ -139,6 +154,8 @@ public class Drawing {
     public static float convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
+        Log.d(MainActivity.TAG, "DisplayMetrics.DENSITY_DEFAULT  = " +  DisplayMetrics.DENSITY_DEFAULT);
+        Log.d(MainActivity.TAG, "metrics.densityDpi  = " +  metrics.densityDpi);
         float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return px;
     }

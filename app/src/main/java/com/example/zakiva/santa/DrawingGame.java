@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class DrawingGame extends AppCompatActivity {
     private Button replaceHelper;
     private Button flashHelper;
     private Button clueHelper;
+   // private ImageView image;
     private MainDrawingView v;
     private int flashHelperLength;
     private ArrayList<Integer> images;
@@ -73,6 +75,7 @@ public class DrawingGame extends AppCompatActivity {
         randomImage = images.get(0);
         activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
         activityBackground.getBackground().setAlpha(0);
+       // image = (ImageView) findViewById(R.id.image);
     }
 
     public void startGame () {
@@ -101,6 +104,8 @@ public class DrawingGame extends AppCompatActivity {
 
     public void startDraw () {
         v.setBackgroundColor(Color.WHITE);
+        //for checking only:
+        //v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
         v.setAllowDrawing(true);
         pen.setVisibility(View.VISIBLE);
         eraser.setVisibility(View.VISIBLE);
@@ -119,10 +124,18 @@ public class DrawingGame extends AppCompatActivity {
 
         hideButtons();
 
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =before botmaps  ");
+
         Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
         Bitmap coloredBitmap = Drawing.convertBlackToColor(bitmap);
+
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =after bitmaps befrep drawbale  ");
+
         Drawable d = new BitmapDrawable(getResources(), coloredBitmap);
         v.setBackground(d);
+
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =after draewbake before intent  ");
+
 
         final Intent intent = new Intent(DrawingGame.this, Score.class);
         intent.putExtra("score", calcScore());
@@ -178,10 +191,19 @@ public class DrawingGame extends AppCompatActivity {
     public long calcScore () {
         //Bitmap draw_bitmap = v.canvasBitmap;
         //Bitmap source_bitmap = Drawing.convertImageToBitmap(randomImage, this);
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =convertImageToMatrix ");
         int [][] source_matrix = Drawing.convertImageToMatrix(randomImage, this);
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =convertBitmapToMatrix ");
+
         int [][] user_matrix = Drawing.convertBitmapToMatrix(v.canvasBitmap);
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =countBlackPixels ");
+
         int blackSource = Drawing.countBlackPixels(source_matrix);
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =compareMatrices ");
+
         int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
+        Log.d(MainActivity.TAG, ">>>>>>>>>> =blackSourceAfterCompare ");
+
         int blackSourceAfterCompare = result[2];
         int badBlackPixels = result[1];
         double formula = ((double) (blackSource - blackSourceAfterCompare) / blackSource) * 1000 - 0.5 * badBlackPixels;

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.MainActivity;
 
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class MainDrawingView extends View {
     private Path path;
     //private Bitmap bitmap;
     //private int [][] matrix;
-    public static int SIZE = 700;
+    public static int SIZE;
+    public static int dpSize = 360;
     public static int JUMP = 5;
     private static final float RATIO = 1f / 1f;
     private Context context;
@@ -48,16 +50,20 @@ public class MainDrawingView extends View {
         super(context, attrs);
        // this.setDrawingCacheEnabled(true);
 
+        this.context = context;
+        this.SIZE = (int) Drawing.convertDpToPixel(dpSize, context);
+
         paint = new Paint();
         path = new Path();
 
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(5f);
+        int stroke = context.getResources().getDisplayMetrics().densityDpi / 60;
+        Log.d(MainActivity.TAG, "stroke  = " +  stroke);
+        paint.setStrokeWidth((float) stroke);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
 
-        this.context = context;
 
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
