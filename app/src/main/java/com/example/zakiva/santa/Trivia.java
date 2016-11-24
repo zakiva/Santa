@@ -79,7 +79,7 @@ public class Trivia extends AppCompatActivity {
         Generator generator = new Generator ();
 
 
-        loadQuestionToScreen(generator.quoteToPerson());
+        loadQuestionToScreen(generator.hostToYear());
         /*
 
         int n = new Random().nextInt(3);

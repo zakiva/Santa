@@ -150,7 +150,7 @@ public class Generator {
     }
     public TriviaQuestion sonToFather() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("bibleFathers"), "מי היה אביו של #0#?",q, "father");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("bibleFathers"), "בתנ\"ך, מי היה אביו של #0#?",q, "father");
     }
     public TriviaQuestion quoteToPerson() {
         String[] q = {"quote"};
@@ -166,7 +166,7 @@ public class Generator {
     }
     public TriviaQuestion hostToYear() {
         String[] q = { "year"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCups"), "איזו מדינה אירחה את המונדיאל בשנת #0#",q, "host");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCups"), "איזו מדינה אירחה את המונדיאל בשנת #0#?",q, "host");
     }
     public TriviaQuestion winnerToYear() {
         String[] q = { "year"};
@@ -177,10 +177,10 @@ public class Generator {
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldLeaders"), "באילו שנים חי #0#?",q, "years");
     }
       public TriviaQuestion brandWhoFirst() {
-        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("brands"), "איזו מהמותגים הבאים נוסד מוקדם יותר?", "brand","year",true);
+        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("brands"), "איזה מהמותגים הבאים נוסד מוקדם יותר?", "brand","year",false);
     }
     public TriviaQuestion brandWhoLast() {
-        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("brands"), "איזו מהמותגים הבאים נוסד מאוחר יותר?", "brand","year",false);
+        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("brands"), "איזה מהמותגים הבאים נוסד מאוחר יותר?", "brand","year",true);
     }
     public TriviaQuestion brandToYear() {
         String[] q = {"brand"};
@@ -201,10 +201,6 @@ public class Generator {
     public TriviaQuestion countryToCapital () {
         String[] q = {"name"};
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("countries"), "מהי עיר הבירה של #0#?",q, "capital");
-    }
-    public TriviaQuestion countryToContinent () {
-        String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("countries"), "באיזו יבשת נמצאת #0#?",q, "continent");
     }
     public TriviaQuestion countryMostArea () {
         return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("countries"), "איזו מהמדינות הבאות בעלת השטח הגדול ביותר?","name","area",true);
@@ -239,15 +235,15 @@ public class Generator {
     }
     public TriviaQuestion generalToEvent() {
         String[] q = { "event"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כרמטכ״לֹ ב#0#?",q, "general");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כרמטכ״לֹ בזמן #0#?",q, "general");
     }
     public TriviaQuestion primeMinisterToEvent() {
         String[] q = {"event"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כראש הממשלה ב#0#?",q, "pminister");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כראש הממשלה בזמן #0#?",q, "pminister");
     }
     public TriviaQuestion defenseMinisterToEvent() {
         String[] q = {"event"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כשר הביטחון ב#0#?",q, "dminister");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כשר הביטחון בזמן #0#?",q, "dminister");
     }
     public TriviaQuestion albumToSinger() {
         String[] q = {"name"};
@@ -305,7 +301,7 @@ public class Generator {
     }*/
     public TriviaQuestion maleActorToCharacter() {
         String [] q = {"actor", "type", "name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("maleActors"), "איזה דמות גילם #0# ב#1# #2#?",q, "character");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("maleActors"), "איזו דמות גילם #0# ב#1# #2#?",q, "character");
     }
     public TriviaQuestion femaleActorToCharacter() {
         String [] q = {"actor", "type", "name"};
