@@ -229,7 +229,7 @@
     <RelativeLayout
         android:id="@+id/fiftyBox"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="32dp"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
@@ -285,7 +285,7 @@
     <RelativeLayout
         android:id="@+id/skipBox"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="32dp"
         android:paddingLeft="10dp"
         android:onClick="skipQuest"
         android:paddingRight="10dp"
@@ -333,57 +333,52 @@
 
     </RelativeLayout>
 
-
-
-
-
     <RelativeLayout
         android:id="@+id/candyBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomBox"
-        android:layout_marginLeft="14dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="19dp"
+        android:layout_marginLeft="15dp">
 
         <ImageView
             android:id="@+id/candy"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             app:srcCompat="@drawable/candis_game" />
 
         <TextView
             android:id="@+id/candiesNumber"
-            android:layout_width="45dp"
-            android:layout_height="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/candy"
             android:gravity="center"
             android:text="700"
             android:textColor="#030330"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/candiesText"
-            android:layout_width="45dp"
-            android:layout_height="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/candiesNumber"
             android:layout_toRightOf="@id/candy"
             android:gravity="center"
             android:text="Candies"
             android:textColor="#030330"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
     </RelativeLayout>
 
 
-
     <RelativeLayout
+        android:id="@+id/activityBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:id="@+id/activityBackground"
-        android:background="#000000" />
+        android:background="#000000"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/bonus"
