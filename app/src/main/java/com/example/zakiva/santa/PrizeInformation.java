@@ -1,7 +1,9 @@
 package com.example.zakiva.santa;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TabHost;
 
 import com.example.zakiva.santa.Models.Images;
@@ -32,5 +34,9 @@ public class PrizeInformation extends AppCompatActivity {
         tabSpec.setContent(R.id.foodTab);
         tabSpec.setIndicator("Food");
         tabHost.addTab(tabSpec);
+    }
+
+    public void backToPrizeClicked(View view) {
+        startActivity(new Intent(PrizeInformation.this, Prize.class));
     }
 }
