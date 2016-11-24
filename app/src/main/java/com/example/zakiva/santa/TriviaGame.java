@@ -1,6 +1,7 @@
 package com.example.zakiva.santa;
 
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,9 +11,11 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +42,7 @@ public class TriviaGame extends AppCompatActivity {
     private RelativeLayout fiftyFiftyBox;
     private RelativeLayout skipQuestBox;
     private ImageView bonusRound;
+    private ProgressBar freezeBar;
     private RelativeLayout layout;
     private static int NUMBER_OF_QUESTIONS;
     private int timeForGreen;
@@ -58,6 +62,7 @@ public class TriviaGame extends AppCompatActivity {
     private int timeForBonus;
     private static int FREEZE_TIME;
     private static long timeWhenStopped;
+    private int mProgressStatus=0;
     private Chronometer clock;
     private TextView candiesTextView;
     public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
@@ -107,6 +112,7 @@ public class TriviaGame extends AppCompatActivity {
         freezePriceTextView = (TextView) findViewById(R.id.freezePrice);
         fiftyFiftyPriceTextView = (TextView) findViewById(R.id.fiftyFiftyPrice);
         skipQuestPriceTextView = (TextView) findViewById(R.id.skipQuestPrice);
+        freezeBar = (ProgressBar) findViewById(R.id.circular_progress_bar);
         nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
@@ -294,6 +300,8 @@ TextView tv = (TextView) view;
         }
         enableHelpers.put("freeze",false);
         freeze.setBackgroundResource(R.drawable.extra_time_disable);
+        freezeProgressBar();
+        view.setBackgroundResource(R.drawable.extra_time_disable);
         disableEnableViews(true,enableHelpers);
         timeWhenStopped = clock.getBase() - SystemClock.elapsedRealtime();
         clock.stop();
@@ -305,6 +313,7 @@ TextView tv = (TextView) view;
                 Log.d(MainActivity.TAG, "system= "+SystemClock.elapsedRealtime());
                 clock.setBase(SystemClock.elapsedRealtime() +timeWhenStopped);
                 clock.start();
+                freezeBar.setVisibility(View.GONE);
             }
         }, FREEZE_TIME);
     }
@@ -391,4 +400,13 @@ TextView tv = (TextView) view;
     public void displayCandies() {
         candiesTextView.setText(MainActivity.candies + "");
     }
-}
+
+    public void freezeProgressBar() {
+        freezeBar.setVisibility(View.VISIBLE);
+        ObjectAnimator anim = ObjectAnimator.ofInt(freezeBar, "progress", 0, 100);
+        anim.setDuration(17500);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.start();
+    }
+    }
+

@@ -15,9 +15,8 @@
         android:layout_below="@+id/topLine"
         android:gravity="center"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:layout_centerHorizontal="true">
-
 
         <Chronometer
             android:id="@+id/clock"
@@ -28,7 +27,6 @@
             android:textColor="#aaaaaa"
             android:textSize="20sp" />
 
-
         <ImageView
             android:id="@+id/PicTime"
             android:layout_width="wrap_content"
@@ -37,6 +35,19 @@
             app:srcCompat="@drawable/time_trivia" />
 
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/circular_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:indeterminate="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:max="48"
+        android:progress="1"
+        android:visibility="invisible"
+        android:progressDrawable="@drawable/freeze_prog_bar" />
 
 
     <View android:id="@+id/primerdivisor1"
@@ -388,5 +399,8 @@
         android:layout_centerVertical="true"
         android:visibility="gone"
         app:srcCompat="@drawable/bonus_screen" />
+
+
+
 
 </RelativeLayout>
