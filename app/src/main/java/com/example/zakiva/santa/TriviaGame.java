@@ -134,7 +134,7 @@ public class TriviaGame extends AppCompatActivity {
 
     public void answerClicked(final View view) {
 
-        disableEnableViews(false,disableHelpers);
+        disableEnableViews(false, disableHelpers);
         final TextView b = (TextView) view;
         String text = b.getText().toString();
         Log.d(MainActivity.TAG, "flash =" + index);
@@ -151,13 +151,11 @@ public class TriviaGame extends AppCompatActivity {
             wrongCount++;
         }
         index++;
-        if(index == NUMBER_OF_QUESTIONS-1) {
-           bonusRoundMethod();
+        if (index == NUMBER_OF_QUESTIONS - 1) {
+            bonusRoundMethod();
+        } else {
+            nextQuestion(timeForNextQuestion);
         }
-        else{
-                nextQuestion(3000);
-            }
-        nextQuestion(timeForNextQuestion);
     }
     public void nextQuestion(int delay) {
         Log.d(MainActivity.TAG, "enable = " + enableHelpers);
@@ -301,7 +299,6 @@ TextView tv = (TextView) view;
         enableHelpers.put("freeze",false);
         freeze.setBackgroundResource(R.drawable.extra_time_disable);
         freezeProgressBar();
-        view.setBackgroundResource(R.drawable.extra_time_disable);
         disableEnableViews(true,enableHelpers);
         timeWhenStopped = clock.getBase() - SystemClock.elapsedRealtime();
         clock.stop();
