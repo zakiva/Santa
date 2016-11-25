@@ -55,4 +55,12 @@ android:clickable="true">
         android:textColor="#aaaaaa"
         android:layout_below="@+id/response"/>
 
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/imageViewWinnerFace"
+        android:layout_alignTop="@+id/name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

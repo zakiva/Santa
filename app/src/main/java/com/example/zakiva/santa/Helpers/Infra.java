@@ -288,13 +288,13 @@ public class Infra {
         myRef.addValueEventListener(triviaDataListener);
     }
 
-    public static void addWinner (final String key, final String name, final String competition, final String details, final String imageName) {
+    public static void addWinner (final String key, final String name, final String competition, final String details, final String imageName, final String prize) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
         storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Winner winner = new Winner(name, competition, details, imageName, uri.toString());
+                Winner winner = new Winner(name, competition, details, imageName, uri.toString(), prize);
                 myDatabase.child("winners").child(key).setValue(winner);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -303,5 +303,23 @@ public class Infra {
                 // Handle any errors
             }
         });
+    }
+
+    public static void getWinnersFromFirebase() {
+        HallOfFame.dataHashWinners = new ArrayList<>();
+        DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("winners");
+        ValueEventListener winnersDataListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HallOfFame.dataHashWinners = (ArrayList<Object>) dataSnapshot.getValue();
+                //Log.d("ccccccccccccccc: ", "yes!!!");
+                //Loader.increase();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //Log.d("ccccccccccccccc: ", "aassdvfdvfd");
+            }
+        };
+        myRef2.addValueEventListener(winnersDataListener);
     }
 }

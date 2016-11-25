@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 
 import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
+import static com.example.zakiva.santa.Helpers.Infra.getWinnersFromFirebase;
 import static com.example.zakiva.santa.Helpers.Infra.getUserAttributesFromFirebase;
 
 public class Loader extends AppCompatActivity {
@@ -47,6 +48,7 @@ public class Loader extends AppCompatActivity {
 
         getTimeCodeFromServer();
         getTriviaDataFromFirebase();
+        getWinnersFromFirebase();
 
         Log.d(TAG, " finish oncreatre ");
     }

@@ -8,16 +8,18 @@ public class Winner {
     public String competition;
     public String details;
     public String imageName;
-    String imageUrl;
+    public String imageUrl;
+    public String prize;
 
     public Winner() {}
 
-    public Winner(String name, String competition, String details, String imageName, String imageUrl) {
+    public Winner(String name, String competition, String details, String imageName, String imageUrl, String prize) {
         this.name = name;
         this.competition = competition;
         this.details = details;
         this.imageName = imageName;
         this.imageUrl = imageUrl;
+        this.prize = prize;
     }
 
     public String getName() {
@@ -52,11 +54,19 @@ public class Winner {
         this.imageName = imageName;
     }
 
-    public String getimageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setimageUrl(String imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getPrize() {
+        return prize;
+    }
+
+    public void setPrize(String prize) {
+        this.prize = prize;
     }
 }

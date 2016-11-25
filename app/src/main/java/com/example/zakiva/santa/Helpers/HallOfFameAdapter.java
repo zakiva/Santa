@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.zakiva.santa.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,21 +43,19 @@ public class HallOfFameAdapter extends ArrayAdapter<String[]> {
             }
         });
 
-        /*
-
-        Button choose = (Button) customView.findViewById(R.id.button_choose);
-
-        choose.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                winner_chosen(v, item[0], item[1]);
-            }
-        });
-
-        */
-
         TextView name = (TextView) customView.findViewById(R.id.name);
+        TextView prize = (TextView) customView.findViewById(R.id.prize);
+        TextView response = (TextView) customView.findViewById(R.id.response);
+        TextView date = (TextView) customView.findViewById(R.id.date);
 
-        name.setText(item[0]);
+        name.setText(item[4]);
+        prize.setText(item[5]);
+        response.setText(item[1]);
+        date.setText(item[0]);
+
+        ImageView image = (ImageView) customView.findViewById(R.id.imageViewWinnerFace);
+        //Picasso.with(getContext()).load(item[3]).into(image);
+        Glide.with(getContext()).load(item[3]).into(image);
 
         return customView;
     }

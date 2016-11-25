@@ -2,8 +2,8 @@ package com.example.zakiva.santa;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.zakiva.santa.Models.Images;
 
+import com.example.zakiva.santa.Models.Images;
 
 public class PrizeInformation extends AppCompatActivity {
 
