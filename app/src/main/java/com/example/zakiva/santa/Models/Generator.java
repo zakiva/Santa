@@ -4,7 +4,10 @@ import com.example.zakiva.santa.Helpers.GeneratorHelper;
 import com.example.zakiva.santa.TriviaGame;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static com.example.zakiva.santa.Helpers.GeneratorHelper.getNumericAnswers;
 
@@ -65,6 +68,136 @@ public class Generator {
 
         return new TriviaQuestion("33", "בסדרה זו מה המספר הבא " + sidra + " ?", s, getNumericAnswers(n, 5).get(0), getNumericAnswers(n, 5).get(1), s, getNumericAnswers(n, 5).get(2),false);
     }
+    public TriviaQuestion groupGeneratorsIsraelBands() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(5);
+            switch (random) {
+                case 0:tq = israelBandToAlbum();break;
+                case 1:tq = israelBandToYear();break;
+                case 2:tq = israelBandToMembers();break;
+                case 3:tq = israelBandWhoFirst();break;
+                case 4:tq = israelBandWhoLast();break;
+            }return tq;
+    }
+    public TriviaQuestion groupGeneratorsWorldBands() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(5);
+        switch (random) {
+            case 0:tq = worldBandToAlbum();break;
+            case 1:tq = worldBandToYear();break;
+            case 2:tq = worldBandToMembers();break;
+            case 3:tq = worldBandWhoFirst();break;
+            case 4:tq = worldBandWhoLast();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsInventions() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(5);
+        switch (random) {
+            case 0:tq = inventionToCountry();break;
+            case 1:tq = inventionToInventor();break;
+            case 2:tq = inventionWhoFirst();break;
+            case 3:tq = inventionWhoLast();break;
+            case 4:tq = inventionToYear();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsAuthors() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(2);
+        switch (random) {
+            case 0:tq = authorToCountry();break;
+            case 1:tq = bookToAuthor();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsWifeToHusband() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(2);
+        switch (random) {
+            case 0:tq = wifeToHusband();break;
+            case 1:tq = husbandToWife();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsWorldCups() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(2);
+        switch (random) {
+            case 0:tq = hostToYear();break;
+            case 1:tq = winnerToYear();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsBrands() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(5);
+        switch (random) {
+            case 0:tq = brandToYear();break;
+            case 1:tq = brandWhoFirst();break;
+            case 2:tq = brandWhoLast();break;
+            case 3:tq = brandToCountry();break;
+            case 4:tq = brandToFounder();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsCountries() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(8);
+        switch (random) {
+            case 0:tq = countryLeastArea();break;
+            case 1:tq = countryLeastGdp();break;
+            case 2:tq = countryLeastPop();break;
+            case 3:tq = countryMostArea();break;
+            case 4:tq = countryMostGdp();break;
+            case 5:tq = countryMostPop();break;
+            case 6:tq = countryToCapital();break;
+            case 7:tq = countryToCoin();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsIsraelEvents() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(5);
+        switch (random) {
+            case 0:tq = eventToYear();break;
+            case 1:tq = defenseMinisterToEvent();break;
+            case 2:tq = primeMinisterToEvent();break;
+            case 3:tq = generalToEvent();break;
+            case 4:tq = yearToEvent();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsSingers() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(4);
+        switch (random) {
+            case 0:tq = albumToSinger();break;
+            case 1:tq = bornToSinger();break;
+            case 2:tq = songToSinger();break;
+            case 3:tq = countryToSinger();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsChampionships() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(3);
+        switch (random) {
+            case 0:tq = mostChampionships();break;
+            case 1:tq = leastChampionships();break;
+            case 2:tq = teamToChampionships();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsLatitudes() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(2);
+        switch (random) {
+            case 0:tq = mostNorth();break;
+            case 1:tq = mostSouth();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsActors() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(4);
+        switch (random) {
+            case 0:tq = maleActorToCharacter();break;
+            case 1:tq = characterToMaleActor();break;
+            case 2:tq = femaleActorToCharacter();break;
+            case 3:tq = characterToFemaleActor();break;
+        }return tq;
+    }
 
     public TriviaQuestion israelBandToAlbum() {
         String[] q = {"name"};
@@ -102,7 +235,7 @@ public class Generator {
     public TriviaQuestion worldBandWhoLast() {
         return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("worldBands"), "איזו מהלהקות הבאות הוקמה מאוחר יותר?", "name", "year",true);
     }
-    public TriviaQuestion yearToInvention() {
+    public TriviaQuestion inventionToYear() {
         String[] q = {"name"};
         TriviaQuestion tq = GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventions"), "באיזו שנה הומצא #0#?", q, "year");
         if(tq.getMale()){
@@ -186,15 +319,15 @@ public class Generator {
         String[] q = {"brand"};
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "באיזו שנה נוסד המותג #0#?",q, "year");
     }
-    public TriviaQuestion founderToBrand() {
+    public TriviaQuestion brandToFounder() {
         String[] q = {"brand"};
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "מי ייסד את #0#?",q, "founder");
     }
-    public TriviaQuestion countryToBrand() {
+    public TriviaQuestion brandToCountry() {
         String[] q = { "brand"};
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "באיזו מדינה נוסד המותג #0#?",q, "country");
     }
-    public TriviaQuestion coinToCountry () {
+    public TriviaQuestion countryToCoin () {
         String[] q = {"name"};
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("countries"), "באיזה מטבע משתמשים ב#0#?",q, "coin");
     }
