@@ -192,7 +192,7 @@ public class Generator {
     }
     public TriviaQuestion countryToBrand() {
         String[] q = { "brand"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "באיזו מדינה נוסד המותג #0# ?",q, "country");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brands"), "באיזו מדינה נוסד המותג #0#?",q, "country");
     }
     public TriviaQuestion coinToCountry () {
         String[] q = {"name"};
