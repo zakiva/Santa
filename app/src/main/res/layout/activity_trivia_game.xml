@@ -167,7 +167,9 @@
         android:layout_below="@+id/timeLayout"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
 
         <TextView
             android:id="@+id/quest"
@@ -213,7 +215,7 @@
             android:layout_height="20dp"
             android:layout_marginTop="0dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/circle_trivia"
+            android:background="@drawable/candies_frame"
             android:gravity="center">
 
             <ImageView
@@ -266,7 +268,7 @@
             android:layout_marginTop="0dp"
             android:layout_centerHorizontal="true"
             android:layout_height="20dp"
-            android:background="@drawable/circle_trivia"
+            android:background="@drawable/candies_frame"
             android:gravity="center">
 
             <ImageView
@@ -321,7 +323,7 @@
             android:layout_marginTop="0dp"
             android:layout_centerHorizontal="true"
             android:layout_height="20dp"
-            android:background="@drawable/circle_trivia"
+            android:background="@drawable/candies_frame"
             android:gravity="center">
 
             <ImageView
