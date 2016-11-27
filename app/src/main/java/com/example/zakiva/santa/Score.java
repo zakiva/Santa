@@ -332,7 +332,7 @@ public boolean isContainMultipleStrings(String word, String [] subWords){
 
     public void inviteFriendClicked(View view) {
         //List of apps that we would like to let the user share with
-        String [] apps = new String[] {"sms", "mms", "whatsapp", "facebook", "mail", "twit", "google+", "hangout", "viber"};
+        String [] apps = new String[] {"messaging", "sms", "mms", "whatsapp", "facebook", "mail", "twit", "google+", "hangout", "viber"};
         List<Intent> targetedShareIntents = new ArrayList<Intent>();
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
