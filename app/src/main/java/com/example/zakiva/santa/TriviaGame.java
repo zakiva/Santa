@@ -72,7 +72,10 @@ public class TriviaGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
-        activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
+        initViews();
+        initFields();
+    }
+    public void initFields(){
         activityBackground.getBackground().setAlpha(0);
         skipQuestPrice = 200;
         freezeGamePrice = 100;
@@ -82,19 +85,23 @@ public class TriviaGame extends AppCompatActivity {
         timeForBonus = 5700;
         timeForAnswer = 2000;
         FREEZE_TIME = 5000;
-        questionsArray = getQuestArray();
         wrongCount = 0;
         index = 0;
         timeForNextQuestion = 3000;
         timeForRed = 650;
         timeForGreen = 1000;
-        timeForSkipQuestion=1000;
+        timeForSkipQuestion = 1000;
+        clock.setBase(SystemClock.elapsedRealtime());
+        clock.start();
         enableHelpers = new HashMap<>();
         disableHelpers = new HashMap<>();
         initDisableEnable(disableHelpers, false, false, false);
         initDisableEnable(enableHelpers, true, true, true);
-        Log.d(MainActivity.TAG, "enable = " + enableHelpers);
-        Log.d(MainActivity.TAG, "disable = " + disableHelpers);
+        questionsArray = getQuestArray();
+        nextQuestion(0);
+    }
+    public void initViews(){
+        activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
         quest = ((TextView) findViewById(R.id.quest));
         answer1 = ((TextView) findViewById(R.id.answer1));
         answer2 = ((TextView) findViewById(R.id.answer2));
@@ -113,7 +120,6 @@ public class TriviaGame extends AppCompatActivity {
         fiftyFiftyPriceTextView = (TextView) findViewById(R.id.fiftyFiftyPrice);
         skipQuestPriceTextView = (TextView) findViewById(R.id.skipQuestPrice);
         freezeBar = (ProgressBar) findViewById(R.id.circular_progress_bar);
-        nextQuestion(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
         displayCandies();
