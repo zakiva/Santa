@@ -74,9 +74,9 @@ public class TriviaGame extends AppCompatActivity {
         setContentView(R.layout.activity_trivia_game);
         initViews();
         initFields();
+        startGame();
     }
     public void initFields(){
-        activityBackground.getBackground().setAlpha(0);
         skipQuestPrice = 200;
         freezeGamePrice = 100;
         fiftyFiftyPrice = 150;
@@ -91,15 +91,10 @@ public class TriviaGame extends AppCompatActivity {
         timeForRed = 650;
         timeForGreen = 1000;
         timeForSkipQuestion = 1000;
-        clock.setBase(SystemClock.elapsedRealtime());
-        clock.start();
         enableHelpers = new HashMap<>();
         disableHelpers = new HashMap<>();
-        initDisableEnable(disableHelpers, false, false, false);
-        initDisableEnable(enableHelpers, true, true, true);
-        questionsArray = getQuestArray();
-        nextQuestion(0);
     }
+
     public void initViews(){
         activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
         quest = ((TextView) findViewById(R.id.quest));
@@ -120,11 +115,19 @@ public class TriviaGame extends AppCompatActivity {
         fiftyFiftyPriceTextView = (TextView) findViewById(R.id.fiftyFiftyPrice);
         skipQuestPriceTextView = (TextView) findViewById(R.id.skipQuestPrice);
         freezeBar = (ProgressBar) findViewById(R.id.circular_progress_bar);
+    }
+
+    public void startGame(){
+        activityBackground.getBackground().setAlpha(0);
         clock.setBase(SystemClock.elapsedRealtime());
         clock.start();
         displayCandies();
         displayHelpersPrices();
         addFont();
+        initDisableEnable(disableHelpers, false, false, false);
+        initDisableEnable(enableHelpers, true, true, true);
+        questionsArray = getQuestArray();
+        nextQuestion(0);
     }
 
     public void displayHelpersPrices () {
