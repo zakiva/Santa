@@ -37,17 +37,16 @@
     </RelativeLayout>
 
     <ProgressBar
-        android:id="@+id/circular_progress_bar"
+        android:id="@+id/freezeBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="140dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
         android:indeterminate="false"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:max="48"
-        android:progress="1"
-        android:visibility="invisible"
-        android:progressDrawable="@drawable/freeze_prog_bar" />
+        android:max="100"
+        android:minHeight="100dp"
+        android:progress="2"
+        android:visibility="invisible" />
 
 
     <View android:id="@+id/primerdivisor1"
