@@ -1,14 +1,18 @@
 package com.example.zakiva.santa;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.example.zakiva.santa.Helpers.HallOfFameAdapter;
+import com.example.zakiva.santa.Helpers.Infra;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,17 +21,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 public class HallOfFame extends AppCompatActivity {
 
     public static ArrayList<Object> dataHashWinners;
+    public static volatile boolean value = true;
+    public static Object cond = new Object();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hall_of_fame);
-
-        loadWinnersList();
+        loadWinnersList(HallOfFame.this, HallOfFame.this);
 
         //HashMap<String, String> hm = (HashMap) dataHashWinners.get(1);
         //Infra.addWinner("0", "Lionel Messi", "12", "blah blah", "0.jpg", "Canon Camera");
@@ -40,9 +47,10 @@ public class HallOfFame extends AppCompatActivity {
         //Infra.addWinner("7", "Xavi", "38", "blah blah", "7.jpg", "Samsung Smart TV");
         //Infra.addWinner("8", "Pique", "40", "blah blah", "8.jpg", "Raven Sunglasses");
         //Infra.addWinner("9", "Javier Mascherano", "56", "blah blah", "9.jpg", "Spaceship");
+        //Infra.addWinner("10", "Ronaldo", "58", "blah blah", "7.jpg", "Spaceship 2");
     }
 
-    public void loadWinnersList () {
+    public static void loadWinnersList (Context context, Activity activity) {
         int size = dataHashWinners.size();
         ArrayList<String[]> items = new ArrayList<String[]>();
 
@@ -58,26 +66,17 @@ public class HallOfFame extends AppCompatActivity {
 
             items.add(item);
         }
-        ListAdapter hallOfFameAdapter = new HallOfFameAdapter(getBaseContext(), items);
-        ListView winnersListView = (ListView) findViewById(R.id.winnersList);
+        ListAdapter hallOfFameAdapter = new HallOfFameAdapter(context, items);
+        ListView winnersListView = (ListView) activity.findViewById(R.id.winnersList);
         winnersListView.setAdapter(hallOfFameAdapter);
     }
 
-    public void updateWinnerList(){
-        HallOfFame.dataHashWinners = new ArrayList<>();
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("winners");
-        ValueEventListener winnersDataListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                HallOfFame.dataHashWinners = (ArrayList<Object>) dataSnapshot.getValue();
-                loadWinnersList();
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        myRef.addValueEventListener(winnersDataListener);
+    public void updateWinnersList(){
+
     }
+
+    //Use this command to update winners list
+    //Infra.getWinnersFromFirebase(1, HallOfFame.this, HallOfFame.this);
 
     public void backToPrizeClicked(View view) {
         startActivity(new Intent(HallOfFame.this, Prize.class));

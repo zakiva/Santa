@@ -1,5 +1,7 @@
 package com.example.zakiva.santa.Helpers;
 
+import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -305,15 +307,19 @@ public class Infra {
         });
     }
 
-    public static void getWinnersFromFirebase() {
+    // startOrUpdate indicates if we are on the first load bo app init or on an update of the list
+    public static void getWinnersFromFirebase(final int startOrUpdate, final Context context, final Activity activity) {
         HallOfFame.dataHashWinners = new ArrayList<>();
         DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("winners");
         ValueEventListener winnersDataListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HallOfFame.dataHashWinners = (ArrayList<Object>) dataSnapshot.getValue();
-                //Log.d("ccccccccccccccc: ", "yes!!!");
                 //Loader.increase();
+                if (startOrUpdate == 1){
+                    HallOfFame.loadWinnersList(context, activity);
+                }
+                Loader.increase();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
