@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,18 +37,15 @@ public class HallOfFame extends AppCompatActivity {
         setContentView(R.layout.activity_hall_of_fame);
         loadWinnersList(HallOfFame.this, HallOfFame.this);
 
-        //HashMap<String, String> hm = (HashMap) dataHashWinners.get(1);
-        //Infra.addWinner("0", "Lionel Messi", "12", "blah blah", "0.jpg", "Canon Camera");
-        //Infra.addWinner("1", "Claudio Marchisio", "16", "blah blah", "1.jpg", "Sony Playstation 4");
-        //Infra.addWinner("2", "Gigi Buffon", "17", "blah blah", "2.jpg", "Apple Iphone 7");
-        //Infra.addWinner("3", "Leonardo Bonucci", "23", "blah blah", "3.jpg", "Samsung Galaxy S7");
-        //Infra.addWinner("4", "Mario Mandjukic", "30", "blah blah", "4.jpg", "Trip to Barcelona");
-        //Infra.addWinner("5", "Sami Khadeira", "32", "blah blah", "5.jpg", "Lenovo Yoga 2 Pro");
-        //Infra.addWinner("6", "Neymar", "35", "blah blah", "6.jpg", "Mazda 3");
-        //Infra.addWinner("7", "Xavi", "38", "blah blah", "7.jpg", "Samsung Smart TV");
-        //Infra.addWinner("8", "Pique", "40", "blah blah", "8.jpg", "Raven Sunglasses");
-        //Infra.addWinner("9", "Javier Mascherano", "56", "blah blah", "9.jpg", "Spaceship");
-        //Infra.addWinner("10", "Ronaldo", "58", "blah blah", "7.jpg", "Spaceship 2");
+        final SwipeRefreshLayout mySwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        updateWinnersList();
+                    }
+                }
+        );
     }
 
     public static void loadWinnersList (Context context, Activity activity) {
@@ -72,13 +70,27 @@ public class HallOfFame extends AppCompatActivity {
     }
 
     public void updateWinnersList(){
-
+        Infra.getWinnersFromFirebase(1, HallOfFame.this, HallOfFame.this);
     }
 
-    //Use this command to update winners list
-    //Infra.getWinnersFromFirebase(1, HallOfFame.this, HallOfFame.this);
+
 
     public void backToPrizeClicked(View view) {
         startActivity(new Intent(HallOfFame.this, Prize.class));
+    }
+
+    public void addWinnersForTesting(){
+        //HashMap<String, String> hm = (HashMap) dataHashWinners.get(1);
+        //Infra.addWinner("0", "Lionel Messi", "12", "blah blah", "0.jpg", "Canon Camera");
+        //Infra.addWinner("1", "Claudio Marchisio", "16", "blah blah", "1.jpg", "Sony Playstation 4");
+        //Infra.addWinner("2", "Gigi Buffon", "17", "blah blah", "2.jpg", "Apple Iphone 7");
+        //Infra.addWinner("3", "Leonardo Bonucci", "23", "blah blah", "3.jpg", "Samsung Galaxy S7");
+        //Infra.addWinner("4", "Mario Mandjukic", "30", "blah blah", "4.jpg", "Trip to Barcelona");
+        //Infra.addWinner("5", "Sami Khadeira", "32", "blah blah", "5.jpg", "Lenovo Yoga 2 Pro");
+        //Infra.addWinner("6", "Neymar", "35", "blah blah", "6.jpg", "Mazda 3");
+        //Infra.addWinner("7", "Xavi", "38", "blah blah", "7.jpg", "Samsung Smart TV");
+        //Infra.addWinner("8", "Pique", "40", "blah blah", "8.jpg", "Raven Sunglasses");
+        //Infra.addWinner("9", "Javier Mascherano", "56", "blah blah", "9.jpg", "Spaceship");
+        //Infra.addWinner("10", "Ronaldo", "58", "blah blah", "7.jpg", "Spaceship 2");
     }
 }

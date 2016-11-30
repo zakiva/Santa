@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import com.example.zakiva.santa.Models.Competition;
@@ -318,6 +319,8 @@ public class Infra {
                 //Loader.increase();
                 if (startOrUpdate == 1){
                     HallOfFame.loadWinnersList(context, activity);
+                    SwipeRefreshLayout mySwipeRefreshLayout = (SwipeRefreshLayout) activity.findViewById(R.id.swiperefresh);
+                    mySwipeRefreshLayout.setRefreshing(false);
                 }
                 Loader.increase();
             }
