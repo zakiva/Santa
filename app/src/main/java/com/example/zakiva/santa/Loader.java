@@ -48,7 +48,7 @@ public class Loader extends AppCompatActivity {
 
         getTimeCodeFromServer();
         getTriviaDataFromFirebase();
-        getWinnersFromFirebase(0, Loader.this, Loader.this);
+        getWinnersFromFirebase();
 
         Log.d(TAG, " finish oncreatre ");
     }

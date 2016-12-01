@@ -309,24 +309,18 @@ public class Infra {
     }
 
     // startOrUpdate indicates if we are on the first load bo app init or on an update of the list
-    public static void getWinnersFromFirebase(final int startOrUpdate, final Context context, final Activity activity) {
+    public static void getWinnersFromFirebase() {
         HallOfFame.dataHashWinners = new ArrayList<>();
         DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("winners");
         ValueEventListener winnersDataListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HallOfFame.dataHashWinners = (ArrayList<Object>) dataSnapshot.getValue();
-                //Loader.increase();
-                if (startOrUpdate == 1){
-                    HallOfFame.loadWinnersList(context, activity);
-                    SwipeRefreshLayout mySwipeRefreshLayout = (SwipeRefreshLayout) activity.findViewById(R.id.swiperefresh);
-                    mySwipeRefreshLayout.setRefreshing(false);
-                }
                 Loader.increase();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //Log.d("ccccccccccccccc: ", "aassdvfdvfd");
+                // Error!
             }
         };
         myRef2.addValueEventListener(winnersDataListener);

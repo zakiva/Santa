@@ -28,27 +28,26 @@ import java.util.concurrent.CountDownLatch;
 public class HallOfFame extends AppCompatActivity {
 
     public static ArrayList<Object> dataHashWinners;
-    public static volatile boolean value = true;
-    public static Object cond = new Object();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hall_of_fame);
-        loadWinnersList(HallOfFame.this, HallOfFame.this);
+        
+        loadWinnersList();
 
         final SwipeRefreshLayout mySwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         mySwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        updateWinnersList();
+                        loadWinnersList();
                     }
                 }
         );
     }
 
-    public static void loadWinnersList (Context context, Activity activity) {
+    public void loadWinnersList () {
         int size = dataHashWinners.size();
         ArrayList<String[]> items = new ArrayList<String[]>();
 
@@ -64,23 +63,19 @@ public class HallOfFame extends AppCompatActivity {
 
             items.add(item);
         }
-        ListAdapter hallOfFameAdapter = new HallOfFameAdapter(context, items);
-        ListView winnersListView = (ListView) activity.findViewById(R.id.winnersList);
+        ListAdapter hallOfFameAdapter = new HallOfFameAdapter(getBaseContext(), items);
+        ListView winnersListView = (ListView) findViewById(R.id.winnersList);
         winnersListView.setAdapter(hallOfFameAdapter);
+
+        SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
-
-    public void updateWinnersList(){
-        Infra.getWinnersFromFirebase(1, HallOfFame.this, HallOfFame.this);
-    }
-
-
 
     public void backToPrizeClicked(View view) {
         startActivity(new Intent(HallOfFame.this, Prize.class));
     }
 
     public void addWinnersForTesting(){
-        //HashMap<String, String> hm = (HashMap) dataHashWinners.get(1);
         //Infra.addWinner("0", "Lionel Messi", "12", "blah blah", "0.jpg", "Canon Camera");
         //Infra.addWinner("1", "Claudio Marchisio", "16", "blah blah", "1.jpg", "Sony Playstation 4");
         //Infra.addWinner("2", "Gigi Buffon", "17", "blah blah", "2.jpg", "Apple Iphone 7");
