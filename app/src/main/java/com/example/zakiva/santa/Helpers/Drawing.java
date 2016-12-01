@@ -27,22 +27,37 @@ public class Drawing {
     public static int JUMP;
 
     public static void initDrawingHelper() {
-        SIZE = MainDrawingView.SIZE;
+        SIZE = MainDrawingView.SIZE_PIXELS;
         JUMP = MainDrawingView.JUMP;
     }
 
-    public static void printMatrix(int[][] matrix) {
+    public static void printMatrix(int[][] matrix, int h, int w) {
         int JUMP_PRINT = 5;
         String line;
-        for (int i = 0; i < SIZE; i += JUMP_PRINT) {
+        for (int i = 0; i < h; i += JUMP_PRINT) {
             line = "";
-            for (int j = 0; j < SIZE; j += JUMP_PRINT) {
+            for (int j = 0; j < w; j += JUMP_PRINT) {
 
                 if (matrix[i][j] > 0) {
-                    line = line + "*";
+                   // line = line + "*";
+                    line = line + i + "|";
                 } else {
                     line = line + " ";
                 }
+            }
+            Log.d(MainActivity.TAG, line);
+        }
+    }
+
+    public static void printMatrixValues(int[][] matrix, int h, int w) {
+        int JUMP_PRINT = 5;
+        String line;
+        for (int i = 0; i < h; i += JUMP_PRINT) {
+            line = "";
+            for (int j = 0; j < w; j += JUMP_PRINT) {
+
+                line = line + matrix[i][j] + "|";
+
             }
             Log.d(MainActivity.TAG, line);
         }
@@ -63,10 +78,24 @@ public class Drawing {
 
         Log.d(MainActivity.TAG, "convertBitmapToMatrix");
         int[][] matrix = new int[SIZE][SIZE];
+
+
+
+
+
+
+
+       // int[][] pixels = new int[SIZE][SIZE];
+        //int[][] alphas = new int[SIZE][SIZE];
+
+
+
+
+
         int h = bitmap.getHeight();
         int w = bitmap.getWidth();
 
-        Log.d(MainActivity.TAG, "SIZE = " + SIZE);
+        Log.d(MainActivity.TAG, "SIZE_PIXELS = " + SIZE);
         Log.d(MainActivity.TAG, "h = " + h);
         Log.d(MainActivity.TAG, "w = " + w);
 
@@ -77,15 +106,29 @@ public class Drawing {
 
         Log.d(MainActivity.TAG, "for loop:");
 
+        int k = 0, l = 0;
 
-        for (int i = 0; i < h; i += JUMP) {
-            for (int j = 0; j < w; j += JUMP) {
+
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
 
                 pixel = bitmap.getPixel(j, i);
                 alpha = Color.alpha(pixel);
 
+
+
+
+             //   pixels[k][l] = pixel;
+             //   alphas[k][l] = alpha;
+
+
+
+
+
                 if (pixel < -1 && alpha == 255) {
-                    matrix[i][j] = 1;
+                    k = roundDown(i, MainDrawingView.densityFactor * JUMP);
+                    l = roundDown(j, MainDrawingView.densityFactor * JUMP);
+                    matrix[k][l] = 1;
 
                     //int colour = bitmap.getPixel(j,i);
                     //int red = Color.red(colour);
@@ -104,7 +147,20 @@ public class Drawing {
                 }
             }
         }
+
+        Log.d(MainActivity.TAG, "printMatrix(pixels) =  ");
+
+        //printMatrixValues(pixels, SIZE, SIZE);
+
+        Log.d(MainActivity.TAG, "printMatrix(alphas) = ");
+
+      //  printMatrixValues(alphas, SIZE, SIZE);
+
+
+
+
         Log.d(MainActivity.TAG, "return matrix...");
+
 
         return matrix;
     }
@@ -179,7 +235,7 @@ public class Drawing {
 
         int white_source = 0, white_matrix = 0, black_source = 0, black_matrix = 0, equal = 0, diff = 0;
         int equal_delta = 0, bad_black_delta = 0;
-        int DELTA = 7;
+        int DELTA = 10;
 
         for (int i = 0; i < SIZE; i += JUMP) {
             for (int j = 0; j < SIZE; j += JUMP) {
@@ -287,6 +343,100 @@ public class Drawing {
         return myBitmap;
     }
 
+    public static int[][] convertRectangleBitmapToMatrix(Bitmap bitmap) {
+
+        Log.d(MainActivity.TAG, "convertRectangleBitmapToMatrix");
+        int h = bitmap.getHeight();
+        int w = bitmap.getWidth();
+        int[][] matrix = new int[h][w];
+
+
+        Log.d(MainActivity.TAG, "h = " + h);
+        Log.d(MainActivity.TAG, "w = " + w);
+
+        int pixel, alpha;
+
+        //Log.d(MainActivity.TAG, "from convertBitmapToMatrix h = " + h);
+        //Log.d(MainActivity.TAG, "from convertBitmapToMatrix w = " + w);
+
+        Log.d(MainActivity.TAG, "for loop in rectangle:");
+
+
+        for (int i = 0; i < h; i += JUMP) {
+            for (int j = 0; j < w; j += JUMP) {
+
+                pixel = bitmap.getPixel(j, i);
+                alpha = Color.alpha(pixel);
+
+                if (pixel < -1 && alpha == 255) {
+                    matrix[i][j] = 1;
+
+                } else {
+                    //default valus is 0
+                }
+            }
+        }
+        Log.d(MainActivity.TAG, "return matrix...");
+
+        return matrix;
+    }
+
+    public static int[][] convertRectangleMatrixToSquareMatrix(int[][] userMatrix) {
+
+
+        Log.d(MainActivity.TAG, "convertRectangleMatrixToSquareMatrix");
+
+        int[][] squareMatrix = new int[SIZE][SIZE];
+
+
+        Log.d(MainActivity.TAG, "for loop:");
+
+
+        //with margin - center vertical view
+
+       // int startHeight = (MainDrawingView.drawingAreaHeight - SIZE) / 2;
+      //  int endHeight = MainDrawingView.drawingAreaHeight - startHeight;
+
+        //without margins:
+
+        int startHeight = (MainDrawingView.screenHeightPixels - SIZE) / 2;
+        startHeight = roundDown(startHeight, JUMP);
+        startHeight -= JUMP * 4 * MainDrawingView.densityFactor; //don't ask me why
+        //make sure it is not negative
+        startHeight = startHeight < 0 ? 0 : startHeight;
+
+        int endHeight = startHeight + SIZE;
+        endHeight = roundDown(endHeight, JUMP);
+
+        Log.d(MainActivity.TAG, "startHeight :" + startHeight);
+        Log.d(MainActivity.TAG, "endHeight :" + endHeight);
+
+
+
+
+        for (int i = startHeight; i < endHeight; i += JUMP) {
+            for (int j = 0; j < SIZE; j += JUMP) {
+
+
+                if (userMatrix[i][j] == 1) {
+                    squareMatrix[i - startHeight][j] = 1;
+
+                } else {
+                    //default valus is 0
+                }
+            }
+        }
+        Log.d(MainActivity.TAG, "return matrix...");
+
+        return squareMatrix;
+
+
+    }
+
+    public static int roundDown(int n, int round) {
+        int result = (n + round - 1) / round * round - round;
+        return result >= 0 ? result : 0;
+    }
 }
 
 
@@ -308,9 +458,9 @@ public class Drawing {
 
     public static void printMatrixBits(int [][] matrix) {
         String line;
-        for (int i = 0; i < SIZE; i += 1){
+        for (int i = 0; i < SIZE_PIXELS; i += 1){
             line = "";
-            for (int j = 0; j < SIZE; j += 1){
+            for (int j = 0; j < SIZE_PIXELS; j += 1){
                 if(matrix[i][j] > 0) {
                     line = line + "1";
                 }
@@ -330,7 +480,7 @@ public class Drawing {
         int DELTA = 3;
         int limit = DELTA*JUMP;
 
-        if (i-limit < 0 || j-limit < 0 || i + limit > SIZE || j + limit > SIZE || drawingMode == 1) {
+        if (i-limit < 0 || j-limit < 0 || i + limit > SIZE_PIXELS || j + limit > SIZE_PIXELS || drawingMode == 1) {
             matrix[i][j] = drawingMode;
             return;
         }

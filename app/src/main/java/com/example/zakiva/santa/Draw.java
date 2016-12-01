@@ -3,8 +3,6 @@ package com.example.zakiva.santa;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +15,6 @@ import com.example.zakiva.santa.Helpers.Drawing;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 
 public class Draw extends AppCompatActivity {
@@ -38,7 +35,7 @@ public class Draw extends AppCompatActivity {
     }
 
     public void initFields () {
-        SIZE = MainDrawingView.SIZE;
+        SIZE = MainDrawingView.SIZE_PIXELS;
         JUMP = MainDrawingView.JUMP;
         pen = (Button) findViewById(R.id.pen);
         eraser = (Button) findViewById(R.id.eraser);
@@ -73,7 +70,7 @@ public class Draw extends AppCompatActivity {
 
         int blackSource = Drawing.countBlackPixels(source_matrix);
 
-        Drawing.printMatrix(source_matrix);
+        //Drawing.printMatrix(source_matrix);
 
         Log.d(MainActivity.TAG, "black source original = " + blackSource);
         int [] result = Drawing.compareMatrices(source_matrix, user_matrix);
@@ -127,7 +124,7 @@ public class Draw extends AppCompatActivity {
     public void bitmapBbuttonClicked(View view) {
         Bitmap b = ((MainDrawingView) v).canvasBitmap;
         int [][] m = Drawing.convertBitmapToMatrix(b);
-        Drawing.printMatrix(m);
+//        Drawing.printMatrix(m);
     }
 
     public void restartButtonClicked(View view) {

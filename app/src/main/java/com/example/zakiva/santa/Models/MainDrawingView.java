@@ -1,5 +1,6 @@
 package com.example.zakiva.santa.Models;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,9 +12,11 @@ import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.zakiva.santa.DrawingGame;
 import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.MainActivity;
 
@@ -29,7 +32,7 @@ public class MainDrawingView extends View {
     private Path path;
     //private Bitmap bitmap;
     //private int [][] matrix;
-    public static int SIZE;
+    public static int SIZE_PIXELS;
     public static int dpSize = 360;
     public static int JUMP = 5;
     private static final float RATIO = 1f / 1f;
@@ -38,6 +41,16 @@ public class MainDrawingView extends View {
     private boolean drawingNow;
     private boolean allowDrawing;
     private ArrayList<Path> pathsUndo;
+    private static int verticalMarginDp = 30;
+    private static int verticalMarginPixels;
+    public static int screenHeightPixels;
+    public static int screenWidthPixels;
+    public static int drawingAreaHeight;
+    public static int density;
+    public static int densityFactor;
+    int stroke;
+
+    //private Activity drawingGameActivity;
 
     //canvas
     private Canvas drawCanvas;
@@ -51,13 +64,37 @@ public class MainDrawingView extends View {
        // this.setDrawingCacheEnabled(true);
 
         this.context = context;
-        this.SIZE = (int) Drawing.convertDpToPixel(dpSize, context);
+        //drawingGameActivity = activity;
+
+
+        verticalMarginPixels = (int) Drawing.convertDpToPixel(verticalMarginDp, context);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+       // drawingGameActivity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        screenHeightPixels = metrics.heightPixels;
+        screenWidthPixels = metrics.widthPixels;
+        drawingAreaHeight = screenHeightPixels - 2 * verticalMarginPixels; // top + bottom
+
+        SIZE_PIXELS = screenWidthPixels;
+
+
+
+        Log.d(MainActivity.TAG, "&&&&&&&&&&&screenWidthPixels: " +  screenWidthPixels);
+        Log.d(MainActivity.TAG, "&&&&&&&&&&&screenHeightPixels: " + screenHeightPixels);
+        Log.d(MainActivity.TAG, "&&&&&&&&&&&sSIZE PIXELS: " + SIZE_PIXELS);
+        Log.d(MainActivity.TAG, "&&&&&&&&&&&verticalMarginPixels: " + verticalMarginPixels);
+        Log.d(MainActivity.TAG, "&&&&&&&&&&&drawingAreaHeight: " + drawingAreaHeight);
+
+
 
         paint = new Paint();
         path = new Path();
 
         paint.setAntiAlias(true);
-        int stroke = context.getResources().getDisplayMetrics().densityDpi / 60;
+        stroke = context.getResources().getDisplayMetrics().densityDpi / 60;
         Log.d(MainActivity.TAG, "stroke  = " +  stroke);
         paint.setStrokeWidth((float) stroke);
         paint.setColor(Color.BLACK);
@@ -65,22 +102,33 @@ public class MainDrawingView extends View {
         paint.setStrokeJoin(Paint.Join.ROUND);
 
 
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
+       // Resources resources = context.getResources();
+        //DisplayMetrics metrics = resources.getDisplayMetrics();
         //int screenWidth = metrics.widthPixels;
         //int screenHeight = metrics.heightPixels;
-        //SIZE = screenWidth;
+        //SIZE_PIXELS = screenWidth;
 
         drawingMode = 1;
         drawingNow = false;
         allowDrawing = false;
-        //matrix = new int[SIZE][SIZE];
+        //matrix = new int[SIZE_PIXELS][SIZE_PIXELS];
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
-        canvasBitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
+        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_8888);
         drawCanvas = new Canvas(canvasBitmap);
 
         this.pathsUndo = new ArrayList<>();
+
+        density = metrics.densityDpi;
+        densityFactor = density / 320 > 0 ? density / 320 : 1;
+
+
+
+        Log.d(MainActivity.TAG, "@@@@@@@@@@@@@@density = " +  density);
+        Log.d(MainActivity.TAG, "@@@@@@@@@@@@@@density / 320 = " +  density / 320);
+
+
+
     }
 
     @Override
@@ -105,13 +153,13 @@ public class MainDrawingView extends View {
         x = xRounded;
         y = yRounded;
 
-        if (x >= SIZE || y >= SIZE || x < 0 || y < 0) {
+        if (x >= screenWidthPixels || y >= drawingAreaHeight || x < 0 || y < 0) {
             if (drawingNow)
                 end_motion();
             invalidate();
             return false;
         }
-        if (xRounded >= SIZE || yRounded >= SIZE || xRounded < 0 || yRounded < 0) {
+        if (xRounded >= screenWidthPixels || yRounded >= drawingAreaHeight || xRounded < 0 || yRounded < 0) {
             if (drawingNow)
                 end_motion();
             invalidate();
@@ -177,7 +225,7 @@ public class MainDrawingView extends View {
         path = new Path();
     }
 
-    int roundUp(int n) {
+    public static int roundUp(int n) {
         return (n + JUMP - 1) / JUMP * JUMP;
     }
 
@@ -210,7 +258,7 @@ public class MainDrawingView extends View {
     public void restartDrawing () {
         end_motion();
         invalidate();
-        canvasBitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
+        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_8888);
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         drawCanvas = new Canvas(canvasBitmap);
         this.pathsUndo = new ArrayList<>();
@@ -230,6 +278,10 @@ public class MainDrawingView extends View {
         //invalidate();
     }
 
+    //cancel onMeasure
+
+    /*
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -246,9 +298,9 @@ public class MainDrawingView extends View {
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-        //set w&h manually by SIZE:
-        width = SIZE;
-        height = SIZE;
+        //set w&h manually by SIZE_PIXELS:
+        width = SIZE_PIXELS;
+        height = SIZE_PIXELS;
 
         Log.d(MainActivity.TAG, "1111 width, height = " + width + " " + height);
 
@@ -273,4 +325,8 @@ public class MainDrawingView extends View {
         //int screenWidth = displayMetrics.widthPixels;
         //int screenHeight = displayMetrics.heightPixels;
     }
+
+    */
+
+
 }
