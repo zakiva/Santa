@@ -1,12 +1,20 @@
 package com.example.zakiva.santa.Helpers;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import com.example.zakiva.santa.Models.Competition;
 import com.example.zakiva.santa.Models.Game;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Models.User;
+import com.example.zakiva.santa.Models.Winner;
 import com.example.zakiva.santa.Trivia;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.example.zakiva.santa.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -279,5 +289,40 @@ public class Infra {
             }
         };
         myRef.addValueEventListener(triviaDataListener);
+    }
+
+    public static void addWinner (final String key, final String name, final String competition, final String details, final String imageName, final String prize) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
+        storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Winner winner = new Winner(name, competition, details, imageName, uri.toString(), prize);
+                myDatabase.child("winners").child(key).setValue(winner);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+    }
+
+    // startOrUpdate indicates if we are on the first load bo app init or on an update of the list
+    public static void getWinnersFromFirebase() {
+        HallOfFame.dataHashWinners = new ArrayList<>();
+        DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("winners");
+        ValueEventListener winnersDataListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HallOfFame.dataHashWinners = (ArrayList<Object>) dataSnapshot.getValue();
+                Loader.increase();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Error!
+            }
+        };
+        myRef2.addValueEventListener(winnersDataListener);
     }
 }
