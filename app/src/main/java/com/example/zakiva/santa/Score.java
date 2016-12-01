@@ -298,7 +298,7 @@ public class Score extends AppCompatActivity {
 
         AlertDialog alertDialog = new AlertDialog.Builder(Score.this).create();
         alertDialog.setTitle("congratrs!!");
-        alertDialog.setMessage("you've reached the EXP SIZE");
+        alertDialog.setMessage("you've reached the EXP SIZE_PIXELS");
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

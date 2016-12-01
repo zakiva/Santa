@@ -7,14 +7,52 @@
     android:id="@+id/parentLayout"
     >
 
+
+    <ImageView
+        android:id="@+id/sourceImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/rec_400"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+
     <!-- This is the view on which we will draw. -->
     <view
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         class="com.example.zakiva.santa.Models.MainDrawingView"
-        android:id="@+id/single_touch_view"
-        android:background="#ffffff" />
+        android:id="@+id/single_touch_view" />
+
+
+    <View android:id="@+id/primerdivisor1"
+        android:layout_height="2dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="49dp"
+        android:background="#dddddd" />
+
+    <View android:id="@+id/primerdivisor2"
+        android:layout_height="2dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="49dp"
+        android:background="#dddddd" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/cta_rectangle"
+        />
+
+
+
 
     <Button
         android:layout_width="40dp"
