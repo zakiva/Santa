@@ -36,7 +36,7 @@ public class MainDrawingView extends View {
     public static int dpSize = 360;
     public static int JUMP = 5;
     private static final float RATIO = 1f / 1f;
-    private Context context;
+    public static Context context;
     private int drawingMode;
     private boolean drawingNow;
     private boolean allowDrawing;
@@ -114,7 +114,7 @@ public class MainDrawingView extends View {
         //matrix = new int[SIZE_PIXELS][SIZE_PIXELS];
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
-        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_8888);
+        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_4444);
         drawCanvas = new Canvas(canvasBitmap);
 
         this.pathsUndo = new ArrayList<>();
@@ -258,7 +258,7 @@ public class MainDrawingView extends View {
     public void restartDrawing () {
         end_motion();
         invalidate();
-        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_8888);
+        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_4444);
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         drawCanvas = new Canvas(canvasBitmap);
         this.pathsUndo = new ArrayList<>();
