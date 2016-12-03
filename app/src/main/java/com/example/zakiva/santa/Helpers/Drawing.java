@@ -85,8 +85,8 @@ public class Drawing {
 
 
 
-       // int[][] pixels = new int[SIZE][SIZE];
-        //int[][] alphas = new int[SIZE][SIZE];
+        int[][] pixels = new int[SIZE][SIZE];
+        int[][] alphas = new int[SIZE][SIZE];
 
 
 
@@ -118,8 +118,8 @@ public class Drawing {
 
 
 
-             //   pixels[k][l] = pixel;
-             //   alphas[k][l] = alpha;
+                pixels[k][l] = pixel;
+                alphas[k][l] = alpha;
 
 
 
@@ -150,11 +150,11 @@ public class Drawing {
 
         Log.d(MainActivity.TAG, "printMatrix(pixels) =  ");
 
-        //printMatrixValues(pixels, SIZE, SIZE);
+        printMatrixValues(pixels, SIZE, SIZE);
 
         Log.d(MainActivity.TAG, "printMatrix(alphas) = ");
 
-      //  printMatrixValues(alphas, SIZE, SIZE);
+        printMatrixValues(alphas, SIZE, SIZE);
 
 
 

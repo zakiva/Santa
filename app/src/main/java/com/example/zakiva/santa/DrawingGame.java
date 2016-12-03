@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
@@ -130,29 +132,31 @@ public class DrawingGame extends AppCompatActivity {
 
         Log.d(MainActivity.TAG, ">>>>>>>>>> =before botmaps  ");
 
-        Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
-        Bitmap coloredBitmap = Drawing.convertBlackToColor(bitmap);
+       // Bitmap bitmap = Drawing.convertImageToBitmap(randomImage, this);
+       // Bitmap coloredBitmap = Drawing.convertBlackToColor(bitmap);
 
         Log.d(MainActivity.TAG, ">>>>>>>>>> =after bitmaps befrep drawbale  ");
 
-        Drawable d = new BitmapDrawable(getResources(), coloredBitmap);
-        sourceImage.setImageDrawable(d);
+      //  Drawable d = new BitmapDrawable(getResources(), coloredBitmap);
+       // sourceImage.setImageDrawable(d);
        // v.setBackground(d);
 
         Log.d(MainActivity.TAG, ">>>>>>>>>> =after draewbake before intent  ");
 
 
         final Intent intent = new Intent(DrawingGame.this, Score.class);
-        intent.putExtra("score", calcScore());
+        intent.putExtra("score", calcScoreNew());
         intent.putExtra("game", "drawing");
         Handler handler = new Handler();
         handler.postDelayed(new Runnable()
         {
             public void run()
             {
+                sourceImage.setImageDrawable(null);
+                MainDrawingView.context = null;
                 startActivity(intent);
             }
-        }, 2000);
+        }, 0000);
     }
 
     public void hideButtons () {
@@ -253,6 +257,193 @@ public class DrawingGame extends AppCompatActivity {
 
         return score < 0 ?  0 : score;
     }
+
+
+
+    public long calcScoreNew () {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), randomImage, options);
+        Bitmap sourceBitmap = Bitmap.createScaledBitmap(bitmap, MainDrawingView.SIZE_PIXELS, MainDrawingView.SIZE_PIXELS, true);
+
+
+        Bitmap userBitmap = v.canvasBitmap;
+
+        //printer(sourceBitmap);
+       // printer(userBitmap);
+
+
+
+        compareBitmaps(sourceBitmap, userBitmap);
+
+
+        return 555;
+    }
+
+    public void compareBitmaps (Bitmap squared, Bitmap rectangle) {
+
+        Log.d(MainActivity.TAG, "start comparing....");
+
+
+        int missed = 0, bad = 0;
+
+        int result;
+
+        int startHeight = getStartHeight();
+
+        for (int i = 0; i < squared.getHeight(); i += MainDrawingView.JUMP) {
+            for (int j = 0; j < squared.getWidth(); j+= MainDrawingView.JUMP) {
+
+                result = checkPixels(i, j, squared, rectangle, startHeight);
+
+                if (result > 0) {
+                    if (result == 1)
+                        missed++;
+                    else
+                        bad++;
+                }
+
+            }
+        }
+
+        Log.d(MainActivity.TAG, "MISSED = "  + missed);
+        Log.d(MainActivity.TAG, "BAD = "  + bad);
+    }
+
+    public int checkPixels (int i, int j, Bitmap squared, Bitmap rectangle, int startHeight) {
+
+
+        int DELTA = 10, pixelSq, alphaSq, pixelRec, alphaRec;
+        //ignore margins
+        if (i <= DELTA || j <= DELTA || i >= squared.getHeight() - DELTA - 1 || j >= squared.getWidth() - DELTA - 1)
+            return 0;
+
+
+        pixelSq = squared.getPixel(j, i);
+        alphaSq = Color.alpha(pixelSq);
+
+        int start = Drawing.roundDown(-1 * DELTA, MainDrawingView.JUMP);
+
+        for (int k = start; k < DELTA; k += MainDrawingView.JUMP) {
+            for (int l = start; l < DELTA; l += MainDrawingView.JUMP) {
+
+                pixelRec = rectangle.getPixel(j + k, i + startHeight + l);
+                alphaRec = Color.alpha(pixelRec);
+
+                if (alphaRec == 255) {
+
+                    if (alphaSq == 255)
+                        return 0;
+                    else
+                        return 2; //bad
+                }
+            }
+        }
+
+        if (alphaSq == 255)
+            return 1; // missed
+
+        return 0;
+    }
+
+
+
+
+    public int getStartHeight () {
+        int startHeight = (MainDrawingView.screenHeightPixels - MainDrawingView.SIZE_PIXELS) / 2;
+        startHeight = Drawing.roundDown(startHeight, MainDrawingView.JUMP);
+        startHeight -= MainDrawingView.JUMP * 4 * MainDrawingView.densityFactor; //don't ask me why
+        //make sure it is not negative
+        startHeight = startHeight < 0 ? 0 : startHeight;
+        Log.d(MainActivity.TAG, "$$$$$$$$$$startHeight = " + startHeight);
+        return startHeight;
+    }
+
+
+
+    public void printer (Bitmap b) {
+
+        int s = MainDrawingView.SIZE_PIXELS;
+
+        Bitmap bitmap = Bitmap.createScaledBitmap(b, s, s, true);
+
+        int[][] matrix = new int[s][s];
+        int[][] pixels = new int[s][s];
+        int[][] alphas = new int[s][s];
+
+        int h = bitmap.getHeight();
+        int w = bitmap.getWidth();
+
+        Log.d(MainActivity.TAG, "original bitmap h = " + b.getHeight());
+        Log.d(MainActivity.TAG, "new bitmap h = " + h);
+
+
+        int pixel, alpha;
+
+        int k = 0, l = 0;
+
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+
+                pixel = bitmap.getPixel(j, i);
+                alpha = Color.alpha(pixel);
+
+                pixels[k][l] = pixel;
+                alphas[k][l] = alpha;
+
+                if (pixel < -1 && alpha == 255) {
+                    k = Drawing.roundDown(i, MainDrawingView.densityFactor * Drawing.JUMP);
+                    l = Drawing.roundDown(j, MainDrawingView.densityFactor * Drawing.JUMP);
+                    matrix[k][l] = 1;
+
+                } else {
+                }
+            }
+        }
+
+        Log.d(MainActivity.TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        Log.d(MainActivity.TAG, "printMatrix(pixels) =  ");
+
+       // Drawing.printMatrixValues(pixels, s, s);
+
+        Log.d(MainActivity.TAG, "printMatrix(alphas) = ");
+
+        Drawing.printMatrixValues(alphas, s, s);
+
+        Log.d(MainActivity.TAG, "printMatrix (matrix) = ");
+
+        Drawing.printMatrix(matrix, s, s);
+
+        Log.d(MainActivity.TAG, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //make this function generic by passing it arguments (and move to INFRA)
     public void showAlertDialogForRestart () {
