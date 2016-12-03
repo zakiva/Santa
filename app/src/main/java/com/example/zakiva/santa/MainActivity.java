@@ -93,4 +93,7 @@ public class MainActivity extends AppCompatActivity {
     public void prizeClicked(View view) {
         startActivity(new Intent(MainActivity.this, Prize.class));
     }
+    public void popUpSignUp(View view){
+        startActivity(new Intent(MainActivity.this, PopUp.class));
+    }
 }
