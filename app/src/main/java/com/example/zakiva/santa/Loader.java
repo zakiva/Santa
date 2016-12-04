@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.zakiva.santa.Models.Images;
 //import com.example.zakiva.santa.Helpers.VungleAds;
 //import com.vungle.publisher.VunglePub;
 
@@ -49,6 +50,7 @@ public class Loader extends AppCompatActivity {
         getTimeCodeFromServer();
         getTriviaDataFromFirebase();
         getWinnersFromFirebase();
+        Images.downloadImageToDisk("drawing1.jpg", getApplicationContext());
 
         Log.d(TAG, " finish oncreatre ");
     }
@@ -78,7 +80,7 @@ public class Loader extends AppCompatActivity {
     }
 
     public void startApp  () {
-        if (counter == 5)
+        if (counter == 6)
             startActivity(new Intent(Loader.this, MainActivity.class));
     }
 }
