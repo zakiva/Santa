@@ -55,11 +55,11 @@ public class HallOfFame extends AppCompatActivity {
             String[] item = new String[6];
 
             item[0] = (String) ((HashMap) dataHashWinners.get(i)).get("competition");
-            item[1] = (String) ((HashMap) dataHashWinners.get(i)).get("details");;
-            item[2] = (String) ((HashMap) dataHashWinners.get(i)).get("imageName");;
-            item[3] = (String) ((HashMap) dataHashWinners.get(i)).get("imageUrl");;
-            item[4] = (String) ((HashMap) dataHashWinners.get(i)).get("name");;
-            item[5] = (String) ((HashMap) dataHashWinners.get(i)).get("prize");;
+            item[1] = (String) ((HashMap) dataHashWinners.get(i)).get("details");
+            item[2] = (String) ((HashMap) dataHashWinners.get(i)).get("imageName");
+            item[3] = (String) ((HashMap) dataHashWinners.get(i)).get("imageUrl");
+            item[4] = (String) ((HashMap) dataHashWinners.get(i)).get("name");
+            item[5] = (String) ((HashMap) dataHashWinners.get(i)).get("prize");
 
             items.add(item);
         }

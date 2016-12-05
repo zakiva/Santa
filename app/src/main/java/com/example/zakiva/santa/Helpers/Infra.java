@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.example.zakiva.santa.Models.Competition;
 import com.example.zakiva.santa.Models.Game;
 import com.example.zakiva.santa.Models.TriviaQuestion;
@@ -308,14 +309,20 @@ public class Infra {
         });
     }
 
-    // startOrUpdate indicates if we are on the first load bo app init or on an update of the list
-    public static void getWinnersFromFirebase() {
+    public static void getWinnersFromFirebase(final Context context) {
         HallOfFame.dataHashWinners = new ArrayList<>();
         DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("winners");
         ValueEventListener winnersDataListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HallOfFame.dataHashWinners = (ArrayList<Object>) dataSnapshot.getValue();
+
+                int size = HallOfFame.dataHashWinners.size();
+                for (int i = size - 1; i >= 0; i--){
+                    String url = (String) ((HashMap) HallOfFame.dataHashWinners.get(i)).get("imageUrl");
+                    Glide.with(context).load(url);
+                }
+
                 Loader.increase();
             }
             @Override
