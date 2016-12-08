@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.example.zakiva.santa.Helpers.HallOfFameAdapter;
 import com.example.zakiva.santa.Helpers.Infra;
+import com.example.zakiva.santa.Models.Winner;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,13 +22,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class HallOfFame extends AppCompatActivity {
 
-    public static ArrayList<Object> dataHashWinners;
+    public static HashMap<String, HashMap> dataHashWinners;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +54,21 @@ public class HallOfFame extends AppCompatActivity {
         int size = dataHashWinners.size();
         ArrayList<String[]> items = new ArrayList<String[]>();
 
-        for (int i = size - 1; i >= 0; i--) {
+        for (HashMap hm : dataHashWinners.values()) {
             String[] item = new String[6];
-
-            item[0] = (String) ((HashMap) dataHashWinners.get(i)).get("competition");
-            item[1] = (String) ((HashMap) dataHashWinners.get(i)).get("details");
-            item[2] = (String) ((HashMap) dataHashWinners.get(i)).get("imageName");
-            item[3] = (String) ((HashMap) dataHashWinners.get(i)).get("imageUrl");
-            item[4] = (String) ((HashMap) dataHashWinners.get(i)).get("name");
-            item[5] = (String) ((HashMap) dataHashWinners.get(i)).get("prize");
-
+            item[0] = (String) hm.get("competition");
+            item[1] = (String) hm.get("details");
+            item[2] = (String) hm.get("imageName");
+            item[3] = (String) hm.get("imageUrl");
+            item[4] = (String) hm.get("name");
+            item[5] = (String) hm.get("prize");
             items.add(item);
         }
+        Collections.sort(items, new java.util.Comparator<String[]>() {
+            public int compare(final String[] entry1, final String[] entry2) {
+                return entry2[0].compareTo(entry1[0]);
+            }
+        });
         ListAdapter hallOfFameAdapter = new HallOfFameAdapter(getBaseContext(), items);
         ListView winnersListView = (ListView) findViewById(R.id.winnersList);
         winnersListView.setAdapter(hallOfFameAdapter);
@@ -75,7 +81,14 @@ public class HallOfFame extends AppCompatActivity {
         startActivity(new Intent(HallOfFame.this, Prize.class));
     }
 
-    public void addWinnersForTesting(){
+    //This loop helps generating Objects on firebase. Do not use it with more than 100 iterations
+    public static void addWinnersForTesting(){
+        for (int i = 0; i < 100; i++ ){
+            String key = Integer.toString(i);
+            int imageKey = i % 10;
+            String imageName = Integer.toString(imageKey) + ".jpg";
+            Infra.addWinner(key, "Person " + key, key, "blah blah", imageName, "Prize " + key);
+        }
         //Infra.addWinner("0", "Lionel Messi", "12", "blah blah", "0.jpg", "Canon Camera");
         //Infra.addWinner("1", "Claudio Marchisio", "16", "blah blah", "1.jpg", "Sony Playstation 4");
         //Infra.addWinner("2", "Gigi Buffon", "17", "blah blah", "2.jpg", "Apple Iphone 7");
@@ -86,6 +99,5 @@ public class HallOfFame extends AppCompatActivity {
         //Infra.addWinner("7", "Xavi", "38", "blah blah", "7.jpg", "Samsung Smart TV");
         //Infra.addWinner("8", "Pique", "40", "blah blah", "8.jpg", "Raven Sunglasses");
         //Infra.addWinner("9", "Javier Mascherano", "56", "blah blah", "9.jpg", "Spaceship");
-        //Infra.addWinner("10", "Ronaldo", "58", "blah blah", "7.jpg", "Spaceship 2");
     }
 }
