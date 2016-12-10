@@ -10,16 +10,18 @@ public class Winner {
     public String imageName;
     public String imageUrl;
     public String prize;
+    public int minusKey;
 
     public Winner() {}
 
-    public Winner(String name, String competition, String details, String imageName, String imageUrl, String prize) {
+    public Winner(String name, String competition, String details, String imageName, String imageUrl, String prize, int minusKey) {
         this.name = name;
         this.competition = competition;
         this.details = details;
         this.imageName = imageName;
         this.imageUrl = imageUrl;
         this.prize = prize;
+        this.minusKey = minusKey;
     }
 
     public String getName() {
@@ -68,5 +70,13 @@ public class Winner {
 
     public void setPrize(String prize) {
         this.prize = prize;
+    }
+
+    public int getMinusKey() {
+        return minusKey;
+    }
+
+    public void setMinusKey(int minusKey) {
+        this.minusKey = minusKey;
     }
 }

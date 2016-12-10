@@ -2,6 +2,9 @@ package com.example.zakiva.santa.Helpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.zakiva.santa.R;
 import com.squareup.picasso.Picasso;
 
@@ -53,9 +57,19 @@ public class HallOfFameAdapter extends ArrayAdapter<String[]> {
         response.setText(item[1]);
         date.setText(item[0]);
 
-        ImageView image = (ImageView) customView.findViewById(R.id.imageViewWinnerFace);
+        final ImageView image = (ImageView) customView.findViewById(R.id.imageViewWinnerFace);
         //Picasso.with(getContext()).load(item[3]).into(image);
-        Glide.with(getContext()).load(item[3]).into(image);
+        //Glide.with(getContext()).load(item[3]).into(image);
+
+        Glide.with(getContext()).load(item[3]).asBitmap().centerCrop().into(new BitmapImageViewTarget(image) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                image.setImageDrawable(circularBitmapDrawable);
+            }
+        });
 
         return customView;
     }
