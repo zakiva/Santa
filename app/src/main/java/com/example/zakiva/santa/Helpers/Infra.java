@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.example.zakiva.santa.Models.Competition;
 import com.example.zakiva.santa.Models.Game;
 import com.example.zakiva.santa.Models.TriviaQuestion;
@@ -40,7 +41,7 @@ public class Infra {
     public static String userEmail;
     public static String timeCode;
     public static String [] triviaSheets = {"inventions","countries","israelBands","worldBands","singers", "timeZones","worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors","mountains","quotes","wifeHusband","worldLeaders"};
-
+    public static int HallOfFameListLimit = 7;
 
     public static void initInfra (String email, String time) {
         myDatabase = FirebaseDatabase.getInstance().getReference();
@@ -292,13 +293,14 @@ public class Infra {
     }
 
     public static void addWinner (final String key, final String name, final String competition, final String details, final String imageName, final String prize) {
+        final int minusKey = Integer.parseInt(key) * (-1);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
         storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Winner winner = new Winner(name, competition, details, imageName, uri.toString(), prize);
-                myDatabase.child("winners").child(key).setValue(winner);
+                Winner winner = new Winner(name, competition, details, imageName, uri.toString(), prize, minusKey);
+                myDatabase.child("winners").push().setValue(winner);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -308,14 +310,17 @@ public class Infra {
         });
     }
 
-    // startOrUpdate indicates if we are on the first load bo app init or on an update of the list
-    public static void getWinnersFromFirebase() {
-        HallOfFame.dataHashWinners = new ArrayList<>();
+    public static void getWinnersFromFirebase(final Context context) {
+        HallOfFame.dataHashWinners = new HashMap<>();
         DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("winners");
         ValueEventListener winnersDataListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                HallOfFame.dataHashWinners = (ArrayList<Object>) dataSnapshot.getValue();
+                HallOfFame.dataHashWinners = (HashMap<String, HashMap>) dataSnapshot.getValue();
+                for (HashMap hm : HallOfFame.dataHashWinners.values()){
+                    Object url = hm.get("imageUrl");
+                    Glide.with(context).load((String) url);
+                }
                 Loader.increase();
             }
             @Override
@@ -323,6 +328,6 @@ public class Infra {
                 // Error!
             }
         };
-        myRef2.addValueEventListener(winnersDataListener);
+        myRef2.orderByChild("minusKey").limitToFirst(HallOfFameListLimit).addValueEventListener(winnersDataListener);
     }
 }

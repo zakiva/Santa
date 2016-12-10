@@ -51,6 +51,7 @@ public class Loader extends AppCompatActivity {
         getTriviaDataFromFirebase();
         getWinnersFromFirebase();
         Images.downloadImageToDisk("drawing1.jpg", getApplicationContext());
+        getWinnersFromFirebase(getApplicationContext());
 
         Log.d(TAG, " finish oncreatre ");
     }
