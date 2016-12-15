@@ -1,6 +1,9 @@
 package com.example.zakiva.santa;
 
 import android.app.Application;
+import android.content.res.Configuration;
+
+import java.util.Locale;
 
 
 /**
@@ -8,6 +11,16 @@ import android.app.Application;
  */
 
 public class Santa extends Application {
+
+    @Override public void onCreate() {
+        super.onCreate();
+        Locale locale = new Locale("en_US");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+    }
 
     private String globalEmail;
 
