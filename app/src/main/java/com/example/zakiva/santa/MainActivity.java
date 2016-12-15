@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public static long candies;
     public static long exp;
     //public static String prize;
-    public static long INIT_CANDIES_NUMBER = 3000;
+    public static long INIT_CANDIES_NUMBER = 300000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

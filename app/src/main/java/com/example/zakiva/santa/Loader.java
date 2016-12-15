@@ -15,6 +15,7 @@ import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
 import static com.example.zakiva.santa.Helpers.Infra.getWinnersFromFirebase;
 import static com.example.zakiva.santa.Helpers.Infra.getUserAttributesFromFirebase;
+import static com.example.zakiva.santa.Helpers.Storage.getStringPreferences;
 
 public class Loader extends AppCompatActivity {
 
@@ -29,6 +30,18 @@ public class Loader extends AppCompatActivity {
         setContentView(R.layout.activity_loader);
         loader = this;
 
+        //name for pre-alpha
+        String name = getStringPreferences("username02", getApplicationContext());
+        if (name.equals("NONE")) {
+            startActivity(new Intent(Loader.this, nameForPreAlpha.class));
+            return;
+        }
+
+        //set the real user email instead
+        ((Santa) this.getApplication()).setGlobalEmail(name);
+        //this must end before continue to first user interface !!!
+
+
         // Initiate Vungle
         //VungleAds vungleAds = new VungleAds();
         //vungleAds.vungleInit(Loader.this);
@@ -39,10 +52,6 @@ public class Loader extends AppCompatActivity {
         Log.d(TAG, " oncreatre ");
 
         Log.d(TAG, " this = null  " + this == null ? "yes" : "no");
-
-        //set the real user email instead
-        ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail1");
-        //this must end before continue to first user interface !!!
 
         Log.d(TAG, " start loadrss  ");
 
@@ -79,6 +88,6 @@ public class Loader extends AppCompatActivity {
 
     public void startApp  () {
         if (counter == 5)
-            startActivity(new Intent(Loader.this, MainActivity.class));
+            startActivity(new Intent(Loader.this, Prize.class));
     }
 }

@@ -177,13 +177,13 @@ public class Prize extends AppCompatActivity {
     }
 
     public void seePrizeInformationClicked(View view) {
-        startActivity(new Intent(Prize.this, PrizeInformation.class));
+       // startActivity(new Intent(Prize.this, PrizeInformation.class));
     }
 
     public void settingsClicked(View view) {
     }
 
     public void hallOfFameClicked(View view) {
-        startActivity(new Intent(Prize.this, HallOfFame.class));
+      //  startActivity(new Intent(Prize.this, HallOfFame.class));
     }
 }

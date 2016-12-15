@@ -96,7 +96,7 @@
             android:gravity="center"
             android:textAllCaps="false"
             android:textSize="25dp"
-            android:tag="drawing"
+            android:tag=""
             android:onClick="gameClicked"
             android:id="@+id/iconSection">
 
@@ -116,7 +116,7 @@
             android:layout_marginRight="@dimen/buttonGamesShadow"
             android:layout_below="@+id/iconSection"
             android:background="#ffffff"
-            android:tag="drawing"
+            android:tag=""
             android:onClick="gameClicked"
             android:id="@+id/textSection">
 

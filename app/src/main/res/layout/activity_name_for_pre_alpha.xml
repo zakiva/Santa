@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:text="שלום וברוכים הבאים לגרסה הראשונית שלנו! על מנת שנוכל לזהות אתכם ולהפיק תועלת מהשימוש שלכם באפליקציה אנא מלאו את שמכם המלא:"
+        />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:imeOptions ="actionDone"
+        android:maxLines="1"
+        android:text=""
+        android:layout_height="wrap_content"
+        android:hint="מלאו את שמכם המלא (פרטי + משפחה)"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/title"/>
+
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:text="המשך"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:onClick="continueButtonClicked"
+        android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true"/>
+
+
+
+</RelativeLayout>

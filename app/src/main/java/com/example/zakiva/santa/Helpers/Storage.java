@@ -11,7 +11,7 @@ import com.example.zakiva.santa.Santa;
 public class Storage {
     //Use this function like this (from any activity):
     //getStringFromSharedPreferences("key", getApplicationContext());
-    public static String getStringFromSharedPreferences(String key, Context context){
+    public static String getStringPreferences(String key, Context context){
         SharedPreferences settings = context.getSharedPreferences("MY_DATA", 0);
         String value = settings.getString(key, "NONE");
         return value;
@@ -19,7 +19,7 @@ public class Storage {
 
     //Use this function like this (from any activity):
     //writeStringToSharedPreferences("key", "value", getApplicationContext());
-    public static void writeStringToSharedPreferences(String key, String value, Context context){
+    public static void setStringPreferences(String key, String value, Context context){
         SharedPreferences settings = context.getSharedPreferences("MY_DATA", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
