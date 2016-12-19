@@ -222,7 +222,7 @@ public class GeneratorHelper {
 
         int ARRAY_SIZE = number_of_questions * 2;
         //IMPORTANT: when adding new generators must update this number:
-        int NUMBER_OF_GENERATORS = 17;
+        int NUMBER_OF_GENERATORS = 19;
         List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_GENERATORS; i++) {
             numbers.add(i);
@@ -274,6 +274,11 @@ public class GeneratorHelper {
                 case 14:array.add(generator.quoteToPerson());break;
                 case 15:array.add(generator.leaderToYears());break;
                 case 16:array.add(generator.yearsToLeader());break;
+                case 17:array.add(generator.groupGeneratorsApps());break;
+                case 18:array.add(generator.carToCountry());break;
+
+
+
             }
         }
         Log.d(MainActivity.TAG, "generateQuestionsArray:  array.size = " + array.size());

@@ -40,7 +40,7 @@ public class Infra {
     public static DatabaseReference myDatabase;
     public static String userEmail;
     public static String timeCode;
-    public static String [] triviaSheets = {"inventions","countries","israelBands","worldBands","singers", "timeZones","worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors","mountains","quotes","wifeHusband","worldLeaders"};
+    public static String [] triviaSheets = {"inventions","countries","israelBands","worldBands","singers", "timeZones","worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors","mountains","quotes","wifeHusband","worldLeaders","apps","cars"};
     public static int HallOfFameListLimit = 7;
 
     public static void initInfra (String email, String time) {
