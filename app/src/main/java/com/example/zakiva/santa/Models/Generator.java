@@ -198,6 +198,15 @@ public class Generator {
             case 3:tq = characterToFemaleActor();break;
         }return tq;
     }
+    public TriviaQuestion groupGeneratorsApps() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(3);
+        switch (random) {
+            case 0:tq = appToYear();break;
+            case 1:tq = appFoundedFirst();break;
+            case 2:tq = appFoundedLast();break;
+        }return tq;
+    }
 
     public TriviaQuestion israelBandToAlbum() {
         String[] q = {"name"};
@@ -447,6 +456,20 @@ public class Generator {
     public TriviaQuestion characterToFemaleActor() {
         String[] q = {"character", "type", "name"};
         return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("femaleActors"), "איזו שחקנית גילמה את דמותה של #0# ב#1# #2#?", q, "actor");
+    }
+    public TriviaQuestion carToCountry() {
+        String[] q = {"car"};
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("cars"), "באיזו מדינה מיוצר רכב ה#0#?", q, "country");
+    }
+    public TriviaQuestion appToYear() {
+        String[] q = {"name"};
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("apps"), "באיזו שנה הושקה אפליקצית #0#?", q, "country");
+    }
+    public TriviaQuestion appFoundedFirst() {
+        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("apps"), "איזו אפליקציה הושקה קודם?", "name","year",false);
+    }
+    public TriviaQuestion appFoundedLast() {
+        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("apps"), "איזו אפליקציה הושקה מאוחר יותר?", "name","year",true);
     }
 
 
