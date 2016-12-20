@@ -49,9 +49,8 @@ public class Loader extends AppCompatActivity {
 
         getTimeCodeFromServer();
         getTriviaDataFromFirebase();
-        getWinnersFromFirebase();
+        getWinnersFromFirebase(getApplicationContext());        
         Images.downloadImageToDisk("drawing1.jpg", getApplicationContext());
-        getWinnersFromFirebase(getApplicationContext());
 
         Log.d(TAG, " finish oncreatre ");
     }
