@@ -20,6 +20,8 @@ import android.view.View;
 import com.example.zakiva.santa.*;
 import com.example.zakiva.santa.Models.MainDrawingView;
 
+import java.nio.ByteBuffer;
+
 
 public class Drawing {
 
@@ -49,12 +51,17 @@ public class Drawing {
         }
     }
 
-    public static void printMatrixValues(int[][] matrix, int h, int w) {
+    public static void printMatrixValues(int[][] matrix, int h, int w, String type) {
         int JUMP_PRINT = 5;
         String line;
         for (int i = 0; i < h; i += JUMP_PRINT) {
             line = "";
             for (int j = 0; j < w; j += JUMP_PRINT) {
+
+                if (matrix[i][j] != 255 && type.equals("alpha"))
+                    Log.d(MainActivity.TAG, "not 255 from printMatrixValues");
+
+
 
                 line = line + matrix[i][j] + "|";
 
@@ -150,11 +157,11 @@ public class Drawing {
 
         Log.d(MainActivity.TAG, "printMatrix(pixels) =  ");
 
-        printMatrixValues(pixels, SIZE, SIZE);
+        //printMatrixValues(pixels, SIZE, SIZE);
 
         Log.d(MainActivity.TAG, "printMatrix(alphas) = ");
 
-        printMatrixValues(alphas, SIZE, SIZE);
+        //printMatrixValues(alphas, SIZE, SIZE);
 
 
 
@@ -436,6 +443,47 @@ public class Drawing {
     public static int roundDown(int n, int round) {
         int result = (n + round - 1) / round * round - round;
         return result >= 0 ? result : 0;
+    }
+
+    public static void printBytesMatrix (byte [][] matrix, int h, int w) {
+        int JUMP_PRINT = 5;
+        String line;
+        for (int i = 0; i < h; i += JUMP_PRINT) {
+            line = "";
+            for (int j = 0; j < w; j += JUMP_PRINT) {
+
+                if (matrix[i][j] != 0) {
+                    // line = line + "*";
+                    line = line + i + "|";
+                } else {
+                    line = line + " ";
+                }
+            }
+            Log.d(MainActivity.TAG, line);
+        }
+    }
+
+    public static byte[] getBytesPixels(Bitmap b) {
+        int bytes = b.getRowBytes() * b.getHeight();
+        ByteBuffer buffer = ByteBuffer.allocate(bytes);
+        b.copyPixelsToBuffer(buffer);
+        return buffer.array();
+    }
+
+    public static byte [][] convertBitmapToBytesMatrix (Bitmap b) {
+        int width = b.getRowBytes();
+        int height = b.getHeight();
+        byte [][] matrix = new byte[height][width];
+
+        byte bytes [] = getBytesPixels(b);
+
+        for (int i = 0; i < height; i++){
+            for (int j = 0; j < width; j++) {
+                matrix[i][j] = bytes[i * width + j];
+            }
+        }
+
+        return matrix;
     }
 }
 

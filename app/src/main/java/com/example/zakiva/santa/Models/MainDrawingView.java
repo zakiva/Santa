@@ -114,7 +114,7 @@ public class MainDrawingView extends View {
         //matrix = new int[SIZE_PIXELS][SIZE_PIXELS];
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
-        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_4444);
+        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ALPHA_8);
         drawCanvas = new Canvas(canvasBitmap);
 
         this.pathsUndo = new ArrayList<>();
@@ -258,7 +258,7 @@ public class MainDrawingView extends View {
     public void restartDrawing () {
         end_motion();
         invalidate();
-        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ARGB_4444);
+        canvasBitmap = Bitmap.createBitmap(screenWidthPixels, drawingAreaHeight, Bitmap.Config.ALPHA_8);
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         drawCanvas = new Canvas(canvasBitmap);
         this.pathsUndo = new ArrayList<>();
