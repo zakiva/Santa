@@ -1,6 +1,7 @@
 package com.example.zakiva.santa.Models;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,10 +13,15 @@ import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.example.zakiva.santa.Helpers.Cache;
+import com.example.zakiva.santa.Loader;
+import com.example.zakiva.santa.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.snappydb.DB;
+import com.snappydb.DBFactory;
+import com.snappydb.SnappydbException;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -107,7 +113,7 @@ public class Images {
             Picasso.with(yourActivity).load(url).into(image);
         } else {
             FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
+            StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
             storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -131,7 +137,7 @@ public class Images {
 
     static void downloadAndUpdateImage(final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
+        StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
         storageRef.child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -164,7 +170,7 @@ public class Images {
 
     static void downloadAndUpdate2Images(final String imageName, final int imageViewId, final String imageName2, final int imageViewId2, final Activity yourActivity, final String index, final String index2) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
+        final StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
         storageRef.child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -195,6 +201,45 @@ public class Images {
                 Log.d("problem: ", "can't load image");
             }
         });
+    }
+
+    public static void downloadImageToDisk(final String imageName, final Context context) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(context.getString(R.string.firebase_storage));
+        storageRef.child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                try {
+                    DB snappydb = DBFactory.open(context);
+                    snappydb.put(imageName, bytes);
+                    snappydb.close();
+                    // Use next line only if you use this method in Loader activity
+                    Loader.increase();
+                } catch (SnappydbException e) {
+                    Log.d("Problem: ", e.toString());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("problem: ", "can't load image");
+            }
+        });
+    }
+
+    // Use this method like this:
+    // Images.getBitmapFromDisk("drawing1.jpg", getApplicationContext());
+    public static Bitmap getBitmapFromDisk(final String imageName, final Context context){
+        try {
+            DB snappydb = DBFactory.open(context);
+            byte[] bytes  =  snappydb.getBytes(imageName);
+            snappydb.close();
+            Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            return bm;
+        } catch (SnappydbException e) {
+            Log.d("Problem: ", e.toString());
+        }
+        return null;
     }
 
 }
