@@ -258,8 +258,6 @@ public class DrawingGame extends AppCompatActivity {
         return score < 0 ?  0 : score;
     }
 
-
-
     public long calcScoreNew () {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -270,18 +268,40 @@ public class DrawingGame extends AppCompatActivity {
 
         Bitmap userBitmap = v.canvasBitmap;
 
-        //printer(sourceBitmap);
-       // printer(userBitmap);
+        Log.d(MainActivity.TAG, " ##################  printer(sourceBitmap);  ################### = ");
+
+        printer(sourceBitmap);
+        //printer(userBitmap);
+        Log.d(MainActivity.TAG, ">>>>>>>>>> printer(userBitmap) =  ");
+        byte [] bytesArray = Drawing.getBytesPixels(userBitmap);
+        Log.d(MainActivity.TAG, "0:" + bytesArray[0]);
+        Log.d(MainActivity.TAG, "1:" + bytesArray[1]);
+        Log.d(MainActivity.TAG, "2:" + bytesArray[2]);
+        Log.d(MainActivity.TAG, "Arrays.toString(byteArray) = " + Arrays.toString(bytesArray));
+
+        Log.d(MainActivity.TAG, " ##################  userBytesMatrix  ################### = ");
+
+        byte [][] userBytesMatrix = Drawing.convertBitmapToBytesMatrix(userBitmap);
+        Drawing.printBytesMatrix(userBytesMatrix, userBitmap.getHeight(), userBitmap.getWidth());
+
+     //   for (int i=0; i < bytesArray.length; i++) {
+     //       if (bytesArray[i] != 0)
+      //          Log.d(MainActivity.TAG, "NOT A ZERO !!!!!!!!!");
+       // }
 
 
+        int s = MainDrawingView.SIZE_PIXELS;
 
-        compareBitmaps(sourceBitmap, userBitmap);
+       // Bitmap sourceBitmapFixedSize = Bitmap.createScaledBitmap(sourceBitmap, s, s, true);
+
+
+        compareBitmaps(sourceBitmap, userBytesMatrix);
 
 
         return 555;
     }
 
-    public void compareBitmaps (Bitmap squared, Bitmap rectangle) {
+    public void compareBitmaps (Bitmap squared, byte [][] rectangle) {
 
         Log.d(MainActivity.TAG, "start comparing....");
 
@@ -295,13 +315,28 @@ public class DrawingGame extends AppCompatActivity {
         for (int i = 0; i < squared.getHeight(); i += MainDrawingView.JUMP) {
             for (int j = 0; j < squared.getWidth(); j+= MainDrawingView.JUMP) {
 
+
+
+                int pixelSq = squared.getPixel(j, i);
+                int alphaSq = Color.alpha(pixelSq);
+                if (alphaSq != 255)
+                    Log.d(MainActivity.TAG, "alpha = " + alphaSq);
+
                 result = checkPixels(i, j, squared, rectangle, startHeight);
+
+
+
+
+
+                if (result == 2)
+                    Log.d(MainActivity.TAG, "BADDDDDDDDDDDDDDDDDDDDDDDD = ");
+
 
                 if (result > 0) {
                     if (result == 1)
                         missed++;
                     else
-                        bad++;
+                        bad++; //result == 2
                 }
 
             }
@@ -311,10 +346,10 @@ public class DrawingGame extends AppCompatActivity {
         Log.d(MainActivity.TAG, "BAD = "  + bad);
     }
 
-    public int checkPixels (int i, int j, Bitmap squared, Bitmap rectangle, int startHeight) {
+    public int checkPixels (int i, int j, Bitmap squared, byte [][] rectangle, int startHeight) {
 
-
-        int DELTA = 10, pixelSq, alphaSq, pixelRec, alphaRec;
+        int DELTA = 10, pixelSq, alphaSq;
+        byte byteRec;
         //ignore margins
         if (i <= DELTA || j <= DELTA || i >= squared.getHeight() - DELTA - 1 || j >= squared.getWidth() - DELTA - 1)
             return 0;
@@ -325,26 +360,45 @@ public class DrawingGame extends AppCompatActivity {
 
         int start = Drawing.roundDown(-1 * DELTA, MainDrawingView.JUMP);
 
-        for (int k = start; k < DELTA; k += MainDrawingView.JUMP) {
-            for (int l = start; l < DELTA; l += MainDrawingView.JUMP) {
+        if (alphaSq == 255) {
 
-                pixelRec = rectangle.getPixel(j + k, i + startHeight + l);
-                alphaRec = Color.alpha(pixelRec);
+       //     Log.d(MainActivity.TAG, "YES");
 
-                if (alphaRec == 255) {
 
-                    if (alphaSq == 255)
-                        return 0;
-                    else
-                        return 2; //bad
+
+            for (int k = start; k < DELTA; k += MainDrawingView.JUMP) {
+                for (int l = start; l < DELTA; l += MainDrawingView.JUMP) {
+
+                    byteRec = rectangle[i + startHeight + l][j + k];
+
+                    if (byteRec != 0) {
+
+                        return 0; //good
+
+                    }
                 }
             }
+
+            return 1; //missed
+
         }
+        else {
+            Log.d(MainActivity.TAG, "NO");
 
-        if (alphaSq == 255)
-            return 1; // missed
+            for (int k = start; k < DELTA; k += MainDrawingView.JUMP) {
+                for (int l = start; l < DELTA; l += MainDrawingView.JUMP) {
 
-        return 0;
+                    byteRec = rectangle[i + startHeight + l][j + k];
+
+                    if (byteRec != 0) {
+
+                        return 2; //bad
+
+                    }
+                }
+            }
+            return 0; //good
+        }
     }
 
 
@@ -366,11 +420,14 @@ public class DrawingGame extends AppCompatActivity {
 
         int s = MainDrawingView.SIZE_PIXELS;
 
-        Bitmap bitmap = Bitmap.createScaledBitmap(b, s, s, true);
+        //Bitmap bitmap = Bitmap.createScaledBitmap(b, s, s, true);
+
+        Bitmap bitmap = b;
 
         int[][] matrix = new int[s][s];
         int[][] pixels = new int[s][s];
         int[][] alphas = new int[s][s];
+       // byte[][] bytes = new byte[s][s];
 
         int h = bitmap.getHeight();
         int w = bitmap.getWidth();
@@ -380,6 +437,7 @@ public class DrawingGame extends AppCompatActivity {
 
 
         int pixel, alpha;
+        //byte myByte;
 
         int k = 0, l = 0;
 
@@ -389,8 +447,15 @@ public class DrawingGame extends AppCompatActivity {
                 pixel = bitmap.getPixel(j, i);
                 alpha = Color.alpha(pixel);
 
+                if (alpha != 255)
+                    Log.d(MainActivity.TAG, "alpha = " + alpha);
+
+
+                //myByte = bitmap.getPixel(j, i);
+
                 pixels[k][l] = pixel;
                 alphas[k][l] = alpha;
+                //bytes[k][l] = myByte;
 
                 if (pixel < -1 && alpha == 255) {
                     k = Drawing.roundDown(i, MainDrawingView.densityFactor * Drawing.JUMP);
@@ -406,11 +471,11 @@ public class DrawingGame extends AppCompatActivity {
 
         Log.d(MainActivity.TAG, "printMatrix(pixels) =  ");
 
-       // Drawing.printMatrixValues(pixels, s, s);
+        Drawing.printMatrixValues(pixels, s, s, "pixel");
 
         Log.d(MainActivity.TAG, "printMatrix(alphas) = ");
 
-        Drawing.printMatrixValues(alphas, s, s);
+        Drawing.printMatrixValues(alphas, s, s, "alpha");
 
         Log.d(MainActivity.TAG, "printMatrix (matrix) = ");
 
