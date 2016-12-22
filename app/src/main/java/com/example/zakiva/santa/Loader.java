@@ -8,7 +8,9 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.zakiva.santa.Helpers.Storage;
 import com.example.zakiva.santa.Models.Images;
+import com.example.zakiva.santa.Models.Token;
 //import com.example.zakiva.santa.Helpers.VungleAds;
 //import com.vungle.publisher.VunglePub;
 
@@ -41,10 +43,15 @@ public class Loader extends AppCompatActivity {
 
         Log.d(TAG, " this = null  " + this == null ? "yes" : "no");
 
+        String email = Storage.getStringPreferences("userEmail",this.getApplicationContext());
+        if (email.equals("NONE")){
         //set the real user email instead
-        ((Santa) this.getApplication()).setGlobalEmail("userDemoEmail1");
-        //this must end before continue to first user interface !!!
-
+            ((Santa) this.getApplication()).setGlobalEmail(Token.getID());
+            //this must end before continue to first user interface !!!
+        }
+        else{
+            ((Santa) this.getApplication()).setGlobalEmail(email);
+        }
         Log.d(TAG, " start loadrss  ");
 
         getTimeCodeFromServer();

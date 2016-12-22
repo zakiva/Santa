@@ -2,8 +2,11 @@ package com.example.zakiva.santa.Models;
 
 import android.content.Context;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.example.zakiva.santa.Helpers.Infra;
+import com.example.zakiva.santa.Helpers.Storage;
+import com.example.zakiva.santa.MainActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -16,29 +19,22 @@ import java.util.UUID;
  */
 
 public class Token {
-    private static String ID = null;
+    static String userToken = null;
     static Context context;
 
     // return a cached unique ID for each device
     public static String getID() {
-
         // if the ID isn't cached inside the class itself
-        if (ID == null) {
+        if (userToken == null) {
             //get it from database / settings table (implement your own method here)
-            ID = "somenumber";
+           userToken = Storage.getStringPreferences("userToken",context);
         }
-
         // if the saved value was incorrect
-        if (ID.equals("0")) {
-            // generate a new ID
-            ID = generateID();
-
-            if (ID != null) {
-                // save it to database / setting (implement your own method here)
-            }
+        if (userToken.equals("NONE")) {
+            userToken = generateID();
+            Storage.setStringPreferences("userToken",userToken,context);
         }
-
-        return ID;
+        return userToken;
     }
 
     // generate a unique ID for each device
@@ -50,16 +46,16 @@ public class Token {
                 Settings.Secure.ANDROID_ID);
 
         // in case known problems are occured
-        if ("9774d56d682e549c".equals(deviceId) || deviceId == null) {
+        String badDefaultToken = "9774d56d682e549c";
+        if (badDefaultToken.equals(deviceId) || deviceId == null) {
 
             // get a unique deviceID like IMEI for GSM or ESN for CDMA phones
             // don't forget:
             //
             deviceId = UUID.randomUUID().toString();
-
+            Log.d(MainActivity.TAG,"id = "+deviceId);
             // if nothing else works, generate a random number
             if (deviceId == null) {
-
                 Random tmpRand = new Random();
                 deviceId = String.valueOf(tmpRand.nextLong());
             }
