@@ -210,11 +210,11 @@ public class Generator {
 
     public TriviaQuestion israelBandToAlbum() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelBands"), "איזה מהאלבומים הבאים שייך לללהקת #0#?", q, "albums");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelBands"), "איזה מהאלבומים הבאים שייך ללהקת #0#?", q, "albums");
     }
     public TriviaQuestion worldBandToAlbum() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldBands"), "איזה מהאלבומים הבאים שייך לללהקת #0#?",q,"albums");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldBands"), "איזה מהאלבומים הבאים שייך ללהקת #0#?",q,"albums");
     }
     public TriviaQuestion israelBandToYear() {
         String[] q = {"name"};
@@ -377,7 +377,7 @@ public class Generator {
     }
     public TriviaQuestion generalToEvent() {
         String[] q = { "event"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כרמטכ״לֹ בזמן #0#?",q, "general");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("israelEvents"), "מי כיהן כרמטכ״ל בזמן #0#?",q, "general");
     }
     public TriviaQuestion primeMinisterToEvent() {
         String[] q = {"event"};
