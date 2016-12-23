@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:textColor="#303030"
-        android:text="version: pre-alpha 1.0"/>
+        android:text="version: pre-alpha 1.2"/>
 
 
 
