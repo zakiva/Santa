@@ -58,9 +58,8 @@ public class Drawing {
             line = "";
             for (int j = 0; j < w; j += JUMP_PRINT) {
 
-                if (matrix[i][j] != 255 && type.equals("alpha"))
-                    Log.d(MainActivity.TAG, "not 255 from printMatrixValues");
-
+               // if (matrix[i][j] != 255 && type.equals("alpha"))
+                   // Log.d(MainActivity.TAG, "not 255 from printMatrixValues");
 
 
                 line = line + matrix[i][j] + "|";
