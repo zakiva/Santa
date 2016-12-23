@@ -18,13 +18,20 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Google" />
-        <activity android:name=".Trivia" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Google"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Trivia"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
         <activity
@@ -39,21 +46,39 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Facebook" />
-        <activity android:name=".Draw" />
-        <activity android:name=".DrawingGame" />
-        <activity android:name=".Score" />
-        <activity android:name=".Prize" />
-        <activity android:name=".Games" />
-        <activity android:name=".TriviaGame" />
-        <activity android:name=".Loader">
+        <activity
+            android:name=".Facebook"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Draw"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DrawingGame"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Score"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Prize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Games"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TriviaGame"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Loader"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PrizeInformation" />
+        <activity
+            android:name=".PrizeInformation"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.vungle.publisher.VideoFullScreenAdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
