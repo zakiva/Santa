@@ -27,6 +27,10 @@ import com.example.zakiva.santa.Models.MainDrawingView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+
+import static com.example.zakiva.santa.Models.MainDrawingView.density;
+import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 
 public class DrawingGame extends AppCompatActivity {
 
@@ -253,6 +257,8 @@ public class DrawingGame extends AppCompatActivity {
 
     public long calcScoreNew() {
 
+        boolean DEBUG = false;
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), randomImage, options);
@@ -263,19 +269,26 @@ public class DrawingGame extends AppCompatActivity {
 
         Log.d(MainActivity.TAG, " ##################  printer(sourceBitmap);  ################### = ");
 
-        printer(sourceBitmap);
+
+        if (DEBUG) {
+            printer(sourceBitmap);
+            Drawing.printBitmap(sourceBitmap, sourceBitmap.getHeight(), sourceBitmap.getWidth());
+        }
         //printer(userBitmap);
         Log.d(MainActivity.TAG, ">>>>>>>>>> printer(userBitmap) =  ");
         byte[] bytesArray = Drawing.getBytesPixels(userBitmap);
         Log.d(MainActivity.TAG, "0:" + bytesArray[0]);
         Log.d(MainActivity.TAG, "1:" + bytesArray[1]);
         Log.d(MainActivity.TAG, "2:" + bytesArray[2]);
-        Log.d(MainActivity.TAG, "Arrays.toString(byteArray) = " + Arrays.toString(bytesArray));
+
+        //Log.d(MainActivity.TAG, "Arrays.toString(byteArray) = " + Arrays.toString(bytesArray));
 
         Log.d(MainActivity.TAG, " ##################  userBytesMatrix  ################### = ");
 
         byte[][] userBytesMatrix = Drawing.convertBitmapToBytesMatrix(userBitmap);
-        Drawing.printBytesMatrix(userBytesMatrix, userBitmap.getHeight(), userBitmap.getWidth());
+
+        if (DEBUG)
+            Drawing.printBytesMatrix(userBytesMatrix, userBitmap.getHeight(), userBitmap.getWidth());
 
         //   for (int i=0; i < bytesArray.length; i++) {
         //       if (bytesArray[i] != 0)
@@ -288,15 +301,31 @@ public class DrawingGame extends AppCompatActivity {
         // Bitmap sourceBitmapFixedSize = Bitmap.createScaledBitmap(sourceBitmap, s, s, true);
 
 
-        compareSourceBitmapToUserMatrix(sourceBitmap, userBytesMatrix);
+        int score = formula(compareSourceBitmapToUserMatrix(sourceBitmap, userBytesMatrix));
+
+        return score;
+    }
+
+    int formula (HashMap<String, Integer> data) {
+
+        int density =  MainDrawingView.densityFactor;
+        int squaredDensity = density * density;
+
+        Log.d(MainActivity.TAG, " density  = " + density);
+        Log.d(MainActivity.TAG, " squaredDensity =  " + squaredDensity);
 
 
-        return 555;
+        int score = 1000;
+        double rate = 1.0 * (data.get("black") - data.get("missed")) / data.get("black"); //what about density here?
+        score *= rate;
+        score -= data.get("bad") * 1.0 / squaredDensity; // need to consider density
+        score -= score == 1000 ? 3 : 0; // 1000 is only for god :)
+        return score < 0 ? 0 : score;
     }
 
     int globalBlackSource;
 
-    public void compareSourceBitmapToUserMatrix(Bitmap squared, byte[][] rectangle) {
+    public HashMap<String, Integer> compareSourceBitmapToUserMatrix(Bitmap squared, byte[][] rectangle) {
 
         Log.d(MainActivity.TAG, "start comparing....");
 
@@ -305,19 +334,23 @@ public class DrawingGame extends AppCompatActivity {
 
         globalBlackSource = 0;
 
-        int missed = 0, bad = 0;
+        int missed = 0, bad = 0, outOfSquared = 0;
 
-        int DELTA = 30;
+        int DELTA = 40;
 
         int startHeight = getStartHeight();
+
+        int START_BY_DELTA = Drawing.roundDownNegative(-1 * DELTA, MainDrawingView.JUMP);
+
+        //check metrics
 
         for (int i = 0; i < squared.getHeight(); i += MainDrawingView.JUMP) {
             for (int j = 0; j < squared.getWidth(); j += MainDrawingView.JUMP) {
 
 
-                if (isMissed(i, j, squared, rectangle, startHeight, DELTA))
+                if (isMissed(i, j, squared, rectangle, startHeight, DELTA * densityFactor, START_BY_DELTA))
                     missed++;
-                else if (isBad(i, j, squared, rectangle, startHeight, DELTA * 3))
+                else if (isBad(i, j, squared, rectangle, startHeight, DELTA * densityFactor, START_BY_DELTA))
                     bad++;
 
 
@@ -358,27 +391,64 @@ public class DrawingGame extends AppCompatActivity {
             }
         }
 
+        //search for bad pixels above the square
+        for (int i = 0; i < startHeight - DELTA / 2 ; i += MainDrawingView.JUMP) {
+            for (int j = 0; j < squared.getWidth(); j += MainDrawingView.JUMP) {
+
+                if (rectangle[i][j] != 0)
+                    outOfSquared++;
+            }
+        }
+        //search for bad pixels below the square
+        for (int i = squared.getHeight() + DELTA / 2 + startHeight; i < rectangle.length; i += MainDrawingView.JUMP) {
+            for (int j = 0; j < squared.getWidth(); j += MainDrawingView.JUMP) {
+
+                if (rectangle[i][j] != 0)
+                    outOfSquared++;
+            }
+        }
+
+
+        Log.d(MainActivity.TAG, "rectangle.length = " + rectangle.length);
+        Log.d(MainActivity.TAG, "rectangle[0].length = " + rectangle[0].length);
+        Log.d(MainActivity.TAG, "startHeigfht = " + startHeight);
+
+
+
         Log.d(MainActivity.TAG, "$$MISSED = " + missed);
         Log.d(MainActivity.TAG, "BAD = " + bad);
+        Log.d(MainActivity.TAG, "outOfSquared = " + outOfSquared);
         Log.d(MainActivity.TAG, "GLOBALBLACKSOURCE = " + globalBlackSource);
+        Log.d(MainActivity.TAG, "DELTA = " + DELTA);
+        Log.d(MainActivity.TAG, "start = " + START_BY_DELTA);
+        Log.d(MainActivity.TAG, "squared.getHeight() = " + squared.getHeight());
+        Log.d(MainActivity.TAG, "squared.getWidth() = " + squared.getWidth());
+
+
+        HashMap<String, Integer> result = new HashMap<>();
+        result.put("bad", bad + outOfSquared);
+        result.put("missed", missed);
+        result.put("black", globalBlackSource);
+        return result;
     }
 
 
     //check for specific pixel in the source bitmap:
     // does exist a corresponding pixel in the user matrix (including DELTA)?
-    public boolean isMissed(int i, int j, Bitmap squared, byte[][] rectangle, int startHeight, int DELTA) {
+    public boolean isMissed(int i, int j, Bitmap squared, byte[][] rectangle, int startHeight, int DELTA, int start) {
 
         byte byteRec;
         //ignore margins
-        if (i <= DELTA || j <= DELTA || i >= squared.getHeight() - DELTA - 1 || j >= squared.getWidth() - DELTA - 1)
-            return false;
+       // if (i <= DELTA || j <= DELTA || i >= squared.getHeight() - DELTA - 1 || j >= squared.getWidth() - DELTA - 1)
+       //     return false;
 
         int pixelSq = squared.getPixel(j, i);
 
-        int start = Drawing.roundDown(-1 * DELTA, MainDrawingView.JUMP);
 
         if (pixelSq == -1) // if the source pixel is white we can't miss it :)
             return false;
+
+        int x, y;
 
 
         //the source pixel is black - search for black pixel in the user matrix:
@@ -389,7 +459,14 @@ public class DrawingGame extends AppCompatActivity {
         for (int k = start; k < DELTA; k += MainDrawingView.JUMP) {
             for (int l = start; l < DELTA; l += MainDrawingView.JUMP) {
 
-                byteRec = rectangle[i + startHeight + l][j + k];
+                y = i + startHeight + l;
+
+                x = j + k;
+
+                if (y < 0 || y >= rectangle.length || x < 0 || x >= rectangle[0].length)
+                    continue;
+
+                byteRec = rectangle[y][x];
 
                 if (byteRec != 0) // found black user pixel -> not missed
                     return false;
@@ -402,32 +479,44 @@ public class DrawingGame extends AppCompatActivity {
 
     //check for specific pixel in the matrix bitmap:
     // does exist a corresponding pixel in the source bitmap (including DELTA)?
-    public boolean isBad(int i, int j, Bitmap squared, byte[][] rectangle, int startHeight, int DELTA) {
+    public boolean isBad(int i, int j, Bitmap squared, byte[][] rectangle, int startHeight, int DELTA, int start) {
 
         //ignore margins
-        if (i <= DELTA || j <= DELTA || i >= squared.getHeight() - DELTA - 1 || j >= squared.getWidth() - DELTA - 1)
-            return false;
+        //if (i <= DELTA || j <= DELTA || i >= squared.getHeight() - DELTA - 1 || j >= squared.getWidth() - DELTA - 1)
+         //   return false;
 
         int pixelSq;
 
-        byte byteRec = rectangle[i + startHeight][j];
+        //just for safety - should never exceed:
+        if (i + startHeight >= rectangle.length)
+            return false;
 
-        int start = Drawing.roundDown(-1 * DELTA, MainDrawingView.JUMP);
+        byte byteRec = rectangle[i + startHeight][j];
 
         if (byteRec == 0) // if the user pixel is white it can't be bad :)
             return false;
 
         //the user pixel is black - search for black pixel in the source bitmap:
 
+        int x, y;
+
         for (int k = start; k < DELTA; k += MainDrawingView.JUMP) {
             for (int l = start; l < DELTA; l += MainDrawingView.JUMP) {
 
-                pixelSq = squared.getPixel(j + k, i + l);
+                x = j + k;
+                y = i + l;
+
+                if (y < 0 || y >= squared.getHeight() || x < 0 || x >= squared.getWidth())
+                    continue;
+
+                pixelSq = squared.getPixel(x, y);
 
                 if (pixelSq < -1) // found black source pixel -> not bad
                     return false;
             }
         }
+        //Log.d(MainActivity.TAG, "returning isBad() == true on pixel: (" + (i + startHeight) + "," + j +")");
+
         return true;
     }
 
