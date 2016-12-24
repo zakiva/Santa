@@ -51,6 +51,24 @@ public class Drawing {
         }
     }
 
+    public static void printBitmap(Bitmap b, int h, int w) {
+        int JUMP_PRINT = 5;
+        String line;
+        for (int i = 0; i < h; i += JUMP_PRINT) {
+            line = "";
+            for (int j = 0; j < w; j += JUMP_PRINT) {
+
+                if (b.getPixel(j, i) < -1) {
+                    // line = line + "*";
+                    line = line + i + "|";
+                } else {
+                    line = line + "-";
+                }
+            }
+            Log.d(MainActivity.TAG, line);
+        }
+    }
+
     public static void printMatrixValues(int[][] matrix, int h, int w, String type) {
         int JUMP_PRINT = 5;
         String line;
@@ -443,6 +461,12 @@ public class Drawing {
         int result = (n + round - 1) / round * round - round;
         return result >= 0 ? result : 0;
     }
+
+    public static int roundDownNegative (int n, int round) {
+        int result = (n + round - 1) / round * round - round;
+        return result;
+    }
+
 
     public static void printBytesMatrix (byte [][] matrix, int h, int w) {
         int JUMP_PRINT = 5;
