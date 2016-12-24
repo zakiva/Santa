@@ -292,10 +292,10 @@ public class Infra {
         myRef.addValueEventListener(triviaDataListener);
     }
 
-    public static void addWinner (final String key, final String name, final String competition, final String details, final String imageName, final String prize) {
+    public static void addWinner (final String key, final String name, final String competition, final String details, final String imageName, final String prize, final Activity yourActivity) {
         final int minusKey = Integer.parseInt(key) * (-1);
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://windis-72265.appspot.com");
+        StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
         storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
