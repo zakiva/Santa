@@ -463,7 +463,7 @@ public class Generator {
     }
     public TriviaQuestion appToYear() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("apps"), "באיזו שנה הושקה אפליקצית #0#?", q, "country");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("apps"), "באיזו שנה הושקה אפליקצית #0#?", q, "year");
     }
     public TriviaQuestion appFoundedFirst() {
         return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("apps"), "איזו אפליקציה הושקה קודם?", "name","year",false);
