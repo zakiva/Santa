@@ -84,11 +84,11 @@ public class HallOfFame extends AppCompatActivity {
     }
 
     //This loop helps generating Objects on firebase. Do not use it with more than 100 iterations
-    public static void addWinnersForTesting(){
+    public static void addWinnersForTesting(Activity myActivity){
         for (int i = 0; i < 40; i++ ){
             String key = Integer.toString(i);
             String imageName = key + ".jpg";
-            Infra.addWinner(key, "Person " + key, key, "blah blah", imageName, "Prize " + key);
+            Infra.addWinner(key, "Person " + key, key, "blah blah", imageName, "Prize " + key, myActivity);
         }
         //Infra.addWinner("0", "Lionel Messi", "12", "blah blah", "0.jpg", "Canon Camera");
         //Infra.addWinner("1", "Claudio Marchisio", "16", "blah blah", "1.jpg", "Sony Playstation 4");
