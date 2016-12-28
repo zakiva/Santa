@@ -203,6 +203,8 @@ public class Images {
         });
     }
 
+    // Use this method like this:
+    // Images.downloadImageToDisk("drawing1.jpg", getApplicationContext());
     public static void downloadImageToDisk(final String imageName, final Context context) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(context.getString(R.string.firebase_storage));
@@ -232,14 +234,15 @@ public class Images {
     public static Bitmap getBitmapFromDisk(final String imageName, final Context context){
         try {
             DB snappydb = DBFactory.open(context);
-            byte[] bytes  =  snappydb.getBytes(imageName);
-            snappydb.close();
-            Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            return bm;
+            if (snappydb.exists(imageName)){
+                byte[] bytes  =  snappydb.getBytes(imageName);
+                snappydb.close();
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                return bm;
+            }
         } catch (SnappydbException e) {
             Log.d("Problem: ", e.toString());
         }
         return null;
     }
-
 }
