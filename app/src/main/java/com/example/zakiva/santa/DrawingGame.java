@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 import static com.example.zakiva.santa.Models.MainDrawingView.density;
 import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
@@ -319,7 +320,7 @@ public class DrawingGame extends AppCompatActivity {
         double rate = 1.0 * (data.get("black") - data.get("missed")) / data.get("black"); //what about density here?
         score *= rate;
         score -= data.get("bad") * 1.0 / squaredDensity; // need to consider density
-        score -= score == 1000 ? 3 : 0; // 1000 is only for god :)
+        score -= score > 990 ? new Random().nextInt(30) : 0; // need some luck to be the best ;)
         return score < 0 ? 0 : score;
     }
 
@@ -630,8 +631,8 @@ public class DrawingGame extends AppCompatActivity {
                 pixel = bitmap.getPixel(j, i);
                 alpha = Color.alpha(pixel);
 
-                if (alpha != 255)
-                    Log.d(MainActivity.TAG, "alpha = " + alpha);
+                //if (alpha != 255)
+                  //  Log.d(MainActivity.TAG, "alpha = " + alpha);
 
                 k = Drawing.roundDown(i, MainDrawingView.densityFactor * Drawing.JUMP);
                 l = Drawing.roundDown(j, MainDrawingView.densityFactor * Drawing.JUMP);
