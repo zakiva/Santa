@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.zakiva.santa.Helpers.Drawing;
+import com.example.zakiva.santa.Models.Images;
 import com.example.zakiva.santa.Models.MainDrawingView;
 
 import java.util.ArrayList;
@@ -30,13 +31,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
+import static com.example.zakiva.santa.Models.Images.*;
 import static com.example.zakiva.santa.Models.MainDrawingView.density;
 import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 
 public class DrawingGame extends AppCompatActivity {
 
+    public static ArrayList<Integer> sourceIndexes;
+    public static int NUMBER_OF_DRAWINGS = 5;
+    public static int defaultIndex; // for safety if download has not been completed
+    private Drawable sourceDrawble;
+    private Bitmap sourceBitmap;
     private int millisecondsToShow;
-    private int randomImage;
+    //private int randomImage;
     private Button pen;
     private Button eraser;
     private Button restart;
@@ -45,10 +52,10 @@ public class DrawingGame extends AppCompatActivity {
     private Button replaceHelper;
     private Button flashHelper;
     private Button clueHelper;
-    private ImageView sourceImage;
+    private ImageView sourceImageView;
     private MainDrawingView v;
     private int flashHelperLength;
-    private ArrayList<Integer> images;
+   // private ArrayList<Integer> images;
     private RelativeLayout activityBackground;
 
     @Override
@@ -57,7 +64,27 @@ public class DrawingGame extends AppCompatActivity {
         setContentView(R.layout.activity_drawing_game);
         Drawing.initDrawingHelper();
         initFields();
+        updateImagesAndQueue();
         startGame();
+    }
+
+    public void updateImagesAndQueue () {
+        //update Bitma
+        sourceBitmap = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + ".jpg", getApplicationContext());
+        if (sourceBitmap == null) { // for safety if download has not been completed
+            sourceBitmap = getBitmapFromDisk("drawing" + defaultIndex + ".jpg", getApplicationContext());
+        }
+        //update Drawable
+        sourceDrawble = new BitmapDrawable(getResources(), sourceBitmap);
+        sourceImageView.setImageDrawable(sourceDrawble);
+        //remove old image from disk
+        //MUST REMOVE FROM DISK BEFORE REMOVE FROM QUEUE
+        // QUESTION: when do we remove the images that are actually in the queue (e.g. in case the user just exit the app)?
+        //updateQueue
+        sourceIndexes.remove(0);
+        sourceIndexes.add(new Random().nextInt(NUMBER_OF_DRAWINGS));
+        //download last image
+        Images.downloadImageToDisk("drawing" + sourceIndexes.get(sourceIndexes.size() - 1) + ".jpg", getApplicationContext());
     }
 
     //flow
@@ -74,12 +101,12 @@ public class DrawingGame extends AppCompatActivity {
         clueHelper = (Button) findViewById(R.id.clueHelperButton);
         v = (MainDrawingView) findViewById(R.id.single_touch_view);
         //images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
-        images = new ArrayList<Integer>(Arrays.asList(R.drawable.rec_400));
-        Collections.shuffle(images);
-        randomImage = images.get(0);
+       // images = new ArrayList<Integer>(Arrays.asList(R.drawable.rec_400));
+        //Collections.shuffle(images);
+        //randomImage = images.get(0);
         activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
         activityBackground.getBackground().setAlpha(0);
-        sourceImage = (ImageView) findViewById(R.id.sourceImage);
+        sourceImageView = (ImageView) findViewById(R.id.sourceImage);
     }
 
     public void startGame() {
@@ -154,7 +181,7 @@ public class DrawingGame extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                sourceImage.setImageDrawable(null);
+                sourceImageView.setImageDrawable(null);
                 MainDrawingView.context = null;
                 startActivity(intent);
             }
@@ -197,6 +224,8 @@ public class DrawingGame extends AppCompatActivity {
     }
 
     //helpers
+
+    /*
 
     public long calcScore() {
         //Bitmap draw_bitmap = v.canvasBitmap;
@@ -255,15 +284,17 @@ public class DrawingGame extends AppCompatActivity {
 
         return score < 0 ? 0 : score;
     }
+    */
 
     public long calcScoreNew() {
 
-        boolean DEBUG = false;
+        boolean DEBUG = true;
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inScaled = false;
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), randomImage, options);
-        Bitmap sourceBitmap = Bitmap.createScaledBitmap(bitmap, MainDrawingView.SIZE_PIXELS, MainDrawingView.SIZE_PIXELS, true);
+      //  BitmapFactory.Options options = new BitmapFactory.Options();
+       // options.inScaled = false;
+        //Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), randomImage, options);
+       // Bitmap bitmap = getBitmapFromDisk("drawing0.jpg", getApplicationContext());
+        Bitmap sourceScaledBitmap = Bitmap.createScaledBitmap(sourceBitmap, MainDrawingView.SIZE_PIXELS, MainDrawingView.SIZE_PIXELS, true);
 
 
         Bitmap userBitmap = v.canvasBitmap;
@@ -272,8 +303,8 @@ public class DrawingGame extends AppCompatActivity {
 
 
         if (DEBUG) {
-            printer(sourceBitmap);
-            Drawing.printBitmap(sourceBitmap, sourceBitmap.getHeight(), sourceBitmap.getWidth());
+            printer(sourceScaledBitmap);
+            Drawing.printBitmap(sourceScaledBitmap, sourceScaledBitmap.getHeight(), sourceScaledBitmap.getWidth());
         }
         //printer(userBitmap);
         Log.d(MainActivity.TAG, ">>>>>>>>>> printer(userBitmap) =  ");
@@ -302,7 +333,7 @@ public class DrawingGame extends AppCompatActivity {
         // Bitmap sourceBitmapFixedSize = Bitmap.createScaledBitmap(sourceBitmap, s, s, true);
 
 
-        int score = formula(compareSourceBitmapToUserMatrix(sourceBitmap, userBytesMatrix));
+        int score = formula(compareSourceBitmapToUserMatrix(sourceScaledBitmap, userBytesMatrix));
 
         return score;
     }
@@ -696,13 +727,13 @@ public class DrawingGame extends AppCompatActivity {
     public void flashHelperButtonClicked(View view) {
         v.setAllowDrawing(false);
         replaceHelper.setClickable(false);
-        sourceImage.setVisibility(View.VISIBLE);
+        sourceImageView.setVisibility(View.VISIBLE);
         // v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 // v.setBackgroundColor(Color.WHITE);
-                sourceImage.setVisibility(View.GONE);
+                sourceImageView.setVisibility(View.GONE);
                 v.setAllowDrawing(true);
                 replaceHelper.setClickable(true);
             }

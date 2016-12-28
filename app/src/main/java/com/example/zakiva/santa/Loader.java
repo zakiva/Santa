@@ -12,6 +12,9 @@ import com.example.zakiva.santa.Models.Images;
 //import com.example.zakiva.santa.Helpers.VungleAds;
 //import com.vungle.publisher.VunglePub;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
 import static com.example.zakiva.santa.Helpers.Infra.getWinnersFromFirebase;
@@ -22,6 +25,7 @@ public class Loader extends AppCompatActivity {
     public static final String TAG = ">>>>>>>Debug: ";
     private static int counter = 0;
     public static Loader loader;
+    public static int IMAGES_QUEUE_SIZE = 3;
     //final VunglePub vunglePub = VunglePub.getInstance();
 
     @Override
@@ -49,10 +53,20 @@ public class Loader extends AppCompatActivity {
 
         getTimeCodeFromServer();
         getTriviaDataFromFirebase();
-        getWinnersFromFirebase(getApplicationContext());        
-        Images.downloadImageToDisk("drawing1.jpg", getApplicationContext());
-
+        getWinnersFromFirebase(getApplicationContext());
+        initDrawing();
         Log.d(TAG, " finish oncreatre ");
+    }
+
+    void initDrawing() {
+        DrawingGame.sourceIndexes = new ArrayList<>();
+        for (int i = 0; i < IMAGES_QUEUE_SIZE; i++) {
+            DrawingGame.sourceIndexes.add(new Random().nextInt(DrawingGame.NUMBER_OF_DRAWINGS));
+        }
+        for (int i = 0; i < DrawingGame.sourceIndexes.size(); i++) {
+            Images.downloadImageToDisk("drawing" + DrawingGame.sourceIndexes.get(i) + ".jpg", getApplicationContext());
+        }
+        DrawingGame.defaultIndex = DrawingGame.sourceIndexes.get(0); //for safety
     }
 
 /*    @Override
@@ -80,7 +94,8 @@ public class Loader extends AppCompatActivity {
     }
 
     public void startApp  () {
-        if (counter == 6)
+        // 3 out of the 8 are images for drawing
+        if (counter == 8)
             startActivity(new Intent(Loader.this, MainActivity.class));
     }
 }
