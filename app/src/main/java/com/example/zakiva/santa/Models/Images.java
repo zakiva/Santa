@@ -245,4 +245,30 @@ public class Images {
         }
         return null;
     }
+    
+    // Use this method like this:
+    // Images.deleteImageFromDisk("drawing1.jpg", getApplicationContext());
+    public static void deleteImageFromDisk(final String imageName, final Context context){
+        try {
+            DB snappydb = DBFactory.open(context);
+            snappydb.del(imageName);
+            snappydb.close();
+        } catch (SnappydbException e) {
+            Log.d("Problem: ", e.toString());
+        }
+    }
+
+    // Use this method like this:
+    // Images.isImageInDisk("drawing1.jpg", getApplicationContext());
+    public static boolean isImageInDisk(final String imageName, final Context context){
+        boolean isKeyExist = false;
+        try {
+            DB snappydb = DBFactory.open(context);
+            isKeyExist = snappydb.exists(imageName);
+            snappydb.close();
+        } catch (SnappydbException e) {
+            Log.d("Problem: ", e.toString());
+        }
+        return isKeyExist;
+    }
 }
