@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +55,9 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(MainActivity.TAG, "first step");
         if (requestCode == RC_SIGN_IN) {
+            Log.d(MainActivity.TAG, "second step = ");
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             GoogleSignInAccount account = googleSignInResult.getSignInAccount();
             try {
@@ -63,6 +66,8 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
                 if (account != null) {
                     name = account.getDisplayName();
                     email = account.getEmail();
+                    Log.d(MainActivity.TAG, "googleEmail = "+email);
+                    Log.d(MainActivity.TAG, "googleName = "+name);
                     sendData.putExtra("p_name", name);
                     sendData.putExtra("p_email", email);
                     startActivity(sendData);
@@ -84,6 +89,8 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
         i_email = i.getStringExtra("p_email");
         name.setText(i_name);
         email.setText(i_email);
+        Log.d(MainActivity.TAG, "name = "+i_name);
+        Log.d(MainActivity.TAG, "email = "+i_email);
     }
     @Override
     public void onClick(View v) {
