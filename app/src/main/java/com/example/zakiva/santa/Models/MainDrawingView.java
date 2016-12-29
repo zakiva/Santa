@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -243,10 +244,13 @@ public class MainDrawingView extends View {
             paint.setStrokeWidth(22f);
             paint.setColor(Color.WHITE);
             //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            //paint.setAlpha(250);
         }
         else {
             paint.setStrokeWidth(5f);
             paint.setColor(Color.BLACK);
+            //paint.setAlpha(0);
+            //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
             //paint.setXfermode(null);
         }
     }
@@ -272,8 +276,10 @@ public class MainDrawingView extends View {
         pathsUndo.remove(0);
         paint.setStrokeWidth(7f);
         paint.setColor(Color.WHITE);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR)); // in order to remove
         drawCanvas.drawPath(p, paint);
         updatePaintWithMode();
+        paint.setXfermode(null); // go back to black - drawing mode
         //path.reset();
         //invalidate();
     }
