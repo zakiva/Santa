@@ -22,6 +22,8 @@ import com.example.zakiva.santa.Models.MainDrawingView;
 
 import java.nio.ByteBuffer;
 
+import static com.example.zakiva.santa.Models.Images.isImageInDisk;
+
 
 public class Drawing {
 
@@ -507,6 +509,16 @@ public class Drawing {
         }
 
         return matrix;
+    }
+
+    public static void printImagesNameOnDisk(Context context) {
+        for (int i = 0; i < DrawingGame.NUMBER_OF_DRAWINGS; i++) {
+            if (isImageInDisk("drawing" + i + ".jpg", context))
+                Log.d(MainActivity.TAG, "IMAGE EXIST:" + "drawing" + i + "jpg");
+            else
+                Log.d(MainActivity.TAG, "IMAGE NOT:" + "drawing" + i + "jpg");
+
+        }
     }
 }
 

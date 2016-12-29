@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
+import static com.example.zakiva.santa.Helpers.Drawing.printImagesNameOnDisk;
+import static com.example.zakiva.santa.Helpers.Storage.*;
 import static com.example.zakiva.santa.Models.Images.*;
 import static com.example.zakiva.santa.Models.MainDrawingView.density;
 import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
@@ -64,12 +66,16 @@ public class DrawingGame extends AppCompatActivity {
         setContentView(R.layout.activity_drawing_game);
         Drawing.initDrawingHelper();
         initFields();
+        Log.d(MainActivity.TAG, "on create drawaing game before updatedimages and queue");
+        printImagesNameOnDisk(getApplicationContext());
         updateImagesAndQueue();
+        Log.d(MainActivity.TAG, "on create drawaing game after updatedimages and queue");
+        printImagesNameOnDisk(getApplicationContext());
         startGame();
     }
 
     public void updateImagesAndQueue () {
-        //update Bitma
+        //update Bitmap
         sourceBitmap = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + ".jpg", getApplicationContext());
         if (sourceBitmap == null) { // for safety if download has not been completed
             sourceBitmap = getBitmapFromDisk("drawing" + defaultIndex + ".jpg", getApplicationContext());
@@ -77,14 +83,19 @@ public class DrawingGame extends AppCompatActivity {
         //update Drawable
         sourceDrawble = new BitmapDrawable(getResources(), sourceBitmap);
         sourceImageView.setImageDrawable(sourceDrawble);
-        //remove old image from disk
-        //MUST REMOVE FROM DISK BEFORE REMOVE FROM QUEUE
-        // QUESTION: when do we remove the images that are actually in the queue (e.g. in case the user just exit the app)?
+        //remove first image from disk
+        if (sourceIndexes.get(0) != defaultIndex)
+            deleteImageFromDisk("drawing" + sourceIndexes.get(0) + ".jpg", getApplicationContext());
         //updateQueue
         sourceIndexes.remove(0);
         sourceIndexes.add(new Random().nextInt(NUMBER_OF_DRAWINGS));
         //download last image
-        Images.downloadImageToDisk("drawing" + sourceIndexes.get(sourceIndexes.size() - 1) + ".jpg", getApplicationContext());
+        String newImage = "drawing" + sourceIndexes.get(sourceIndexes.size() - 1) + ".jpg";
+        Images.downloadImageToDisk(newImage, getApplicationContext());
+        //shift the old images in Preferences
+        setStringPreferences("oldImage0", getStringPreferences("oldImage1", getApplicationContext()), getApplicationContext());
+        setStringPreferences("oldImage1", getStringPreferences("oldImage2", getApplicationContext()), getApplicationContext());
+        setStringPreferences("oldImage2", newImage, getApplicationContext());
     }
 
     //flow
@@ -288,7 +299,7 @@ public class DrawingGame extends AppCompatActivity {
 
     public long calcScoreNew() {
 
-        boolean DEBUG = true;
+        boolean DEBUG = false;
 
       //  BitmapFactory.Options options = new BitmapFactory.Options();
        // options.inScaled = false;

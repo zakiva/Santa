@@ -15,10 +15,13 @@ import com.example.zakiva.santa.Models.Images;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.example.zakiva.santa.Helpers.Drawing.printImagesNameOnDisk;
 import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
 import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
 import static com.example.zakiva.santa.Helpers.Infra.getWinnersFromFirebase;
 import static com.example.zakiva.santa.Helpers.Infra.getUserAttributesFromFirebase;
+import static com.example.zakiva.santa.Helpers.Storage.*;
+import static com.example.zakiva.santa.Models.Images.*;
 
 public class Loader extends AppCompatActivity {
 
@@ -54,19 +57,39 @@ public class Loader extends AppCompatActivity {
         getTimeCodeFromServer();
         getTriviaDataFromFirebase();
         getWinnersFromFirebase(getApplicationContext());
+       // Log.d(TAG, "on create loader before clean");
+      //  printImagesNameOnDisk(getApplicationContext());
+        cleanOldImages();
+       // Log.d(TAG, "on create loader after clean before init");
+      //  printImagesNameOnDisk(getApplicationContext());
         initDrawing();
+      //  Log.d(TAG, "on create loader after init");
+      //  printImagesNameOnDisk(getApplicationContext());
         Log.d(TAG, " finish oncreatre ");
+    }
+
+    void cleanOldImages () {
+        String image;
+        for (int i = 0; i <= IMAGES_QUEUE_SIZE; i++) { // "<=" because we have one more for default
+            image = getStringPreferences("oldImage" + i, getApplicationContext());
+            if (!(image.equals("NONE")))
+                deleteImageFromDisk(image, getApplicationContext());
+        }
     }
 
     void initDrawing() {
         DrawingGame.sourceIndexes = new ArrayList<>();
+        String image;
         for (int i = 0; i < IMAGES_QUEUE_SIZE; i++) {
             DrawingGame.sourceIndexes.add(new Random().nextInt(DrawingGame.NUMBER_OF_DRAWINGS));
         }
         for (int i = 0; i < DrawingGame.sourceIndexes.size(); i++) {
-            Images.downloadImageToDisk("drawing" + DrawingGame.sourceIndexes.get(i) + ".jpg", getApplicationContext());
+            image = "drawing" + DrawingGame.sourceIndexes.get(i) + ".jpg";
+            Images.downloadImageToDisk(image, getApplicationContext());
+            setStringPreferences("oldImage" + i, image, getApplicationContext());
         }
         DrawingGame.defaultIndex = DrawingGame.sourceIndexes.get(0); //for safety
+        setStringPreferences("oldImage3", "drawing" + DrawingGame.defaultIndex + ".jpg", getApplicationContext());
     }
 
 /*    @Override
