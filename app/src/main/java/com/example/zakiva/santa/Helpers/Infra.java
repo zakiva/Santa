@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zakiva.santa.Models.Competition;
 import com.example.zakiva.santa.Models.Game;
 import com.example.zakiva.santa.Models.Token;
@@ -26,8 +27,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.example.zakiva.santa.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +45,8 @@ public class Infra {
     public static String userEmail;
     public static String timeCode;
     public static String [] triviaSheets = {"inventions","countries","israelBands","worldBands","singers", "timeZones","worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors","mountains","quotes","wifeHusband","worldLeaders","apps","cars"};
-    public static int HallOfFameListLimit = 7;
+    public static int HallOfFameListLimit = 40;
+    public static int HallOfFamePreDownloadLimit = 20;
 
     public static void initInfra (String email, String time) {
         myDatabase = FirebaseDatabase.getInstance().getReference();
@@ -318,9 +322,25 @@ public class Infra {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HallOfFame.dataHashWinners = (HashMap<String, HashMap>) dataSnapshot.getValue();
-                for (HashMap hm : HallOfFame.dataHashWinners.values()){
-                    Object url = hm.get("imageUrl");
-                    Glide.with(context).load((String) url);
+
+                int size = HallOfFame.dataHashWinners.size();
+                ArrayList<String[]> items = new ArrayList<String[]>();
+
+                for (HashMap hm : HallOfFame.dataHashWinners.values()) {
+                    String[] item = new String[2];
+                    item[0] = (String) hm.get("imageUrl");
+                    item[1] = (String) hm.get("minusKey").toString();
+                    items.add(item);
+                }
+                Collections.sort(items, new java.util.Comparator<String[]>() {
+                    public int compare(final String[] entry1, final String[] entry2) {
+                        return (Integer.parseInt(entry1[1]) - Integer.parseInt(entry2[1]));
+                    }
+                });
+
+                for (int i = 0; i < HallOfFamePreDownloadLimit; i++){
+                    //Log.d("bbbbbbbb: ", items.get(i)[1]);
+                    Picasso.with(context).load(items.get(i)[0]).transform(new CircleTransform()).fetch();
                 }
                 Loader.increase();
             }

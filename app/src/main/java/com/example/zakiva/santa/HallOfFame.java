@@ -55,18 +55,20 @@ public class HallOfFame extends AppCompatActivity {
         ArrayList<String[]> items = new ArrayList<String[]>();
 
         for (HashMap hm : dataHashWinners.values()) {
-            String[] item = new String[6];
+            String[] item = new String[7];
             item[0] = (String) hm.get("competition");
             item[1] = (String) hm.get("details");
             item[2] = (String) hm.get("imageName");
             item[3] = (String) hm.get("imageUrl");
             item[4] = (String) hm.get("name");
             item[5] = (String) hm.get("prize");
+            item[6] = (String) hm.get("minusKey").toString();
+            //Log.d("aaaaaaa: ", item[6]);
             items.add(item);
         }
         Collections.sort(items, new java.util.Comparator<String[]>() {
             public int compare(final String[] entry1, final String[] entry2) {
-                return entry2[0].compareTo(entry1[0]);
+                return (Integer.parseInt(entry1[6]) - Integer.parseInt(entry2[6]));
             }
         });
         ListAdapter hallOfFameAdapter = new HallOfFameAdapter(getBaseContext(), items);
@@ -83,10 +85,9 @@ public class HallOfFame extends AppCompatActivity {
 
     //This loop helps generating Objects on firebase. Do not use it with more than 100 iterations
     public static void addWinnersForTesting(Activity myActivity){
-        for (int i = 0; i < 100; i++ ){
+        for (int i = 0; i < 40; i++ ){
             String key = Integer.toString(i);
-            int imageKey = i % 10;
-            String imageName = Integer.toString(imageKey) + ".jpg";
+            String imageName = key + ".jpg";
             Infra.addWinner(key, "Person " + key, key, "blah blah", imageName, "Prize " + key, myActivity);
         }
         //Infra.addWinner("0", "Lionel Messi", "12", "blah blah", "0.jpg", "Canon Camera");

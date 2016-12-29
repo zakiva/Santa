@@ -61,16 +61,9 @@ public class HallOfFameAdapter extends ArrayAdapter<String[]> {
         //Picasso.with(getContext()).load(item[3]).into(image);
         //Glide.with(getContext()).load(item[3]).into(image);
 
-        Glide.with(getContext()).load(item[3]).asBitmap().centerCrop().into(new BitmapImageViewTarget(image) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                image.setImageDrawable(circularBitmapDrawable);
-            }
-        });
-
+        //Picasso.with(getContext()).load(item[3]).transform(new CircleTransform()).fetch();
+        Picasso.with(getContext()).load(item[3]).placeholder(R.drawable.face_placeholder).transform(new CircleTransform()).into(image);
+        //Picasso.with(getContext()).load(item[3]).placeholder(R.drawable.face_placeholder).into(image);
         return customView;
     }
 
