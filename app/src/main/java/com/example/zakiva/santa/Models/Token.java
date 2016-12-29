@@ -20,10 +20,9 @@ import java.util.UUID;
 
 public class Token {
     static String userToken = null;
-    static Context context;
 
     // return a cached unique ID for each device
-    public static String getID() {
+    public static String getID(Context context) {
         // if the ID isn't cached inside the class itself
         if (userToken == null) {
             //get it from database / settings table (implement your own method here)
@@ -31,7 +30,7 @@ public class Token {
         }
         // if the saved value was incorrect
         if (userToken.equals("NONE")) {
-            userToken = generateID();
+            userToken = generateID(context);
             Storage.setStringPreferences("userToken",userToken,context);
         }
         return userToken;
@@ -39,7 +38,7 @@ public class Token {
 
     // generate a unique ID for each device
     // use available schemes if possible / generate a random signature instead
-    private static String generateID() {
+    private static String generateID(Context context) {
 
         // use the ANDROID_ID constant, generated at the first device boot
         String deviceId = Settings.Secure.getString(context.getContentResolver(),

@@ -53,7 +53,7 @@ public class Loader extends AppCompatActivity {
         String email = Storage.getStringPreferences("userEmail",this.getApplicationContext());
         if (email.equals("NONE")){
         //set the real user email instead
-            ((Santa) this.getApplication()).setGlobalEmail(Token.getID());
+            ((Santa) this.getApplication()).setGlobalEmail(Token.getID(getApplicationContext()));
             //this must end before continue to first user interface !!!
         }
         else{
