@@ -1,5 +1,6 @@
 package com.example.zakiva.santa;
 
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -16,8 +17,10 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -56,6 +59,7 @@ public class DrawingGame extends AppCompatActivity {
     private ImageView clueHelper;
     private ImageView sourceImageView;
     private MainDrawingView v;
+    private ProgressBar stopperBar;
     private int flashHelperLength;
    // private ArrayList<Integer> images;
     private RelativeLayout activityBackground;
@@ -100,7 +104,7 @@ public class DrawingGame extends AppCompatActivity {
 
     //flow
     public void initFields() {
-        millisecondsToShow = 2000;
+        millisecondsToShow = 3000;
         flashHelperLength = 2000;
        // pen = (Button) findViewById(R.id.pen);
        // eraser = (Button) findViewById(R.id.eraser);
@@ -118,6 +122,7 @@ public class DrawingGame extends AppCompatActivity {
         activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
         activityBackground.getBackground().setAlpha(0);
         sourceImageView = (ImageView) findViewById(R.id.sourceImage);
+        stopperBar = (ProgressBar) findViewById(R.id.stopperBar);
     }
 
     public void startGame() {
@@ -125,7 +130,7 @@ public class DrawingGame extends AppCompatActivity {
         //v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
         final TextView stopper = (TextView) findViewById(R.id.stopper);
         stopper.setVisibility(View.VISIBLE);
-
+        runStopperBar();
 
         new CountDownTimer(millisecondsToShow, 100) {
 
@@ -764,5 +769,14 @@ public class DrawingGame extends AppCompatActivity {
 
     public void changeBackgroundOpacity(int opacity) {
         activityBackground.getBackground().setAlpha(opacity);
+    }
+
+    public void runStopperBar() {
+        stopperBar.getProgressDrawable().setColorFilter(Color.parseColor("#9254ff"), android.graphics.PorterDuff.Mode.SRC_IN);
+        stopperBar.setVisibility(View.VISIBLE);
+        ObjectAnimator animation = ObjectAnimator.ofInt(stopperBar, "progress", 0, 100);
+        animation.setDuration(millisecondsToShow);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
     }
 }

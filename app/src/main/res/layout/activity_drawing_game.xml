@@ -125,17 +125,41 @@
 
     </RelativeLayout>
 
-
-    <TextView
-        android:text=""
-        android:textSize="40dp"
-        android:textColor="@color/com_facebook_blue"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:id="@+id/stopper" />
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:id="@+id/stopperBox"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/stopperBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:progressDrawable="@drawable/circular_progress"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="2"
+            android:visibility="visible" />
+
+        <TextView
+            android:text=""
+            android:textSize="26dp"
+            android:gravity="center"
+            android:textColor="#aaaaaa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/stopper" />
+
+    </RelativeLayout>
+
+
 
 
 
