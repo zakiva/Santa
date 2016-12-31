@@ -281,7 +281,7 @@ public class MainDrawingView extends View {
         updatePaintWithMode();
         paint.setXfermode(null); // go back to black - drawing mode
         //path.reset();
-        //invalidate();
+        invalidate();
     }
 
     //cancel onMeasure

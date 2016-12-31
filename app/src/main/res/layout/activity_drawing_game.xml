@@ -26,124 +26,105 @@
         android:id="@+id/single_touch_view" />
 
 
-    <View android:id="@+id/primerdivisor1"
-        android:layout_height="2dp"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="49dp"
-        android:background="#dddddd" />
-
-    <View android:id="@+id/primerdivisor2"
-        android:layout_height="2dp"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="49dp"
-        android:background="#dddddd" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/cta_rectangle"
-        />
+    <RelativeLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="1dp"
+            android:background="#fff"
+            app:title=" "
+            android:layout_width="match_parent"
+            android:layout_height="53dp">
 
 
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text=""
-        android:id="@+id/pen"
-        android:visibility="gone"
-        android:tag="1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:onClick="drawingModeClicked"
-        android:background="@drawable/pen_icon_color"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text=""
-        android:tag="0"
-        android:visibility="gone"
-        android:id="@+id/eraser"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/pen"
-        android:layout_marginRight="10dp"
-        android:onClick="drawingModeClicked"
-        android:background="@drawable/eraser_icon"
-        android:layout_marginTop="14dp" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/undoCircle"
+                    android:layout_marginLeft="5dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="undoButtonClicked"
+                    android:gravity="center">
 
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text=""
-        android:tag="0"
-        android:visibility="gone"
-        android:id="@+id/restart"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/eraser"
-        android:layout_marginRight="10dp"
-        android:onClick="restartDrawClicked"
-        android:background="@drawable/trash_icon"
-        android:layout_marginTop="14dp" />
 
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text=""
-        android:tag="0"
-        android:visibility="gone"
-        android:id="@+id/undo"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/restart"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/undo_icon"
-        android:onClick="undoButtonClicked"
-        android:layout_marginTop="14dp" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:tag="0"
+                        android:visibility="visible"
+                        android:id="@+id/undo"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/undo"
+                        android:onClick="undoButtonClicked" />
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:text="Done"
-        android:tag="0"
-        android:visibility="gone"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/doneButton"
-        android:onClick="doneButtonClicked" />
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="70dp"
-        android:text="replace"
-        android:tag="0"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/replaceDrawingHelperButton"
-        android:onClick="replaceDrawingButtonHelperClicked" />
+                </RelativeLayout>
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="70dp"
-        android:text="clue"
-        android:tag="0"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/clueHelperButton"
-        android:onClick="clueHelperButtonClicked" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:id="@+id/trashCircle"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/undoCircle"
+                    android:layout_centerVertical="true"
+                    android:onClick="restartDrawClicked"
+                    android:gravity="center">
+
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:tag="0"
+                        android:visibility="visible"
+                        android:id="@+id/restart"
+                        android:onClick="restartDrawClicked"
+                        android:background="@drawable/trash" />
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SUBMIT"
+                    android:padding="12dp"
+                    android:tag="0"
+                    android:textColor="#9254ff"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/doneButton"
+                    android:onClick="doneButtonClicked" />
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <View android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow_below"/>
+
+    </RelativeLayout>
+
 
     <TextView
         android:text=""
@@ -156,17 +137,216 @@
         android:layout_marginBottom="60dp"
         android:id="@+id/stopper" />
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="70dp"
-        android:text="flash"
-        android:tag="0"
-        android:visibility="gone"
-        android:id="@+id/flashHelperButton"
-        android:onClick="flashHelperButtonClicked"
+
+
+
+    <RelativeLayout
+        android:id="@+id/bottomBox"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/rectangle_trivia">
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/flashBox"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="flashHelperButtonClicked"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_height="70dp">
+
+        <RelativeLayout
+            android:id="@+id/circle2"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="0dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/candies_frame"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ch2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/candis_help" />
+
+            <TextView
+                android:id="@+id/flashPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ch2"
+                android:text="100"
+                android:textColor="#303030"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/flashHelperButton"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:background="@drawable/flash_enable"
+            android:onClick="flashHelperButtonClicked" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/clueBox"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:onClick="clueHelperButtonClicked">
+
+        <RelativeLayout
+            android:id="@+id/circle1"
+            android:layout_width="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="20dp"
+            android:background="@drawable/candies_frame"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/candis_help" />
+
+            <TextView
+                android:id="@+id/cluePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ch1"
+                android:text="100"
+                android:textColor="#303030"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/clueHelperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/hint_enable"
+            android:onClick="clueHelperButtonClicked" />
+
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/replaceBox"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginRight="32dp"
+        android:paddingLeft="10dp"
+        android:onClick="replaceDrawingButtonHelperClicked"
+        android:paddingRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp">
+
+        <RelativeLayout
+            android:id="@+id/circle3"
+            android:layout_width="60dp"
+            android:layout_marginTop="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="20dp"
+            android:background="@drawable/candies_frame"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/candis_help" />
+
+            <TextView
+                android:id="@+id/replacePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ch"
+                android:text="100"
+                android:textColor="#303030"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/replaceHelperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/next_enable"
+            android:onClick="replaceDrawingButtonHelperClicked" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/candyBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomBox"
+        android:layout_marginBottom="19dp"
+        android:layout_marginLeft="15dp">
+
+        <ImageView
+            android:id="@+id/candy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@drawable/candis_game" />
+
+        <TextView
+            android:id="@+id/candiesNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/candy"
+            android:gravity="center"
+            android:text="700"
+            android:textColor="#030330"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/candiesText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/candiesNumber"
+            android:layout_toRightOf="@id/candy"
+            android:gravity="center"
+            android:text="Candies"
+            android:textColor="#030330"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
 
 
     <RelativeLayout

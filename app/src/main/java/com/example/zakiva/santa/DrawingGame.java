@@ -46,14 +46,14 @@ public class DrawingGame extends AppCompatActivity {
     private Bitmap sourceBitmap;
     private int millisecondsToShow;
     //private int randomImage;
-    private Button pen;
-    private Button eraser;
-    private Button restart;
-    private Button undo;
-    private Button doneButton;
-    private Button replaceHelper;
-    private Button flashHelper;
-    private Button clueHelper;
+    //private Button pen;
+   // private Button eraser;
+    private ImageView restart;
+    private ImageView undo;
+    private TextView doneButton;
+    private ImageView replaceHelper;
+    private ImageView flashHelper;
+    private ImageView clueHelper;
     private ImageView sourceImageView;
     private MainDrawingView v;
     private int flashHelperLength;
@@ -102,14 +102,14 @@ public class DrawingGame extends AppCompatActivity {
     public void initFields() {
         millisecondsToShow = 2000;
         flashHelperLength = 2000;
-        pen = (Button) findViewById(R.id.pen);
-        eraser = (Button) findViewById(R.id.eraser);
-        restart = (Button) findViewById(R.id.restart);
-        undo = (Button) findViewById(R.id.undo);
-        doneButton = (Button) findViewById(R.id.doneButton);
-        flashHelper = (Button) findViewById(R.id.flashHelperButton);
-        replaceHelper = (Button) findViewById(R.id.replaceDrawingHelperButton);
-        clueHelper = (Button) findViewById(R.id.clueHelperButton);
+       // pen = (Button) findViewById(R.id.pen);
+       // eraser = (Button) findViewById(R.id.eraser);
+        restart = (ImageView) findViewById(R.id.restart);
+        undo = (ImageView) findViewById(R.id.undo);
+        doneButton = (TextView) findViewById(R.id.doneButton);
+        flashHelper = (ImageView) findViewById(R.id.flashHelperButton);
+        replaceHelper = (ImageView) findViewById(R.id.replaceHelperButton);
+        clueHelper = (ImageView) findViewById(R.id.clueHelperButton);
         v = (MainDrawingView) findViewById(R.id.single_touch_view);
         //images = new ArrayList<Integer>(Arrays.asList(R.drawable.bone700sq, R.drawable.heart700sq, R.drawable.house700sq, R.drawable.nike700sq, R.drawable.tree700sq));
        // images = new ArrayList<Integer>(Arrays.asList(R.drawable.rec_400));
@@ -155,8 +155,8 @@ public class DrawingGame extends AppCompatActivity {
 
 
         v.setAllowDrawing(true);
-        pen.setVisibility(View.VISIBLE);
-        eraser.setVisibility(View.VISIBLE);
+        //pen.setVisibility(View.VISIBLE);
+        //eraser.setVisibility(View.VISIBLE);
         restart.setVisibility(View.VISIBLE);
         undo.setVisibility(View.VISIBLE);
         doneButton.setVisibility(View.VISIBLE);
@@ -200,8 +200,8 @@ public class DrawingGame extends AppCompatActivity {
     }
 
     public void hideButtons() {
-        pen.setVisibility(View.GONE);
-        eraser.setVisibility(View.GONE);
+        //pen.setVisibility(View.GONE);
+        //eraser.setVisibility(View.GONE);
         restart.setVisibility(View.GONE);
         undo.setVisibility(View.GONE);
         doneButton.setVisibility(View.GONE);
@@ -217,11 +217,11 @@ public class DrawingGame extends AppCompatActivity {
             return;
 
         if (mode == 0) {
-            pen.setBackgroundResource(R.drawable.pen_icon);
-            eraser.setBackgroundResource(R.drawable.eraser_icon_color);
+            //pen.setBackgroundResource(R.drawable.pen_icon);
+            //eraser.setBackgroundResource(R.drawable.eraser_icon_color);
         } else {
-            pen.setBackgroundResource(R.drawable.pen_icon_color);
-            eraser.setBackgroundResource(R.drawable.eraser_icon);
+            //pen.setBackgroundResource(R.drawable.pen_icon_color);
+            //eraser.setBackgroundResource(R.drawable.eraser_icon);
         }
     }
 
