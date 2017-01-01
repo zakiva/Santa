@@ -278,7 +278,7 @@ public class Generator {
         if(tq.getMale()){
             return tq;
         }
-        tq.setQuestion(tq.getQuestion().replace("הסופר","הסופרת"));
+        tq.setQuestion(tq.getQuestion().replace("נולד הסופר","נולדה הסופרת"));
         return tq;
     }
     public TriviaQuestion bookToAuthor() {
