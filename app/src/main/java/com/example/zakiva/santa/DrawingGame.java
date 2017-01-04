@@ -28,9 +28,11 @@ import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Models.Images;
 import com.example.zakiva.santa.Models.MainDrawingView;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -204,7 +206,14 @@ public class DrawingGame extends AppCompatActivity {
 
 
         final Intent intent = new Intent(DrawingGame.this, Score.class);
+
+        Date startTime = getCurrentTime();
         intent.putExtra("score", calcScoreNew());
+        Date endTime = getCurrentTime();
+
+        long millisecondsDelta = (endTime.getTime() - startTime.getTime());
+        long timeForHandler = 2000 - millisecondsDelta >= 0 ? 2000 - millisecondsDelta : 0;
+
         intent.putExtra("game", "drawing");
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -213,7 +222,14 @@ public class DrawingGame extends AppCompatActivity {
                 MainDrawingView.context = null;
                 startActivity(intent);
             }
-        }, 2000);
+        }, timeForHandler);
+    }
+
+    public Date getCurrentTime () {
+        long currentTimeMillis = System.currentTimeMillis();
+        Timestamp stamp = new Timestamp(currentTimeMillis);
+        Date currentTime = new Date(stamp.getTime());
+        return currentTime;
     }
 
     public void hideButtons() {
