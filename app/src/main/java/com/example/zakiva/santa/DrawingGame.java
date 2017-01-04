@@ -43,7 +43,7 @@ import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 public class DrawingGame extends AppCompatActivity {
 
     public static ArrayList<Integer> sourceIndexes;
-    public static int NUMBER_OF_DRAWINGS = 1;
+    public static int NUMBER_OF_DRAWINGS = 5; // must be greater than number of images in the queue
     public static int defaultIndex; // for safety if download has not been completed
     private Drawable sourceDrawble;
     private Bitmap sourceBitmap;
@@ -92,7 +92,15 @@ public class DrawingGame extends AppCompatActivity {
             deleteImageFromDisk("drawing" + sourceIndexes.get(0) + ".jpg", getApplicationContext());
         //updateQueue
         sourceIndexes.remove(0);
-        sourceIndexes.add(new Random().nextInt(NUMBER_OF_DRAWINGS));
+        int n = new Random().nextInt(NUMBER_OF_DRAWINGS);
+        int safe = 0;
+        while (sourceIndexes.contains(n) && safe < 200) {
+            n = new Random().nextInt(NUMBER_OF_DRAWINGS);
+            safe++;
+            if (safe > 150) // should never happen
+                Log.d(MainActivity.TAG, ">>>>>>>>>safe!!!!!! not good !!  ");
+        }
+        sourceIndexes.add(n);
         //download last image
         String newImage = "drawing" + sourceIndexes.get(sourceIndexes.size() - 1) + ".jpg";
         Images.downloadImageToDisk(newImage, getApplicationContext());

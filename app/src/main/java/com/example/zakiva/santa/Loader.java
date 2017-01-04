@@ -15,6 +15,7 @@ import com.example.zakiva.santa.Models.Token;
 //import com.vungle.publisher.VunglePub;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import static com.example.zakiva.santa.Helpers.Drawing.printImagesNameOnDisk;
@@ -86,9 +87,15 @@ public class Loader extends AppCompatActivity {
 
     void initDrawing() {
         DrawingGame.sourceIndexes = new ArrayList<>();
+        ArrayList<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < DrawingGame.NUMBER_OF_DRAWINGS; i++) {
+            numbers.add(i);
+        }
+        Collections.shuffle(numbers);
+
         String image;
         for (int i = 0; i < IMAGES_QUEUE_SIZE; i++) {
-            DrawingGame.sourceIndexes.add(new Random().nextInt(DrawingGame.NUMBER_OF_DRAWINGS));
+            DrawingGame.sourceIndexes.add(numbers.get(i));
         }
         for (int i = 0; i < DrawingGame.sourceIndexes.size(); i++) {
             image = "drawing" + DrawingGame.sourceIndexes.get(i) + ".jpg";
