@@ -153,6 +153,7 @@ public class DrawingGame extends AppCompatActivity {
 
             public void onFinish() {
                 stopper.setVisibility(View.GONE);
+                stopperBar.setVisibility(View.GONE);
                 startDraw();
             }
         }.start();
@@ -164,7 +165,8 @@ public class DrawingGame extends AppCompatActivity {
         //v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
 
 
-        //sourceImage.setVisibility(View.GONE);
+        sourceImageView.setVisibility(View.GONE);
+
 
 
         v.setAllowDrawing(true);
@@ -183,7 +185,9 @@ public class DrawingGame extends AppCompatActivity {
 
         v.setAllowDrawing(false);
 
-        hideButtons();
+        sourceImageView.setVisibility(View.VISIBLE);
+
+        //hideButtons();
 
         Log.d(MainActivity.TAG, ">>>>>>>>>> =before botmaps  ");
 
@@ -209,7 +213,7 @@ public class DrawingGame extends AppCompatActivity {
                 MainDrawingView.context = null;
                 startActivity(intent);
             }
-        }, 0000);
+        }, 2000);
     }
 
     public void hideButtons() {
@@ -778,7 +782,7 @@ public class DrawingGame extends AppCompatActivity {
 
     public void replaceDrawingButtonHelperClicked(View view) {
         v.restartDrawing();
-        hideButtons();
+        //hideButtons();
         // uncomment to allow this helper
         //randomImage = images.get(1);
         startGame();
