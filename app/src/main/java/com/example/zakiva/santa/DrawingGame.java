@@ -72,12 +72,7 @@ public class DrawingGame extends AppCompatActivity {
         setContentView(R.layout.activity_drawing_game);
         Drawing.initDrawingHelper();
         initFields();
-        Log.d(MainActivity.TAG, "on create drawaing game before updatedimages and queue");
-        printImagesNameOnDisk(getApplicationContext());
-        updateImagesAndQueue();
-        Log.d(MainActivity.TAG, "on create drawaing game after updatedimages and queue");
-        printImagesNameOnDisk(getApplicationContext());
-        startGame();
+        startGame(); // including updating images and queue
     }
 
     public void updateImagesAndQueue () {
@@ -138,6 +133,10 @@ public class DrawingGame extends AppCompatActivity {
     public void startGame() {
         //show the source image
         //v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
+
+        updateImagesAndQueue();
+        sourceImageView.setVisibility(View.VISIBLE);
+
         final TextView stopper = (TextView) findViewById(R.id.stopper);
         stopper.setVisibility(View.VISIBLE);
         runStopperBar();
