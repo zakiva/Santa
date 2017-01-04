@@ -1,5 +1,6 @@
 package com.example.zakiva.santa;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zakiva.santa.Helpers.Infra;
+import com.example.zakiva.santa.Helpers.Storage;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -64,6 +67,7 @@ public class Facebook extends AppCompatActivity {
 
     }
     public void RequestData(){
+        final Application myApp = this.getApplication();
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object,GraphResponse response) {
@@ -74,7 +78,13 @@ public class Facebook extends AppCompatActivity {
 
                         email.setText(json.getString("email"));
                         name.setText(json.getString("name"));
-                        json.getString("name");
+                        String formattedEmail = Infra.formatEmail(json.getString("email"));
+                        Storage.setStringPreferences("userEmail",formattedEmail,getApplicationContext());
+                        Storage.setStringPreferences("signedUpType","facebook",getApplicationContext());
+                        String token = Storage.getStringPreferences("userToken",getApplicationContext());
+                        Infra.copyOldUserToNewUser(token,formattedEmail);
+                        ((Santa) myApp).setSignedUpType("facebook");
+                        ((Santa) myApp).setGlobalEmail(formattedEmail);
                         Log.d(MainActivity.TAG,"email"+ json.getString("email"));
                         Log.d(MainActivity.TAG,"name = "+json.getString("name"));
                     }

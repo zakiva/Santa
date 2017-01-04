@@ -24,11 +24,21 @@ public class Santa extends Application {
 
     private String globalEmail;
 
+    private  String signedUpType;
+
     public String getGlobalEmail() {
         return globalEmail;
     }
 
     public void setGlobalEmail(String str) {
         globalEmail = str;
+    }
+
+    public  String getSignedUpType() {
+        return signedUpType;
+    }
+
+    public void setSignedUpType(String s) {
+        signedUpType = s;
     }
 }

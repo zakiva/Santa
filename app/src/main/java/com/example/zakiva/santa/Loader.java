@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Helpers.Storage;
 import com.example.zakiva.santa.Models.Images;
 import com.example.zakiva.santa.Models.Token;
@@ -52,13 +53,17 @@ public class Loader extends AppCompatActivity {
         Log.d(TAG, " this = null  " + this == null ? "yes" : "no");
 
         String email = Storage.getStringPreferences("userEmail",this.getApplicationContext());
+        ((Santa) this.getApplication()).setSignedUpType(Storage.getStringPreferences("signedUpType",getApplicationContext()));
+        Log.d(">>>>>>>>>>>>","what's your email address:  "+email);
         if (email.equals("NONE")){
         //set the real user email instead
             ((Santa) this.getApplication()).setGlobalEmail(Token.getID(getApplicationContext()));
+            Log.d(MainActivity.TAG,"is sign up ?????"+ ((Santa) this.getApplication()).getSignedUpType());
             //this must end before continue to first user interface !!!
         }
         else{
             ((Santa) this.getApplication()).setGlobalEmail(email);
+            Log.d(MainActivity.TAG,"is sign up ?????"+ ((Santa) this.getApplication()).getSignedUpType());
         }
         Log.d(TAG, " start loadrss  ");
 

@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zakiva.santa.Helpers.Infra;
+import com.example.zakiva.santa.Helpers.Storage;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -68,6 +70,13 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
                     email = account.getEmail();
                     Log.d(MainActivity.TAG, "googleEmail = "+email);
                     Log.d(MainActivity.TAG, "googleName = "+name);
+                    String formattedEmail = Infra.formatEmail(email);
+                    Storage.setStringPreferences("userEmail",formattedEmail,getApplicationContext());
+                    Storage.setStringPreferences("signedUpType","google",getApplicationContext());
+                    String token = Storage.getStringPreferences("userToken",getApplicationContext());
+                    Infra.copyOldUserToNewUser(token,formattedEmail);
+                    ((Santa) this.getApplication()).setSignedUpType("google");
+                    ((Santa) this.getApplication()).setGlobalEmail(formattedEmail);
                     sendData.putExtra("p_name", name);
                     sendData.putExtra("p_email", email);
                     startActivity(sendData);
