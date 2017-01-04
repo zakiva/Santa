@@ -49,6 +49,7 @@ public class MainDrawingView extends View {
     public static int drawingAreaHeight;
     public static int density;
     public static int densityFactor;
+    public static int blackPixelsCounter;
     int stroke;
 
     //private Activity drawingGameActivity;
@@ -128,6 +129,7 @@ public class MainDrawingView extends View {
         Log.d(MainActivity.TAG, "@@@@@@@@@@@@@@density = " +  density);
         Log.d(MainActivity.TAG, "@@@@@@@@@@@@@@density / 320 = " +  density / 320);
 
+        blackPixelsCounter = 0;
 
 
     }
@@ -171,6 +173,9 @@ public class MainDrawingView extends View {
         //updateMatrixWithDelta(yRounded, xRounded);
 
         Log.d(MainActivity.TAG, "touched: " + x +"," + y);
+
+        if (drawingMode == 1)
+            blackPixelsCounter++;
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:

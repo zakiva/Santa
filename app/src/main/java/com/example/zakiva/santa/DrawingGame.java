@@ -43,7 +43,7 @@ import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 public class DrawingGame extends AppCompatActivity {
 
     public static ArrayList<Integer> sourceIndexes;
-    public static int NUMBER_OF_DRAWINGS = 5;
+    public static int NUMBER_OF_DRAWINGS = 1;
     public static int defaultIndex; // for safety if download has not been completed
     private Drawable sourceDrawble;
     private Bitmap sourceBitmap;
@@ -306,6 +306,10 @@ public class DrawingGame extends AppCompatActivity {
 
         boolean DEBUG = false;
 
+        if (MainDrawingView.blackPixelsCounter > 500) {
+            return 0; //there are too many black pixels in the user matrix - to avoid long calculation time
+        }
+
       //  BitmapFactory.Options options = new BitmapFactory.Options();
        // options.inScaled = false;
         //Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), randomImage, options);
@@ -471,6 +475,8 @@ public class DrawingGame extends AppCompatActivity {
         Log.d(MainActivity.TAG, "start = " + START_BY_DELTA);
         Log.d(MainActivity.TAG, "squared.getHeight() = " + squared.getHeight());
         Log.d(MainActivity.TAG, "squared.getWidth() = " + squared.getWidth());
+        Log.d(MainActivity.TAG, "MainDrawingView.blackPixelsCounter = " + MainDrawingView.blackPixelsCounter);
+
 
 
         HashMap<String, Integer> result = new HashMap<>();
@@ -485,7 +491,9 @@ public class DrawingGame extends AppCompatActivity {
     // does exist a corresponding pixel in the user matrix (including DELTA)?
     public boolean isMissed(int i, int j, Bitmap squared, byte[][] rectangle, int startHeight, int DELTA, int start) {
 
-        byte byteRec;
+        if (i % (MainDrawingView.JUMP * densityFactor) != 0)
+            return false; // we ignore lines that are not aligned to jump and density
+
         //ignore margins
        // if (i <= DELTA || j <= DELTA || i >= squared.getHeight() - DELTA - 1 || j >= squared.getWidth() - DELTA - 1)
        //     return false;
@@ -493,10 +501,14 @@ public class DrawingGame extends AppCompatActivity {
         int pixelSq = squared.getPixel(j, i);
 
 
+
         if (pixelSq == -1) // if the source pixel is white we can't miss it :)
             return false;
 
         int x, y;
+
+        byte byteRec;
+
 
 
         //the source pixel is black - search for black pixel in the user matrix:
@@ -548,8 +560,8 @@ public class DrawingGame extends AppCompatActivity {
 
         int x, y;
 
-        for (int k = start; k < DELTA; k += MainDrawingView.JUMP) {
-            for (int l = start; l < DELTA; l += MainDrawingView.JUMP) {
+        for (int k = start; k < DELTA; k += MainDrawingView.JUMP * densityFactor) { // * density factor ?
+            for (int l = start; l < DELTA; l += MainDrawingView.JUMP * densityFactor) { // * density factor ?
 
                 x = j + k;
                 y = i + l;
