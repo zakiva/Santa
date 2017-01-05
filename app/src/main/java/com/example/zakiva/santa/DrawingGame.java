@@ -87,6 +87,8 @@ public class DrawingGame extends AppCompatActivity {
         setContentView(R.layout.activity_drawing_game);
         Drawing.initDrawingHelper();
         initFields();
+        displayHelpersPrices();
+        displayCandies();
         startGame(); // including updating images and queue
     }
 
@@ -160,7 +162,6 @@ public class DrawingGame extends AppCompatActivity {
         flashBox = (RelativeLayout) findViewById(R.id.flashBox);
         replaceBox = (RelativeLayout) findViewById(R.id.replaceBox);
         clueBox = (RelativeLayout) findViewById(R.id.clueBox);
-        displayHelpersPrices();
     }
 
     public void displayHelpersPrices () {
@@ -237,9 +238,14 @@ public class DrawingGame extends AppCompatActivity {
     //listeners
     public void doneButtonClicked(View view) {
 
+        doneButton.setClickable(false);
+
+
         v.setAllowDrawing(false);
 
-        sourceImageView.setVisibility(View.VISIBLE);
+        //sourceImageView.setVisibility(View.VISIBLE);
+        sourceDrawble = new BitmapDrawable(getResources(), sourceBitmap);
+        sourceImageView.setImageDrawable(sourceDrawble);
 
         //hideButtons();
 
@@ -868,8 +874,13 @@ public class DrawingGame extends AppCompatActivity {
         enableHelpers.put("replace",false);
         replaceHelper.setBackgroundResource(R.drawable.next_disable);
 
-        v.restartDrawing();
-        startGame();
+        Handler handler = new Handler(); // to allow UI thread to update view
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                v.restartDrawing();
+                startGame();
+            }
+        }, 1);
     }
 
     public void clueHelperButtonClicked(View view) {
