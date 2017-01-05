@@ -51,12 +51,17 @@ public class DrawingGame extends AppCompatActivity {
     public static int defaultIndex; // for safety if download has not been completed
     private Drawable sourceDrawble;
     private Bitmap sourceBitmap;
+    private Bitmap sourceBitmapClue1;
+    private Bitmap sourceBitmapClue2;
     private int millisecondsToShow;
     //private int randomImage;
     //private Button pen;
    // private Button eraser;
     private ImageView restart;
     private ImageView undo;
+    private TextView replacePriceTextView;
+    private TextView flashPriceTextView;
+    private TextView cluePriceTextView;
     private TextView doneButton;
     private ImageView replaceHelper;
     private ImageView flashHelper;
@@ -88,8 +93,12 @@ public class DrawingGame extends AppCompatActivity {
     public void updateImagesAndQueue () {
         //update Bitmap
         sourceBitmap = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + ".png", getApplicationContext());
-        if (sourceBitmap == null) { // for safety if download has not been completed
+        sourceBitmapClue1 = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + "Clue1.png", getApplicationContext());
+        sourceBitmapClue2 = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + "Clue2.png", getApplicationContext());
+        if (sourceBitmap == null || sourceBitmapClue1 == null || sourceBitmapClue2 == null) { // for safety if download has not been completed
             sourceBitmap = getBitmapFromDisk("drawing" + defaultIndex + ".png", getApplicationContext());
+            sourceBitmapClue1 = getBitmapFromDisk("drawing" + defaultIndex + "Clue1.png", getApplicationContext());
+            sourceBitmapClue2 = getBitmapFromDisk("drawing" + defaultIndex + "Clue2.png", getApplicationContext());
         }
         //update Drawable
         sourceDrawble = new BitmapDrawable(getResources(), sourceBitmap);
@@ -151,6 +160,17 @@ public class DrawingGame extends AppCompatActivity {
         flashBox = (RelativeLayout) findViewById(R.id.flashBox);
         replaceBox = (RelativeLayout) findViewById(R.id.replaceBox);
         clueBox = (RelativeLayout) findViewById(R.id.clueBox);
+        displayHelpersPrices();
+    }
+
+    public void displayHelpersPrices () {
+        flashPriceTextView = (TextView) findViewById(R.id.flashPrice);
+        replacePriceTextView = (TextView) findViewById(R.id.replacePrice);
+        cluePriceTextView = (TextView) findViewById(R.id.cluePrice);
+
+        flashPriceTextView.setText(flashHelperPrice + "");
+        replacePriceTextView.setText(replaceHelperPrice + "");
+        cluePriceTextView.setText(clueHelperPrice + "");
     }
 
     public void initDisableEnable(HashMap helpers, boolean flash, boolean replace, boolean clue) {
@@ -165,7 +185,7 @@ public class DrawingGame extends AppCompatActivity {
 
         disableEnableViews(disableHelpers);
         updateImagesAndQueue();
-        sourceImageView.setVisibility(View.VISIBLE);
+        //sourceImageView.setVisibility(View.VISIBLE);
 
         final TextView stopper = (TextView) findViewById(R.id.stopper);
         stopper.setVisibility(View.VISIBLE);
@@ -195,8 +215,10 @@ public class DrawingGame extends AppCompatActivity {
         //for checking only:
         //v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
 
+        // sourceImageView.setVisibility(View.GONE);
 
-        sourceImageView.setVisibility(View.GONE);
+        sourceDrawble = new BitmapDrawable(getResources(), sourceBitmapClue1);
+        sourceImageView.setImageDrawable(sourceDrawble);
         disableEnableViews(enableHelpers);
 
 
@@ -819,13 +841,18 @@ public class DrawingGame extends AppCompatActivity {
         disableEnableViews(disableHelpers);
         enableHelpers.put("flash",false);
         flashHelper.setBackgroundResource(R.drawable.flash_disable);
-        sourceImageView.setVisibility(View.VISIBLE);
+        final Drawable oldSource = sourceDrawble;
+        sourceDrawble = new BitmapDrawable(getResources(), sourceBitmap);
+        sourceImageView.setImageDrawable(sourceDrawble);
+        //sourceImageView.setVisibility(View.VISIBLE);
         // v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 // v.setBackgroundColor(Color.WHITE);
-                sourceImageView.setVisibility(View.GONE);
+                //sourceImageView.setVisibility(View.GONE);
+                sourceDrawble = oldSource;
+                sourceImageView.setImageDrawable(sourceDrawble);
                 v.setAllowDrawing(true);
                 disableEnableViews(enableHelpers);
             }
@@ -846,6 +873,17 @@ public class DrawingGame extends AppCompatActivity {
     }
 
     public void clueHelperButtonClicked(View view) {
+        if (!updateCandies(clueHelperPrice)) {
+            notifyNoCandies();
+            return;
+        }
+
+        enableHelpers.put("clue",false);
+        disableEnableViews(enableHelpers);
+        clueHelper.setBackgroundResource(R.drawable.hint_disable);
+
+        sourceDrawble = new BitmapDrawable(getResources(), sourceBitmapClue2);
+        sourceImageView.setImageDrawable(sourceDrawble);
     }
 
     public void changeBackgroundOpacity(int opacity) {
