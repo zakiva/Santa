@@ -514,10 +514,10 @@ public class Drawing {
 
     public static void printImagesNameOnDisk(Context context) {
         for (int i = 0; i < DrawingGame.NUMBER_OF_DRAWINGS; i++) {
-            if (isImageInDisk("drawing" + i + ".jpg", context))
-                Log.d(MainActivity.TAG, "IMAGE EXIST:" + "drawing" + i + "jpg");
+            if (isImageInDisk("drawing" + i + ".png", context))
+                Log.d(MainActivity.TAG, "IMAGE EXIST:" + "drawing" + i + "png");
             else
-                Log.d(MainActivity.TAG, "IMAGE NOT:" + "drawing" + i + "jpg");
+                Log.d(MainActivity.TAG, "IMAGE NOT:" + "drawing" + i + "png");
 
         }
     }

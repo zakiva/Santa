@@ -23,8 +23,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zakiva.santa.Helpers.Drawing;
+import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Models.Images;
 import com.example.zakiva.santa.Models.MainDrawingView;
 
@@ -45,7 +47,7 @@ import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 public class DrawingGame extends AppCompatActivity {
 
     public static ArrayList<Integer> sourceIndexes;
-    public static int NUMBER_OF_DRAWINGS = 5; // must be greater than number of images in the queue
+    public static int NUMBER_OF_DRAWINGS = 3; // must be greater than number of images in the queue
     public static int defaultIndex; // for safety if download has not been completed
     private Drawable sourceDrawble;
     private Bitmap sourceBitmap;
@@ -61,10 +63,18 @@ public class DrawingGame extends AppCompatActivity {
     private ImageView clueHelper;
     private ImageView sourceImageView;
     private MainDrawingView v;
+    private TextView candiesTextView;
     private ProgressBar stopperBar;
     private int flashHelperLength;
    // private ArrayList<Integer> images;
     private RelativeLayout activityBackground;
+    private static HashMap<String,Boolean> enableHelpers,disableHelpers;
+    private static int replaceHelperPrice = 50;
+    private static int flashHelperPrice = 150;
+    private static int clueHelperPrice = 200;
+    private RelativeLayout flashBox;
+    private RelativeLayout replaceBox;
+    private RelativeLayout clueBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,30 +87,35 @@ public class DrawingGame extends AppCompatActivity {
 
     public void updateImagesAndQueue () {
         //update Bitmap
-        sourceBitmap = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + ".jpg", getApplicationContext());
+        sourceBitmap = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + ".png", getApplicationContext());
         if (sourceBitmap == null) { // for safety if download has not been completed
-            sourceBitmap = getBitmapFromDisk("drawing" + defaultIndex + ".jpg", getApplicationContext());
+            sourceBitmap = getBitmapFromDisk("drawing" + defaultIndex + ".png", getApplicationContext());
         }
         //update Drawable
         sourceDrawble = new BitmapDrawable(getResources(), sourceBitmap);
         sourceImageView.setImageDrawable(sourceDrawble);
         //remove first image from disk
-        if (sourceIndexes.get(0) != defaultIndex)
-            deleteImageFromDisk("drawing" + sourceIndexes.get(0) + ".jpg", getApplicationContext());
+        if (sourceIndexes.get(0) != defaultIndex) {
+            deleteImageFromDisk("drawing" + sourceIndexes.get(0) + ".png", getApplicationContext());
+            deleteImageFromDisk("drawing" + sourceIndexes.get(0) + "Clue1.png", getApplicationContext());
+            deleteImageFromDisk("drawing" + sourceIndexes.get(0) + "Clue2.png", getApplicationContext());
+        }
         //updateQueue
         sourceIndexes.remove(0);
         int n = new Random().nextInt(NUMBER_OF_DRAWINGS);
         int safe = 0;
-        while (sourceIndexes.contains(n) && safe < 200) {
+        while (sourceIndexes.contains(n) && safe < 1000) {
             n = new Random().nextInt(NUMBER_OF_DRAWINGS);
             safe++;
-            if (safe > 150) // should never happen
+            if (safe > 900) // should never happen
                 Log.d(MainActivity.TAG, ">>>>>>>>>safe!!!!!! not good !!  ");
         }
         sourceIndexes.add(n);
         //download last image
-        String newImage = "drawing" + sourceIndexes.get(sourceIndexes.size() - 1) + ".jpg";
-        Images.downloadImageToDisk(newImage, getApplicationContext());
+        String newImage = "drawing" + sourceIndexes.get(sourceIndexes.size() - 1);
+        Images.downloadImageToDisk(newImage + ".png", getApplicationContext());
+        Images.downloadImageToDisk(newImage + "Clue1.png", getApplicationContext());
+        Images.downloadImageToDisk(newImage + "Clue2.png", getApplicationContext());
         //shift the old images in Preferences
         setStringPreferences("oldImage0", getStringPreferences("oldImage1", getApplicationContext()), getApplicationContext());
         setStringPreferences("oldImage1", getStringPreferences("oldImage2", getApplicationContext()), getApplicationContext());
@@ -128,12 +143,27 @@ public class DrawingGame extends AppCompatActivity {
         activityBackground.getBackground().setAlpha(0);
         sourceImageView = (ImageView) findViewById(R.id.sourceImage);
         stopperBar = (ProgressBar) findViewById(R.id.stopperBar);
+        candiesTextView = (TextView) findViewById(R.id.candiesNumber);
+        disableHelpers = new HashMap<>();
+        enableHelpers = new HashMap<>();
+        initDisableEnable(disableHelpers, false, false, false);
+        initDisableEnable(enableHelpers, true, true, true);
+        flashBox = (RelativeLayout) findViewById(R.id.flashBox);
+        replaceBox = (RelativeLayout) findViewById(R.id.replaceBox);
+        clueBox = (RelativeLayout) findViewById(R.id.clueBox);
+    }
+
+    public void initDisableEnable(HashMap helpers, boolean flash, boolean replace, boolean clue) {
+        helpers.put("flash", flash);
+        helpers.put("replace", replace);
+        helpers.put("clue", clue);
     }
 
     public void startGame() {
         //show the source image
         //v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
 
+        disableEnableViews(disableHelpers);
         updateImagesAndQueue();
         sourceImageView.setVisibility(View.VISIBLE);
 
@@ -167,6 +197,7 @@ public class DrawingGame extends AppCompatActivity {
 
 
         sourceImageView.setVisibility(View.GONE);
+        disableEnableViews(enableHelpers);
 
 
 
@@ -780,8 +811,14 @@ public class DrawingGame extends AppCompatActivity {
     }
 
     public void flashHelperButtonClicked(View view) {
+        if (!updateCandies(flashHelperPrice)) {
+            notifyNoCandies();
+            return;
+        }
         v.setAllowDrawing(false);
-        replaceHelper.setClickable(false);
+        disableEnableViews(disableHelpers);
+        enableHelpers.put("flash",false);
+        flashHelper.setBackgroundResource(R.drawable.flash_disable);
         sourceImageView.setVisibility(View.VISIBLE);
         // v.setBackground(ResourcesCompat.getDrawable(getResources(), randomImage, null));
         Handler handler = new Handler();
@@ -790,16 +827,21 @@ public class DrawingGame extends AppCompatActivity {
                 // v.setBackgroundColor(Color.WHITE);
                 sourceImageView.setVisibility(View.GONE);
                 v.setAllowDrawing(true);
-                replaceHelper.setClickable(true);
+                disableEnableViews(enableHelpers);
             }
         }, flashHelperLength);
     }
 
     public void replaceDrawingButtonHelperClicked(View view) {
+        if (!updateCandies(replaceHelperPrice)) {
+            notifyNoCandies();
+            return;
+        }
+        v.setAllowDrawing(false);
+        enableHelpers.put("replace",false);
+        replaceHelper.setBackgroundResource(R.drawable.next_disable);
+
         v.restartDrawing();
-        //hideButtons();
-        // uncomment to allow this helper
-        //randomImage = images.get(1);
         startGame();
     }
 
@@ -817,5 +859,35 @@ public class DrawingGame extends AppCompatActivity {
         animation.setDuration(millisecondsToShow);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
+    }
+
+    public boolean updateCandies (int price) {
+        if (MainActivity.candies < price)
+            return false;
+        long new_candies = MainActivity.candies - price;
+        Infra.addCandiesToUser(new_candies);
+        MainActivity.setCandies(new_candies);
+        displayCandies();
+        return true;
+    }
+
+    public void notifyNoCandies () {
+        Toast toast = Toast.makeText(this, "Need more candies mateee!!", Toast.LENGTH_SHORT);
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        v.setTextColor(Color.WHITE);
+        toast.show();
+    }
+
+    public void displayCandies() {
+        candiesTextView.setText(MainActivity.candies + "");
+    }
+
+    public void disableEnableViews(HashMap<String,Boolean> helpers){
+        flashHelper.setClickable(helpers.get("flash"));
+        flashBox.setClickable(helpers.get("flash"));
+        replaceHelper.setClickable(helpers.get("replace"));
+        replaceBox.setClickable(helpers.get("replace"));
+        clueHelper.setClickable(helpers.get("clue"));
+        clueBox.setClickable(helpers.get("clue"));
     }
 }

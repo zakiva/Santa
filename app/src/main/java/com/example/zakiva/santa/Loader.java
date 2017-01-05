@@ -80,8 +80,11 @@ public class Loader extends AppCompatActivity {
         String image;
         for (int i = 0; i <= IMAGES_QUEUE_SIZE; i++) { // "<=" because we have one more for default
             image = getStringPreferences("oldImage" + i, getApplicationContext());
-            if (!(image.equals("NONE")))
-                deleteImageFromDisk(image, getApplicationContext());
+            if (!(image.equals("NONE"))) {
+                deleteImageFromDisk(image + ".png", getApplicationContext());
+                deleteImageFromDisk(image + "Clue1.png", getApplicationContext());
+                deleteImageFromDisk(image + "Clue2.png", getApplicationContext());
+            }
         }
     }
 
@@ -98,12 +101,14 @@ public class Loader extends AppCompatActivity {
             DrawingGame.sourceIndexes.add(numbers.get(i));
         }
         for (int i = 0; i < DrawingGame.sourceIndexes.size(); i++) {
-            image = "drawing" + DrawingGame.sourceIndexes.get(i) + ".jpg";
-            Images.downloadImageToDisk(image, getApplicationContext());
+            image = "drawing" + DrawingGame.sourceIndexes.get(i);
+            Images.downloadImageToDisk(image + ".png", getApplicationContext());
+            Images.downloadImageToDisk(image + "Clue1.png", getApplicationContext());
+            Images.downloadImageToDisk(image + "Clue2.png", getApplicationContext());
             setStringPreferences("oldImage" + i, image, getApplicationContext());
         }
         DrawingGame.defaultIndex = DrawingGame.sourceIndexes.get(0); //for safety
-        setStringPreferences("oldImage3", "drawing" + DrawingGame.defaultIndex + ".jpg", getApplicationContext());
+        setStringPreferences("oldImage3", "drawing" + DrawingGame.defaultIndex, getApplicationContext());
     }
 
 /*    @Override
@@ -131,8 +136,8 @@ public class Loader extends AppCompatActivity {
     }
 
     public void startApp  () {
-        // 3 out of the 8 are images for drawing
-        if (counter == 8)
+        // 9 out of the 14 are images for drawing
+        if (counter == 14)
             startActivity(new Intent(Loader.this, MainActivity.class));
     }
 }
