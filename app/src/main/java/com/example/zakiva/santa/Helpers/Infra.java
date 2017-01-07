@@ -351,4 +351,21 @@ public class Infra {
         };
         myRef2.orderByChild("minusKey").limitToFirst(HallOfFameListLimit).addValueEventListener(winnersDataListener);
     }
+
+    //maybe wait for loader - because need to wait to this process to complete - or make the ui wait for this call
+    public static void copyOldUserToNewUser (String oldUser, final String newUser) {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users/" + oldUser);
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myDatabase.child("users").child(newUser).setValue(dataSnapshot.getValue());
+                Log.d(TAG, "#########copied user############");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+            }
+        };
+        myRef.addValueEventListener(userListener);
+    }
 }
