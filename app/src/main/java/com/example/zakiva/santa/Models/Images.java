@@ -12,6 +12,7 @@ import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 
+import com.example.zakiva.santa.DrawingGame;
 import com.example.zakiva.santa.Helpers.Cache;
 import com.example.zakiva.santa.Loader;
 import com.example.zakiva.santa.R;
@@ -215,6 +216,7 @@ public class Images {
                     DB snappydb = DBFactory.open(context);
                     snappydb.put(imageName, bytes);
                     snappydb.close();
+                    DrawingGame.imagesOnDisk.add(imageName);
                     // Use next line only if you use this method in Loader activity
                     Loader.increase();
                 } catch (SnappydbException e) {
@@ -253,6 +255,7 @@ public class Images {
             DB snappydb = DBFactory.open(context);
             snappydb.del(imageName);
             snappydb.close();
+            DrawingGame.imagesOnDisk.remove(imageName);
         } catch (SnappydbException e) {
             Log.d("Problem: ", e.toString());
         }

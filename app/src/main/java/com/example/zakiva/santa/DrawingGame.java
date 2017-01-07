@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import static com.example.zakiva.santa.Helpers.Drawing.printImagesNameOnDisk;
@@ -47,7 +48,7 @@ import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 public class DrawingGame extends AppCompatActivity {
 
     public static ArrayList<Integer> sourceIndexes;
-    public static int NUMBER_OF_DRAWINGS = 3; // must be greater than number of images in the queue
+    public static int NUMBER_OF_DRAWINGS = 5; // must be greater than number of images in the queue
     public static int defaultIndex; // for safety if download has not been completed
     private Drawable sourceDrawble;
     private Bitmap sourceBitmap;
@@ -80,27 +81,47 @@ public class DrawingGame extends AppCompatActivity {
     private RelativeLayout flashBox;
     private RelativeLayout replaceBox;
     private RelativeLayout clueBox;
+    public static HashSet<String> imagesOnDisk = new HashSet<>();
+    private int currentIndex;
+    private TextView stopper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(MainActivity.TAG, "1>>>>>>>>>> default index = " + defaultIndex);
+        Log.d(MainActivity.TAG, "1>>>>>>>>>> =current index =  " + currentIndex);
+        Log.d(MainActivity.TAG, "1>>>>>>>>>> images on disk = " + imagesOnDisk.toString());
+
         setContentView(R.layout.activity_drawing_game);
         Drawing.initDrawingHelper();
         initFields();
         displayHelpersPrices();
         displayCandies();
+        Log.d(MainActivity.TAG, "2>>>>>>>>>> default index = " + defaultIndex);
+        Log.d(MainActivity.TAG, "2>>>>>>>>>> =current index =  " + currentIndex);
+        Log.d(MainActivity.TAG, "2>>>>>>>>>> images on disk = " + imagesOnDisk.toString());
         startGame(); // including updating images and queue
     }
 
     public void updateImagesAndQueue () {
+        Log.d(MainActivity.TAG, ">>>>>>>>>> sources indexes =   " + sourceIndexes.toString());
+        Log.d(MainActivity.TAG, "updateImagesAndQueue>>>>>>>>>> default index = " + defaultIndex);
+        Log.d(MainActivity.TAG, "updateImagesAndQueue>>>>>>>>>> =current index =  " + currentIndex);
+        Log.d(MainActivity.TAG, "updateImagesAndQueue>>>>>>>>>> images on disk = " + imagesOnDisk.toString());
+
         //update Bitmap
         sourceBitmap = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + ".png", getApplicationContext());
-        sourceBitmapClue1 = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + "Clue1.png", getApplicationContext());
-        sourceBitmapClue2 = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + "Clue2.png", getApplicationContext());
-        if (sourceBitmap == null || sourceBitmapClue1 == null || sourceBitmapClue2 == null) { // for safety if download has not been completed
+        //save source index for clues
+        currentIndex = sourceIndexes.get(0);
+        //sourceBitmapClue1 = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + "Clue1.png", getApplicationContext());
+        //sourceBitmapClue2 = getBitmapFromDisk("drawing" + sourceIndexes.get(0) + "Clue2.png", getApplicationContext());
+        if (sourceBitmap == null || !(imagesOnDisk.contains("drawing" + sourceIndexes.get(0) + "Clue1.png")) || !(imagesOnDisk.contains("drawing" + sourceIndexes.get(0) + "Clue2.png"))) { // for safety if download has not been completed
             sourceBitmap = getBitmapFromDisk("drawing" + defaultIndex + ".png", getApplicationContext());
-            sourceBitmapClue1 = getBitmapFromDisk("drawing" + defaultIndex + "Clue1.png", getApplicationContext());
-            sourceBitmapClue2 = getBitmapFromDisk("drawing" + defaultIndex + "Clue2.png", getApplicationContext());
+            currentIndex = defaultIndex;
+            Log.d(MainActivity.TAG, ">>>>>>>>>> =go to default unforuntaly  ");
+
+            // sourceBitmapClue1 = getBitmapFromDisk("drawing" + defaultIndex + "Clue1.png", getApplicationContext());
+           // sourceBitmapClue2 = getBitmapFromDisk("drawing" + defaultIndex + "Clue2.png", getApplicationContext());
         }
         //update Drawable
         sourceDrawble = new BitmapDrawable(getResources(), sourceBitmap);
@@ -108,8 +129,8 @@ public class DrawingGame extends AppCompatActivity {
         //remove first image from disk
         if (sourceIndexes.get(0) != defaultIndex) {
             deleteImageFromDisk("drawing" + sourceIndexes.get(0) + ".png", getApplicationContext());
-            deleteImageFromDisk("drawing" + sourceIndexes.get(0) + "Clue1.png", getApplicationContext());
-            deleteImageFromDisk("drawing" + sourceIndexes.get(0) + "Clue2.png", getApplicationContext());
+           // deleteImageFromDisk("drawing" + sourceIndexes.get(0) + "Clue1.png", getApplicationContext());
+           // deleteImageFromDisk("drawing" + sourceIndexes.get(0) + "Clue2.png", getApplicationContext());
         }
         //updateQueue
         sourceIndexes.remove(0);
@@ -162,6 +183,7 @@ public class DrawingGame extends AppCompatActivity {
         flashBox = (RelativeLayout) findViewById(R.id.flashBox);
         replaceBox = (RelativeLayout) findViewById(R.id.replaceBox);
         clueBox = (RelativeLayout) findViewById(R.id.clueBox);
+        stopper = (TextView) findViewById(R.id.stopper);
     }
 
     public void displayHelpersPrices () {
@@ -188,14 +210,13 @@ public class DrawingGame extends AppCompatActivity {
         updateImagesAndQueue();
         //sourceImageView.setVisibility(View.VISIBLE);
 
-        final TextView stopper = (TextView) findViewById(R.id.stopper);
         stopper.setVisibility(View.VISIBLE);
         runStopperBar();
 
         new CountDownTimer(millisecondsToShow, 100) {
 
             public void onTick(long millisUntilFinished) {
-                Log.d(MainActivity.TAG, ">>>>>>>>>> =millisUntilFinished " + millisUntilFinished);
+//                Log.d(MainActivity.TAG, ">>>>>>>>>> =millisUntilFinished " + millisUntilFinished);
                 // cancel DRAW IT before starting gmae
                 // if (millisUntilFinished / 1000 == 0) {
                 //     v.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.draw_it, null));
@@ -204,8 +225,6 @@ public class DrawingGame extends AppCompatActivity {
             }
 
             public void onFinish() {
-                stopper.setVisibility(View.GONE);
-                stopperBar.setVisibility(View.GONE);
                 startDraw();
             }
         }.start();
@@ -218,9 +237,24 @@ public class DrawingGame extends AppCompatActivity {
 
         // sourceImageView.setVisibility(View.GONE);
 
+        sourceBitmapClue1 = getBitmapFromDisk("drawing" + currentIndex + "Clue1.png", getApplicationContext());
+        sourceBitmapClue2 = getBitmapFromDisk("drawing" + currentIndex + "Clue2.png", getApplicationContext());
+
+        if (currentIndex != defaultIndex && !(sourceIndexes.contains(currentIndex))) {
+            deleteImageFromDisk("drawing" + currentIndex + "Clue1.png", getApplicationContext());
+            deleteImageFromDisk("drawing" + currentIndex + "Clue2.png", getApplicationContext());
+        }
+
+
         sourceDrawble = new BitmapDrawable(getResources(), sourceBitmapClue1);
         sourceImageView.setImageDrawable(sourceDrawble);
         disableEnableViews(enableHelpers);
+        stopper.setVisibility(View.GONE);
+        stopperBar.setVisibility(View.GONE);
+
+        Log.d(MainActivity.TAG, "3>>>>>>>>>> default index = " + defaultIndex);
+        Log.d(MainActivity.TAG, "3>>>>>>>>>> =current index =  " + currentIndex);
+        Log.d(MainActivity.TAG, "3>>>>>>>>>> images on disk = " + imagesOnDisk.toString());
 
 
 
@@ -238,7 +272,12 @@ public class DrawingGame extends AppCompatActivity {
     //listeners
     public void doneButtonClicked(View view) {
 
+        Log.d(MainActivity.TAG, "DONE>>>>>>>>>> default index = " + defaultIndex);
+        Log.d(MainActivity.TAG, "DONE>>>>>>>>>> =current index =  " + currentIndex);
+        Log.d(MainActivity.TAG, "DONE>>>>>>>>>> images on disk = " + imagesOnDisk.toString());
+
         doneButton.setClickable(false);
+        disableEnableViews(disableHelpers);
 
 
         v.setAllowDrawing(false);
