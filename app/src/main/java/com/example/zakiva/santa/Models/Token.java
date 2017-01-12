@@ -30,9 +30,11 @@ public class Token {
         }
         // if the saved value was incorrect
         if (userToken.equals("NONE")) {
+            Log.d(MainActivity.TAG,">>>>>>>>>>>>>>>>>>>>>>>> user token must have been none");
             userToken = generateID(context);
             Storage.setStringPreferences("userToken",userToken,context);
         }
+        Log.d(MainActivity.TAG,">>>>>>>>>>>>>>>>>>>>>>>>"+userToken);
         return userToken;
     }
 

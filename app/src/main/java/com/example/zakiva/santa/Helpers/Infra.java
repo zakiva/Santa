@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zakiva.santa.Models.Competition;
 import com.example.zakiva.santa.Models.Game;
+import com.example.zakiva.santa.Models.MainDrawingView;
 import com.example.zakiva.santa.Models.Token;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Models.User;
@@ -367,5 +368,12 @@ public class Infra {
             }
         };
         myRef.addValueEventListener(userListener);
+    }
+    public static String formatEmail(String e){
+        String s = e;
+        if(e.contains(".")){
+           s = e.replace(".","*@@*");
+        }
+        return s;
     }
 }
