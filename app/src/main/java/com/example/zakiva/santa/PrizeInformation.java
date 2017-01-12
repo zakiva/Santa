@@ -64,14 +64,14 @@ public class PrizeInformation extends AppCompatActivity {
     public void createTabs(){
         tabHost.setup();
 
-        TabHost.TabSpec tabSpec = tabHost.newTabSpec("tab_b");
-        tabSpec.setContent(R.id.tabB);
-        tabSpec.setIndicator(Prize.prizeBCategory);
-        tabHost.addTab(tabSpec);
-
-        tabSpec = tabHost.newTabSpec("tab_a");
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec("tab_a");
         tabSpec.setContent(R.id.tabA);
         tabSpec.setIndicator(Prize.prizeACategory);
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("tab_b");
+        tabSpec.setContent(R.id.tabB);
+        tabSpec.setIndicator(Prize.prizeBCategory);
         tabHost.addTab(tabSpec);
     }
 
