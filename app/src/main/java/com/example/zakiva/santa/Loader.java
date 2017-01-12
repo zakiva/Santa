@@ -67,8 +67,10 @@ public class Loader extends AppCompatActivity {
         }
         Log.d(TAG, " start loadrss  ");
 
-        getGlobalFieldsFromFirebase();
+        getGlobalFieldsFromFirebase(this);
         initTrivia();
+        //getTimeCodeFromServer(this);
+        //getTriviaDataFromFirebase();
         getWinnersFromFirebase(getApplicationContext());
        // Log.d(TAG, "on create loader before clean");
       //  printImagesNameOnDisk(getApplicationContext());
@@ -171,7 +173,7 @@ public class Loader extends AppCompatActivity {
 
     public void startApp  () {
         // 9 out of the 14 are images for drawing
-        if (counter == 15)
+        if (counter == 16)
             startActivity(new Intent(Loader.this, MainActivity.class));
     }
 }

@@ -9,12 +9,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="1dp"
-        android:layout_width="match_parent"
-        android:layout_height="53dp">
-    </android.support.v7.widget.Toolbar>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="53dp">
+        </android.support.v7.widget.Toolbar>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -24,14 +24,14 @@
             android:onClick="backToPrizeClicked"
             android:layout_alignParentLeft="true">
 
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="backToPrizeClicked"
-            android:background="@drawable/ic_ac_nav_back"
-            android:id="@+id/homeScreen" />
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="backToPrizeClicked"
+                android:background="@drawable/ic_ac_nav_back"
+                android:id="@+id/homeScreen" />
 
         </RelativeLayout>
 
@@ -41,211 +41,211 @@
             android:background="@drawable/shadow_below"/>
 
     </RelativeLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/toolbarLayout">
-    <TabHost
-        android:id="@+id/tabsBox"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:theme="@style/TabWidgetTheme">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarLayout">
+        <TabHost
+            android:id="@+id/tabsBox"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:theme="@style/TabWidgetTheme">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TabWidget
-                android:id="@android:id/tabs"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:id="@+id/fashionTab"
+                <TabWidget
+                    android:id="@android:id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
 
-                    <ImageView
-                        android:id="@+id/imageViewExample"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tabsBox"
-                        android:layout_marginTop="30dp"
-                        android:adjustViewBounds="true" />
-
-                    <RelativeLayout
-                        android:id="@+id/headlinesBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageViewExample">
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="15dp">
-
-                            <TextView
-                                android:id="@+id/giftName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Name of the gift"
-                                android:textColor="#303030"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/companyName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/giftName"
-                                android:text="Comapny name"
-                                android:textColor="#303030"
-                                android:textSize="13sp" />
-                        </RelativeLayout>
-
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="15dp">
-
-                            <TextView
-                                android:id="@+id/money"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:text="100$"
-                                android:textColor="#9254ff"
-                                android:textSize="17sp" />
-
-                            <TextView
-                                android:id="@+id/worth"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_below="@+id/money"
-                                android:text="Worth"
-                                android:textColor="#aaaaaa"
-                                android:textSize="13sp" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/headlinesBox"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="18dp"
-                        android:text="this is a fucking amazing super duper awsomeeeee prize !!!!! wooowwwwwwwww"
-                        android:textColor="#303030"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/foodTab"
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/imageViewExample2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tabsBox"
-                        android:layout_marginTop="30dp"
-                        android:adjustViewBounds="true" />
-
-                    <RelativeLayout
-                        android:id="@+id/headlinesBox2"
+                    <LinearLayout
+                        android:id="@+id/tabA"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageViewExample">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageViewTabA"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tabsBox"
+                            android:layout_marginTop="30dp"
+                            android:adjustViewBounds="true" />
 
                         <RelativeLayout
-                            android:layout_width="wrap_content"
+                            android:id="@+id/headlinesBoxTabA"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="15dp">
+                            android:layout_below="@+id/imageViewTabA">
 
-                            <TextView
-                                android:id="@+id/giftName2"
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Name of the gift"
-                                android:textColor="#303030"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="15dp">
 
-                            <TextView
-                                android:id="@+id/companyName2"
+                                <TextView
+                                    android:id="@+id/giftNameTabA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Name of the gift"
+                                    android:textColor="#303030"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/companyNameTabA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/giftNameTabA"
+                                    android:text="Comapny name"
+                                    android:textColor="#303030"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
+
+
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/giftName2"
-                                android:text="Comapny name"
-                                android:textColor="#303030"
-                                android:textSize="13sp" />
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="15dp">
+
+                                <TextView
+                                    android:id="@+id/moneyTabA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:text="100$"
+                                    android:textColor="#9254ff"
+                                    android:textSize="17sp" />
+
+                                <TextView
+                                    android:id="@+id/worthTabA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_below="@+id/moneyTabA"
+                                    android:text="Worth"
+                                    android:textColor="#aaaaaa"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
                         </RelativeLayout>
 
+                        <TextView
+                            android:id="@+id/informationTabA"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/headlinesBoxTabA"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="18dp"
+                            android:text="this is a fucking amazing super duper awsomeeeee prize !!!!! wooowwwwwwwww"
+                            android:textColor="#303030"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/tabB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageViewTabB"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tabsBox"
+                            android:layout_marginTop="30dp"
+                            android:adjustViewBounds="true" />
 
                         <RelativeLayout
+                            android:id="@+id/headlinesBoxTabB"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imageViewTabB">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="15dp">
+
+                                <TextView
+                                    android:id="@+id/giftNameTabB"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Name of the gift"
+                                    android:textColor="#303030"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/companyNameTabB"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/giftNameTabB"
+                                    android:text="Comapny name"
+                                    android:textColor="#303030"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
+
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="15dp">
+
+                                <TextView
+                                    android:id="@+id/moneyTabB"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:text="100$"
+                                    android:textColor="#9254ff"
+                                    android:textSize="17sp" />
+
+                                <TextView
+                                    android:id="@+id/worthTabB"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_below="@+id/moneyTabB"
+                                    android:text="Worth"
+                                    android:textColor="#aaaaaa"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/informationTabB"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="15dp">
+                            android:layout_below="@+id/headlinesBoxTabB"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="18dp"
+                            android:text="Lorem ipusom this great prize."
+                            android:textColor="#303030"
+                            android:textSize="15sp" />
 
-                            <TextView
-                                android:id="@+id/money2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:text="100$"
-                                android:textColor="#9254ff"
-                                android:textSize="17sp" />
+                    </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/worth2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_below="@+id/money2"
-                                android:text="Worth"
-                                android:textColor="#aaaaaa"
-                                android:textSize="13sp" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/information2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/headlinesBox"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="18dp"
-                        android:text="Lorem ipusom this great prize."
-                        android:textColor="#303030"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-        </LinearLayout>
-    </TabHost>
-</ScrollView>
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+    </ScrollView>
 
     <ImageView
         android:layout_width="match_parent"

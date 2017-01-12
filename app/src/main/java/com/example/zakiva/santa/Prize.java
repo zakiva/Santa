@@ -38,11 +38,36 @@ public class Prize extends AppCompatActivity {
     public static long milisecondsToEndOfCompetition;
     private static Activity activity;
 
+    public static String prizeACategory = "";
+    public static String prizeACompany = "";
+    public static String prizeACompetitionNumber = "";
+    public static String prizeADescription = "";
+    public static String prizeAImageUrl = "";
+    public static String prizeAName = "";
+    public static String prizeANumber = "";
+    public static String prizeAWorth = "";
+
+    public static String prizeBCategory = "";
+    public static String prizeBCompany = "";
+    public static String prizeBCompetitionNumber = "";
+    public static String prizeBDescription = "";
+    public static String prizeBImageUrl = "";
+    public static String prizeBName = "";
+    public static String prizeBNumber = "";
+    public static String prizeBWorth = "";
+
+    public static int drawableAEnabled;
+    public static int drawableADisabled;
+    public static int drawableBEnabled;
+    public static int drawableBDisabled;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prize);
         initFields();
+        updatePrizesNames();
         colorPrizes();
         setCountDown();
 
@@ -75,12 +100,22 @@ public class Prize extends AppCompatActivity {
         stopper = (TextView) findViewById(R.id.stopper);
     }
 
+    public static void updatePrizesNames (){
+        if (prizeALabel == null){
+            return;
+        }
+        prizeALabel.setText(prizeAName);
+        prizeBLabel.setText(prizeBName);
+    }
     public static void colorPrizes () {
+        if (prizeALabel == null){
+            return;
+        }
         if (prizeChosen.equals("NONE")) {
             prizeALabel.setTextColor(Color.parseColor("#aaaaaa"));
             prizeBLabel.setTextColor(Color.parseColor("#aaaaaa"));
-            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.culinary_disable, null));
-            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.gadget_disable, null));
+            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), drawableADisabled, null));
+            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), drawableBDisabled, null));
             ((GradientDrawable) prizeA.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
             ((GradientDrawable) prizeB.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
             return;
@@ -88,16 +123,16 @@ public class Prize extends AppCompatActivity {
         if (prizeChosen.equals("a")) {
             prizeALabel.setTextColor(Color.parseColor("#9254ff"));
             prizeBLabel.setTextColor(Color.parseColor("#aaaaaa"));
-            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.culinary_enable, null));
-            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.gadget_disable, null));
+            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), drawableAEnabled, null));
+            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), drawableBDisabled, null));
             ((GradientDrawable) prizeA.getBackground()).setStroke(1, Color.parseColor("#9254ff"));
             ((GradientDrawable) prizeB.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
         }
         else {
             prizeALabel.setTextColor(Color.parseColor("#aaaaaa"));
             prizeBLabel.setTextColor(Color.parseColor("#9254ff"));
-            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.culinary_disable, null));
-            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.gadget_enable, null));
+            prizeAIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), drawableADisabled, null));
+            prizeBIcon.setBackground(ResourcesCompat.getDrawable(activity.getResources(), drawableBEnabled, null));
             ((GradientDrawable) prizeA.getBackground()).setStroke(1, Color.parseColor("#aaaaaa"));
             ((GradientDrawable) prizeB.getBackground()).setStroke(1, Color.parseColor("#9254ff"));
         }
