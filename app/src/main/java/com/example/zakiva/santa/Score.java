@@ -1,19 +1,26 @@
 package com.example.zakiva.santa;
 
 import android.app.Activity;
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.provider.SyncStateContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +57,10 @@ public class Score extends AppCompatActivity {
     RelativeLayout messageBox;
     Button playButton;
     TextView shareScore;
+
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0 ;
+    public static String globalPhoneNumber;
+    public static String globalContent;
 
     //final VunglePub vunglePub = VunglePub.getInstance();
 
@@ -319,18 +330,111 @@ public class Score extends AppCompatActivity {
         startActivity(Intent.createChooser(intent, "Choose sharing method"));
     }
 
-public boolean isContainMultipleStrings(String word, String [] subWords){
-    for (String s : subWords)
-    {
-        if (word.contains(s))
-        {
-            return true;
+    public void sendSms(String number, String content) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(number, null, content, null, null);
+            Toast.makeText(Score.this, "Sms sent successfully!", Toast.LENGTH_LONG).show();
+        } catch (Exception e1) {
+            Toast.makeText(Score.this, "Error: can't send sms", Toast.LENGTH_LONG).show();
         }
     }
-    return false;
-}
+
+    public void sendSmsWithPermissions(String number, String content) {
+        globalPhoneNumber = number;
+        globalContent = content;
+        Log.d("aaaaaaaaaa: ", "1");
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("aaaaaaaaaa: ", "2");
+            //Log.d("aaaaaaaaaabbb: ", Manifest.permission.SEND_SMS);
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+                Log.d("aaaaaaaaaa: ", "3");
+                //Log.d("aaaaaaaaaabbb: ", Manifest.permission.SEND_SMS);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+            } else {
+                Log.d("aaaaaaaaaa: ", "4");
+                //Log.d("aaaaaaaaaabbb: ", Manifest.permission.SEND_SMS);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
+        }
+        else {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(globalPhoneNumber, null, globalContent, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent Successfully!", Toast.LENGTH_LONG).show();
+            Log.d("aaaaaaaaaa: ", "5");
+            // Reward here
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("aaaaaaaaaa: ", "6");
+                    //Log.d("aaaaaaaaaabbb: ", Manifest.permission.SEND_SMS);
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(globalPhoneNumber, null, globalContent, null, null);
+                    Toast.makeText(getApplicationContext(), "SMS sent Successfully!", Toast.LENGTH_LONG).show();
+                    // Reward here
+                } else {
+                    Log.d("aaaaaaaaaa: ", "7");
+                    //Log.d("aaaaaaaaaabbb: ", Manifest.permission.SEND_SMS);
+                    Toast.makeText(getApplicationContext(), "Please allow permissions. if you pressed 'Never ask again' change it through Android settings", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+    }
 
     public void inviteFriendClicked(View view) {
+        Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+        pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+        startActivityForResult(pickContactIntent, 1);
+        //sendSmsWithPermissions("+972526216383", "Please download windis!");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request it is that we're responding to
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // Get the URI that points to the selected contact
+                Uri contactUri = data.getData();
+                // We only need the NUMBER column, because there will be only one row in the result
+                String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER};
+                Cursor cursor = getContentResolver()
+                        .query(contactUri, projection, null, null, null);
+                cursor.moveToFirst();
+                // Retrieve the phone number from the NUMBER column
+                int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String number = cursor.getString(column);
+                String finalNumber = number.replaceAll("[^0-9]", "");
+                sendSmsWithPermissions(finalNumber, "Please download windis!");
+            }
+        }
+    }
+
+    public void notifyNoCandies () {
+        Toast toast = Toast.makeText(this, "Need more candies mateee!!", Toast.LENGTH_SHORT);
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        v.setTextColor(Color.WHITE);
+        toast.show();
+    }
+
+    public boolean isContainMultipleStrings(String word, String [] subWords){
+        for (String s : subWords)
+        {
+            if (word.contains(s))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void shareScoreButtonClicked(View view) {
         //List of apps that we would like to let the user share with
         String [] apps = new String[] {"messaging", "sms", "mms", "whatsapp", "facebook", "mail", "twit", "google+", "hangout", "viber"};
         List<Intent> targetedShareIntents = new ArrayList<Intent>();
@@ -342,7 +446,7 @@ public boolean isContainMultipleStrings(String word, String [] subWords){
                 Intent targetedShare = new Intent(android.content.Intent.ACTION_SEND);
                 targetedShare.setType("text/plain"); // put here your mime type
                 if (isContainMultipleStrings(info.activityInfo.packageName.toLowerCase(), apps) || isContainMultipleStrings(info.activityInfo.name.toLowerCase(), apps)) {
-                    targetedShare.putExtra(Intent.EXTRA_TEXT, "You are invited to download Windis!");
+                    targetedShare.putExtra(Intent.EXTRA_TEXT, "You are invited to download Windis! " + "My score is " + Long.toString(score));
                     targetedShare.setPackage(info.activityInfo.packageName);
                     targetedShareIntents.add(targetedShare);
                 }
@@ -351,16 +455,6 @@ public boolean isContainMultipleStrings(String word, String [] subWords){
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[]{}));
             startActivity(chooserIntent);
         }
-    }
-
-    public void notifyNoCandies () {
-        Toast toast = Toast.makeText(this, "Need more candies mateee!!", Toast.LENGTH_SHORT);
-        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-        v.setTextColor(Color.WHITE);
-        toast.show();
-    }
-    
-    public void shareScoreButtonClicked(View view) {
     }
 
     public void backFromScoreClicked(View view) {
