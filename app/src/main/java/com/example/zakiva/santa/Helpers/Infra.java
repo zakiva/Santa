@@ -369,6 +369,9 @@ public class Infra {
         };
         myRef.addValueEventListener(userListener);
     }
+    public static void addSignedUpType (String type) {
+        myDatabase.child("users").child(userEmail).child("attributes").child("signedUpType").setValue(type);
+    }
     public static String formatEmail(String e){
         String s = e;
         if(e.contains(".")){
