@@ -48,7 +48,7 @@ import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 public class DrawingGame extends AppCompatActivity {
 
     public static ArrayList<Integer> sourceIndexes;
-    public static int NUMBER_OF_DRAWINGS = 5; // must be greater than number of images in the queue
+    public static int NUMBER_OF_DRAWINGS = 3; // must be greater than number of images in the queue
     public static int defaultIndex; // for safety if download has not been completed
     private Drawable sourceDrawble;
     private Bitmap sourceBitmap;
@@ -156,7 +156,7 @@ public class DrawingGame extends AppCompatActivity {
 
     //flow
     public void initFields() {
-        millisecondsToShow = 3000;
+        millisecondsToShow = 5000;
         flashHelperLength = 2000;
        // pen = (Button) findViewById(R.id.pen);
        // eraser = (Button) findViewById(R.id.eraser);
@@ -440,7 +440,6 @@ public class DrawingGame extends AppCompatActivity {
         //Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), randomImage, options);
        // Bitmap bitmap = getBitmapFromDisk("drawing0.jpg", getApplicationContext());
         Bitmap sourceScaledBitmap = Bitmap.createScaledBitmap(sourceBitmap, MainDrawingView.SIZE_PIXELS, MainDrawingView.SIZE_PIXELS, true);
-
 
         Bitmap userBitmap = v.canvasBitmap;
 
