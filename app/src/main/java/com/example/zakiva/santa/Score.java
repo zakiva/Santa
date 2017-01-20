@@ -2,18 +2,17 @@ package com.example.zakiva.santa;
 
 import android.app.Activity;
 import android.Manifest;
-import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
-import android.provider.SyncStateContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -33,14 +32,16 @@ import android.widget.Toast;
 
 import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Helpers.Infra;
+import com.example.zakiva.santa.Helpers.Storage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 //import com.vungle.publisher.VunglePub;
 
 public class Score extends AppCompatActivity {
 
+    private int SIGN_UP_TIME = 2000;
     static int TRY_CANDIES_PRICE = 100;
     Bundle extras;
     TextView scoreTextView;
@@ -57,10 +58,12 @@ public class Score extends AppCompatActivity {
     RelativeLayout messageBox;
     Button playButton;
     TextView shareScore;
+    RelativeLayout activityBackground;
 
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0 ;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     public static String globalPhoneNumber;
     public static String globalContent;
+
 
     //final VunglePub vunglePub = VunglePub.getInstance();
 
@@ -70,13 +73,17 @@ public class Score extends AppCompatActivity {
         setContentView(R.layout.activity_score);
         initFields();
         displayScreenAccordingToScore();
+        activityBackground.getBackground().setAlpha(0);
+        if (score != -1 && Storage.getStringPreferences("signedUpType",this.getApplicationContext()).equals("NONE")) {
+            signUpWindow();
+        }
         if (score != -1)
             Infra.addGameToUser(gameType, score);
         displayCandies();
         calcAndDisplayExp();
     }
 
-    public void displayScreenAccordingToScore () {
+    public void displayScreenAccordingToScore() {
         if (score != -1) {
             //set main icon to score section - remove icon
             mainIcon.setVisibility(View.GONE);
@@ -99,8 +106,7 @@ public class Score extends AppCompatActivity {
 
             //show share score
             shareScore.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
 
             //don't show score labels
             scoreTextView.setVisibility(View.GONE);
@@ -141,6 +147,7 @@ public class Score extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        changeBackgroundOpacity(0, View.GONE);
         displayCandies();
         Log.d(MainActivity.TAG, ">>>>>>>>>>ON RESTART SCORE ");
         //displayExp();
@@ -149,19 +156,22 @@ public class Score extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        changeBackgroundOpacity(0, View.GONE);
         displayCandies();
         Log.d(MainActivity.TAG, ">>>>>>>>>>ON Resume SCORE ");
     }
 
-    public void initFields () {
+    public void initFields() {
         activity = this;
         extras = getIntent().getExtras();
+        activityBackground = (RelativeLayout) findViewById(R.id.activityBackground);
         scoreTextView = ((TextView) findViewById(R.id.score));
         candiesTextView = ((TextView) findViewById(R.id.candies));
         expTextView = ((TextView) findViewById(R.id.exp));
         expBar = ((ProgressBar) findViewById(R.id.expBar));
-        mainIcon = ((ImageView) findViewById(R.id.mainIconScoreSection));;
-        scoreTitle = ((TextView) findViewById(R.id.scoreTitle));;
+        mainIcon = ((ImageView) findViewById(R.id.mainIconScoreSection));
+        scoreTitle = ((TextView) findViewById(R.id.scoreTitle));
+
         score = extras.getLong("score");
         gameType = extras.getString("game");
         messageBox = ((RelativeLayout) findViewById(R.id.messageRectangle));
@@ -169,7 +179,7 @@ public class Score extends AppCompatActivity {
         shareScore = ((TextView) findViewById(R.id.shareScoreOnBar));
     }
 
-    public void displayCandies () {
+    public void displayCandies() {
         candiesTextView.setText(MainActivity.candies + " candies");
     }
 
@@ -195,7 +205,7 @@ public class Score extends AppCompatActivity {
         }
     }
 
-    public boolean updateCandies () {
+    public boolean updateCandies() {
         if (MainActivity.candies < TRY_CANDIES_PRICE)
             return false;
         long new_candies = MainActivity.candies - TRY_CANDIES_PRICE;
@@ -221,10 +231,10 @@ public class Score extends AppCompatActivity {
     }
 
 
-    public void calcAndDisplayExp () {
+    public void calcAndDisplayExp() {
         long exp = MainActivity.exp;
         mProgressStatus = exp;
-        expBar.setProgress((int)exp);
+        expBar.setProgress((int) exp);
         expTextView.setText("" + exp);
         if (extras != null && score != -1) {
             exp += score;
@@ -232,20 +242,18 @@ public class Score extends AppCompatActivity {
                 exp %= EXP_SIZE;
                 Infra.addExpToUser(exp);
                 expSizeReached(exp);
-            }
-            else {
+            } else {
                 Infra.addExpToUser(exp);
                 showProgressAnimation(exp, false, 0);
             }
-        }
-        else {
+        } else {
             //its the first time we are here (not retry). init views anyway above in this method
         }
     }
 
-    void showProgressAnimation (final long newExp, final boolean expReached, final long expAfterSize) {
+    void showProgressAnimation(final long newExp, final boolean expReached, final long expAfterSize) {
 
-        Log.d(MainActivity.TAG, " showProgressAnimation  -- newEXP , exp reached, expAfterSize " + newExp +"," + expReached + "," + expAfterSize);
+        Log.d(MainActivity.TAG, " showProgressAnimation  -- newEXP , exp reached, expAfterSize " + newExp + "," + expReached + "," + expAfterSize);
 
         final Handler mHandler = new Handler();
 
@@ -284,8 +292,7 @@ public class Score extends AppCompatActivity {
 
                         if (expReached) {
                             showAlertDialogForExpSizeReached(expAfterSize);
-                        }
-                        else {
+                        } else {
                             expTextView.setText("" + (int) mProgressStatus);
                         }
                     }
@@ -295,7 +302,7 @@ public class Score extends AppCompatActivity {
         }).start();
     }
 
-    public void expSizeReached (long newExp) {
+    public void expSizeReached(long newExp) {
         //add more candies.. tell the user WOW..
         //show complete animation before new progress animation
         Log.d(MainActivity.TAG, "expSizeReached: ");
@@ -303,7 +310,7 @@ public class Score extends AppCompatActivity {
     }
 
     //make this function generic by passing it arguments (and move to INFRA)
-    public void showAlertDialogForExpSizeReached (final long newExp) {
+    public void showAlertDialogForExpSizeReached(final long newExp) {
 
         Log.d(MainActivity.TAG, "showAlertDialogForExpSizeReached ");
 
@@ -356,8 +363,7 @@ public class Score extends AppCompatActivity {
                 //Log.d("aaaaaaaaaabbb: ", Manifest.permission.SEND_SMS);
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
             }
-        }
-        else {
+        } else {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(globalPhoneNumber, null, globalContent, null, null);
             Toast.makeText(getApplicationContext(), "SMS sent Successfully!", Toast.LENGTH_LONG).show();
@@ -416,32 +422,30 @@ public class Score extends AppCompatActivity {
         }
     }
 
-    public void notifyNoCandies () {
+    public void notifyNoCandies() {
         Toast toast = Toast.makeText(this, "Need more candies mateee!!", Toast.LENGTH_SHORT);
         TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
         v.setTextColor(Color.WHITE);
         toast.show();
     }
 
-    public boolean isContainMultipleStrings(String word, String [] subWords){
-        for (String s : subWords)
-        {
-            if (word.contains(s))
-            {
+    public boolean isContainMultipleStrings(String word, String[] subWords) {
+        for (String s : subWords) {
+            if (word.contains(s)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public void shareScoreButtonClicked(View view) {
         //List of apps that we would like to let the user share with
-        String [] apps = new String[] {"messaging", "sms", "mms", "whatsapp", "facebook", "mail", "twit", "google+", "hangout", "viber"};
+        String[] apps = new String[]{"messaging", "sms", "mms", "whatsapp", "facebook", "mail", "twit", "google+", "hangout", "viber"};
         List<Intent> targetedShareIntents = new ArrayList<Intent>();
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
         List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(share, 0);
-        if (!resInfo.isEmpty()){
+        if (!resInfo.isEmpty()) {
             for (ResolveInfo info : resInfo) {
                 Intent targetedShare = new Intent(android.content.Intent.ACTION_SEND);
                 targetedShare.setType("text/plain"); // put here your mime type
@@ -459,5 +463,26 @@ public class Score extends AppCompatActivity {
 
     public void backFromScoreClicked(View view) {
         startActivity(new Intent(Score.this, Games.class));
+    }
+
+    public void signUpWindow() {
+            playButton.setClickable(false);
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    playButton.setClickable(true);
+                    changeBackgroundOpacity(220,View.VISIBLE);
+                    startActivity(new Intent(Score.this, SignUp.class));
+                }
+            }, SIGN_UP_TIME);
+        }
+
+    public void changeBackgroundOpacity(int opacity, int visible) {
+        activityBackground.getBackground().setAlpha(opacity);
+        activityBackground.setVisibility(visible);
+    }
+    public void changePlayButtonVisibility(int visibility){
+        playButton.setVisibility(visibility);
     }
 }

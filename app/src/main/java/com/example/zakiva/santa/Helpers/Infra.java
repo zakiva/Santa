@@ -369,8 +369,11 @@ public class Infra {
         };
         myRef.addValueEventListener(userListener);
     }
-    public static void addSignedUpType (String type) {
+    public static void updateUserAttributes(String type,String ageRange,String gender,String name) {
         myDatabase.child("users").child(userEmail).child("attributes").child("signedUpType").setValue(type);
+        myDatabase.child("users").child(userEmail).child("attributes").child("ageRange").setValue(ageRange);
+        myDatabase.child("users").child(userEmail).child("attributes").child("gender").setValue(gender);
+        myDatabase.child("users").child(userEmail).child("attributes").child("name").setValue(name);
     }
     public static String formatEmail(String e){
         String s = e;

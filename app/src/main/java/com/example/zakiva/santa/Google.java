@@ -77,7 +77,7 @@ public class Google extends AppCompatActivity implements View.OnClickListener, G
                     Infra.copyOldUserToNewUser(token,formattedEmail);
                     ((Santa) this.getApplication()).setSignedUpType("google");
                     ((Santa) this.getApplication()).setGlobalEmail(formattedEmail);
-                    Infra.addSignedUpType("google");
+                    //Infra.addSignedUpType("google");
                     sendData.putExtra("p_name", name);
                     sendData.putExtra("p_email", email);
                     startActivity(sendData);

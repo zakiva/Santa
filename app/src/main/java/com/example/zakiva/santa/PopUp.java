@@ -21,7 +21,7 @@ public class PopUp extends AppCompatActivity {
             setContentView(R.layout.test_pop_up);
         }
 
-        public void initiatePopupWindow(View view) {
+        public  void initiatePopupWindow(View view) {
             try {
                 LayoutInflater inflater = (LayoutInflater) PopUp.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View layout = inflater.inflate(R.layout.pop_up,(ViewGroup) findViewById(R.id.signUpPopUp));

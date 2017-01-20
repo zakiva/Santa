@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goToFb(View v) {
         FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
         startActivity(new Intent(MainActivity.this, Facebook.class));
     }
     public void drawClicked(View view) {
