@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_sign_up"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:id="@+id/signUpPopUp">
+    tools:context="com.example.zakiva.santa.SignUp">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -40,7 +41,7 @@ sit amet, consectetur adipiscing elit, sed do."
         android:textColor="#303030"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/fbSignInBtn"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_below="@id/textView3"
@@ -48,20 +49,31 @@ sit amet, consectetur adipiscing elit, sed do."
         android:layout_marginTop="30dp"
         android:background="#3b5998"
         android:text="Continue with Facebook"
+        android:onClick="goToFacebookSignIn"
         android:textColor="#ffffff"
         android:textSize="15sp" />
 
-
-     <Button
-         android:id="@+id/button4"
+    <Button
+        android:id="@+id/googleSignBtn"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_below="@id/button3"
-        android:layout_marginTop="15dp"
+        android:layout_below="@id/fbSignInBtn"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:background="#fafafa"
         android:text="Continue with Google"
+        android:onClick="goToGoogleSignIn"
         android:textColor="#303030"
         android:textSize="15sp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/googleSignBtn"
+        android:text="Not Now"
+        android:textSize="12sp"
+        android:background="#ffffff"
+        android:layout_centerHorizontal="true"
+        android:onClick="backToScoreButton"/>
 
 </RelativeLayout>

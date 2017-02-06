@@ -85,7 +85,7 @@ public class Facebook extends AppCompatActivity {
                         Infra.copyOldUserToNewUser(token,formattedEmail);
                         ((Santa) myApp).setSignedUpType("facebook");
                         ((Santa) myApp).setGlobalEmail(formattedEmail);
-                        Infra.addSignedUpType("facebook");
+                        //Infra.addSignedUpType("facebook");
                         Log.d(MainActivity.TAG,"email"+ json.getString("email"));
                         Log.d(MainActivity.TAG,"name = "+json.getString("name"));
                     }
