@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Helpers.Storage;
+import com.example.zakiva.santa.Loader;
 import com.example.zakiva.santa.MainActivity;
 import com.example.zakiva.santa.R;
 import com.example.zakiva.santa.Santa;
@@ -71,7 +72,7 @@ public class GoogleSignUp extends AppCompatActivity  implements GoogleApiClient.
                 Log.d(MainActivity.TAG, "googleEmail = " + email);
                 Log.d(MainActivity.TAG, "googleName = " + name);
                 String formattedEmail = Infra.formatEmail(email);
-                Storage.setStringPreferences("userEmail", formattedEmail, getApplicationContext());
+                Storage.setStringPreferences(Loader.userEmailFieldName , formattedEmail, getApplicationContext());
                 Storage.setStringPreferences("signedUpType", "google", getApplicationContext());
                 String token = Storage.getStringPreferences("userToken", getApplicationContext());
                 Infra.copyOldUserToNewUser(token, formattedEmail);
