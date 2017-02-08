@@ -33,6 +33,7 @@ public class Loader extends AppCompatActivity {
     private static int counter = 0;
     public static Loader loader;
     public static int IMAGES_QUEUE_SIZE = 3;
+    public static String userEmailFieldName  = "userEmail";
     //final VunglePub vunglePub = VunglePub.getInstance();
 
     @Override
@@ -52,7 +53,7 @@ public class Loader extends AppCompatActivity {
 
         Log.d(TAG, " this = null  " + this == null ? "yes" : "no");
 
-        String email = Storage.getStringPreferences("userEmail",this.getApplicationContext());
+        String email = Storage.getStringPreferences(userEmailFieldName ,this.getApplicationContext());
         ((Santa) this.getApplication()).setSignedUpType(Storage.getStringPreferences("signedUpType",getApplicationContext()));
         Log.d(">>>>>>>>>>>>","what's your email address:  "+email);
         if (email.equals("NONE")){
