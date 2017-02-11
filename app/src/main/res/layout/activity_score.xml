@@ -456,21 +456,6 @@
             android:textColor="#303030"
             android:textSize="15sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/googleSignBtn"
-            android:text="Not Now"
-            android:layout_marginTop="20dp"
-            android:textSize="12sp"
-            android:textColor="#303030"
-            android:padding="8dp"
-            android:background="#ffffff"
-            android:layout_centerHorizontal="true"
-            android:onClick="backToScoreButton"/>
-
-
-
 
 
 
