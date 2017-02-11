@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Helpers.Storage;
 import com.example.zakiva.santa.Models.Images;
@@ -20,10 +21,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import static com.example.zakiva.santa.Helpers.Drawing.printImagesNameOnDisk;
-import static com.example.zakiva.santa.Helpers.Infra.getTimeCodeFromServer;
-import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
-import static com.example.zakiva.santa.Helpers.Infra.getWinnersFromFirebase;
-import static com.example.zakiva.santa.Helpers.Infra.getUserAttributesFromFirebase;
+import static com.example.zakiva.santa.Helpers.Infra.*;
 import static com.example.zakiva.santa.Helpers.Storage.*;
 import static com.example.zakiva.santa.Models.Images.*;
 
@@ -68,7 +66,7 @@ public class Loader extends AppCompatActivity {
         }
         Log.d(TAG, " start loadrss  ");
 
-        getTimeCodeFromServer();
+        getGlobalFieldsFromFirebase();
         getTriviaDataFromFirebase();
         getWinnersFromFirebase(getApplicationContext());
        // Log.d(TAG, "on create loader before clean");
@@ -108,9 +106,13 @@ public class Loader extends AppCompatActivity {
         }
         for (int i = 0; i < DrawingGame.sourceIndexes.size(); i++) {
             image = "drawing" + DrawingGame.sourceIndexes.get(i);
-            Images.downloadImageToDisk(image + ".png", getApplicationContext());
-            Images.downloadImageToDisk(image + "Clue1.png", getApplicationContext());
-            Images.downloadImageToDisk(image + "Clue2.png", getApplicationContext());
+            Drawing.downloadDrawing(image + ".png", getApplicationContext());
+            Drawing.downloadDrawing(image + "Clue1.png", getApplicationContext());
+            Drawing.downloadDrawing(image + "Clue2.png", getApplicationContext());
+
+            //Images.downloadImageToDisk(image + ".png", getApplicationContext());
+            //Images.downloadImageToDisk(image + "Clue1.png", getApplicationContext());
+            //Images.downloadImageToDisk(image + "Clue2.png", getApplicationContext());
             setStringPreferences("oldImage" + i, image, getApplicationContext());
         }
         DrawingGame.defaultIndex = DrawingGame.sourceIndexes.get(0); //for safety

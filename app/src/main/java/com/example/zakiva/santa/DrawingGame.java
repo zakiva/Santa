@@ -48,7 +48,7 @@ import static com.example.zakiva.santa.Models.MainDrawingView.densityFactor;
 public class DrawingGame extends AppCompatActivity {
 
     public static ArrayList<Integer> sourceIndexes;
-    public static int NUMBER_OF_DRAWINGS = 3; // must be greater than number of images in the queue
+    public static int NUMBER_OF_DRAWINGS = 20; // must be greater than number of images in the queue
     public static int defaultIndex; // for safety if download has not been completed
     private Drawable sourceDrawble;
     private Bitmap sourceBitmap;
@@ -145,9 +145,19 @@ public class DrawingGame extends AppCompatActivity {
         sourceIndexes.add(n);
         //download last image
         String newImage = "drawing" + sourceIndexes.get(sourceIndexes.size() - 1);
-        Images.downloadImageToDisk(newImage + ".png", getApplicationContext());
-        Images.downloadImageToDisk(newImage + "Clue1.png", getApplicationContext());
-        Images.downloadImageToDisk(newImage + "Clue2.png", getApplicationContext());
+
+
+
+        Drawing.downloadDrawing(newImage + ".png", getApplicationContext());
+        Drawing.downloadDrawing(newImage + "Clue1.png", getApplicationContext());
+        Drawing.downloadDrawing(newImage + "Clue2.png", getApplicationContext());
+
+
+
+
+        //Images.downloadImageToDisk(newImage + ".png", getApplicationContext());
+        //Images.downloadImageToDisk(newImage + "Clue1.png", getApplicationContext());
+        //Images.downloadImageToDisk(newImage + "Clue2.png", getApplicationContext());
         //shift the old images in Preferences
         setStringPreferences("oldImage0", getStringPreferences("oldImage1", getApplicationContext()), getApplicationContext());
         setStringPreferences("oldImage1", getStringPreferences("oldImage2", getApplicationContext()), getApplicationContext());

@@ -17,6 +17,7 @@ import com.example.zakiva.santa.Models.TriviaQuestion;
 import com.example.zakiva.santa.Models.User;
 import com.example.zakiva.santa.Models.Winner;
 import com.example.zakiva.santa.Trivia;
+import com.google.android.gms.drive.internal.StringListResponse;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -228,12 +229,23 @@ public class Infra {
     }
 
     //get a timestamp code from the database
-    public static void getTimeCodeFromServer () {
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("timeCode");
+    public static void getGlobalFieldsFromFirebase () {
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("globalFields");
         ValueEventListener timeCodeListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                MainActivity.setTimeCode((String) dataSnapshot.getValue());
+
+
+
+                HashMap<String,Object> fields = (HashMap<String, Object>) dataSnapshot.getValue();
+                MainActivity.setTimeCode((String) fields.get("timeCode"));
+
+                Log.d(TAG, "## We got the timecode: " + fields.get("timeCode"));
+
+                Log.d(TAG, "<< >> MainActivity.getTime =  " + MainActivity.getTimeCode());
+
+                DrawingGame.NUMBER_OF_DRAWINGS = (int) (long) ((Long) fields.get("drawingsNumber"));
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

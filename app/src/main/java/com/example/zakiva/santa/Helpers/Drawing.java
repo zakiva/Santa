@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.zakiva.santa.*;
+import com.example.zakiva.santa.Models.Images;
 import com.example.zakiva.santa.Models.MainDrawingView;
 
 import java.nio.ByteBuffer;
@@ -34,6 +35,10 @@ public class Drawing {
     public static void initDrawingHelper() {
         SIZE = MainDrawingView.SIZE_PIXELS;
         JUMP = MainDrawingView.JUMP;
+    }
+
+    public static void downloadDrawing (String drawingName, Context context) {
+        Images.downloadImageToDisk1("drawings", drawingName, context);
     }
 
     public static void printMatrix(int[][] matrix, int h, int w) {
