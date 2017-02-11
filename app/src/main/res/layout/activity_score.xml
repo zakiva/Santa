@@ -210,10 +210,12 @@
 
     </RelativeLayout>
 
-    <Button
+    <TextView
         android:text="Play! (100 candis)"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:textAllCaps="false"
@@ -223,6 +225,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/playButton" />
+
+
 
     <TextView
         android:id="@+id/getExtraCandiesLabel"
@@ -365,6 +369,110 @@
         android:layout_height="match_parent"
         android:background="#000000"
         android:visibility="gone" />
+
+
+    <RelativeLayout
+        android:id="@+id/signUpPopUp"
+        android:background="#ffffff"
+        android:visibility="visible"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginBottom="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/popUpImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/sign_up_cover_no_margin" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/popUpImage"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp"
+            android:text="Sign Up"
+            android:textSize="17sp"
+            android:textColor="#303030"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@id/textView2"
+            android:layout_marginTop="7dp"
+            android:text="In order to continue please sign up"
+            android:textSize="14sp"
+            android:textColor="#303030"/>
+
+        <Button
+            android:id="@+id/fbSignInBtn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignStart="@+id/popUpImage"
+            android:layout_alignLeft="@+id/popUpImage"
+            android:layout_alignEnd="@+id/popUpImage"
+            android:layout_alignRight="@+id/popUpImage"
+            android:background="#3b5998"
+            android:text="Continue with Facebook"
+            android:onClick="goToFacebookSignIn"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/googleSignBtn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignStart="@+id/popUpImage"
+            android:layout_alignLeft="@+id/popUpImage"
+            android:layout_alignEnd="@+id/popUpImage"
+            android:layout_alignRight="@+id/popUpImage"
+            android:layout_below="@id/fbSignInBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="#fafafa"
+            android:text="Continue with Google"
+            android:onClick="goToGoogleSignIn"
+            android:textColor="#303030"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/googleSignBtn"
+            android:text="Not Now"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp"
+            android:textColor="#303030"
+            android:padding="8dp"
+            android:background="#ffffff"
+            android:layout_centerHorizontal="true"
+            android:onClick="backToScoreButton"/>
+
+
+
+
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

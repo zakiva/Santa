@@ -35,8 +35,7 @@
         android:layout_below="@+id/textView2"
         android:layout_alignLeft="@id/textView2"
         android:layout_marginTop="7dp"
-        android:text="In order to continue play Lorem ipsum dolor
-sit amet, consectetur adipiscing elit, sed do."
+        android:text="In order to continue please sign up"
         android:textSize="14sp"
         android:textColor="#303030"/>
 
@@ -47,6 +46,8 @@ sit amet, consectetur adipiscing elit, sed do."
         android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="#3b5998"
         android:text="Continue with Facebook"
         android:onClick="goToFacebookSignIn"
@@ -57,6 +58,8 @@ sit amet, consectetur adipiscing elit, sed do."
         android:id="@+id/googleSignBtn"
         android:layout_width="300dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_below="@id/fbSignInBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
@@ -65,15 +68,18 @@ sit amet, consectetur adipiscing elit, sed do."
         android:onClick="goToGoogleSignIn"
         android:textColor="#303030"
         android:textSize="15sp" />
-    <Button
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_below="@id/googleSignBtn"
         android:text="Not Now"
         android:textSize="12sp"
+        android:padding="30dp"
         android:background="#ffffff"
         android:layout_centerHorizontal="true"
         android:onClick="backToScoreButton"/>
+
 
 </RelativeLayout>

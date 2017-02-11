@@ -33,6 +33,8 @@ import android.widget.Toast;
 import com.example.zakiva.santa.Helpers.Drawing;
 import com.example.zakiva.santa.Helpers.Infra;
 import com.example.zakiva.santa.Helpers.Storage;
+import com.example.zakiva.santa.Models.FacebookSignUp;
+import com.example.zakiva.santa.Models.GoogleSignUp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +58,10 @@ public class Score extends AppCompatActivity {
     ImageView mainIcon;
     TextView scoreTitle;
     RelativeLayout messageBox;
-    Button playButton;
+    TextView playButton;
     TextView shareScore;
     RelativeLayout activityBackground;
+    RelativeLayout signUpPopUp;
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     public static String globalPhoneNumber;
@@ -158,6 +161,7 @@ public class Score extends AppCompatActivity {
         super.onResume();
         changeBackgroundOpacity(0, View.GONE);
         displayCandies();
+        closePopUp();
         Log.d(MainActivity.TAG, ">>>>>>>>>>ON Resume SCORE ");
     }
 
@@ -175,8 +179,9 @@ public class Score extends AppCompatActivity {
         score = extras.getLong("score");
         gameType = extras.getString("game");
         messageBox = ((RelativeLayout) findViewById(R.id.messageRectangle));
-        playButton = ((Button) findViewById(R.id.playButton));
+        playButton = ((TextView) findViewById(R.id.playButton));
         shareScore = ((TextView) findViewById(R.id.shareScoreOnBar));
+        signUpPopUp = ((RelativeLayout) findViewById(R.id.signUpPopUp));
     }
 
     public void displayCandies() {
@@ -473,7 +478,9 @@ public class Score extends AppCompatActivity {
                 public void run() {
                     playButton.setClickable(true);
                     changeBackgroundOpacity(220,View.VISIBLE);
-                    startActivity(new Intent(Score.this, SignUp.class));
+                    signUpPopUp.setVisibility(View.VISIBLE);
+
+                   // startActivity(new Intent(Score.this, SignUp.class));
                 }
             }, SIGN_UP_TIME);
         }
@@ -482,7 +489,22 @@ public class Score extends AppCompatActivity {
         activityBackground.getBackground().setAlpha(opacity);
         activityBackground.setVisibility(visible);
     }
-    public void changePlayButtonVisibility(int visibility){
-        playButton.setVisibility(visibility);
+
+    public void goToGoogleSignIn(View view){
+        startActivity(new Intent(Score.this, GoogleSignUp.class));
     }
+    public void goToFacebookSignIn(View view){
+        startActivity(new Intent(Score.this, FacebookSignUp.class));
+    }
+
+    public void backToScoreButton(View view) {
+        closePopUp();
+    }
+
+    public void closePopUp () {
+        playButton.setClickable(true); // already true probably
+        changeBackgroundOpacity(0,View.GONE);
+        signUpPopUp.setVisibility(View.GONE);
+    }
+
 }
