@@ -43,7 +43,7 @@ import java.util.List;
 
 public class Score extends AppCompatActivity {
 
-    private int SIGN_UP_TIME = 2000;
+    private int SIGN_UP_TIME = 2500;
     static int TRY_CANDIES_PRICE = 100;
     Bundle extras;
     TextView scoreTextView;
@@ -161,7 +161,7 @@ public class Score extends AppCompatActivity {
         super.onResume();
         changeBackgroundOpacity(0, View.GONE);
         displayCandies();
-        closePopUp();
+        closePopUp(false);
         Log.d(MainActivity.TAG, ">>>>>>>>>>ON Resume SCORE ");
     }
 
@@ -471,12 +471,12 @@ public class Score extends AppCompatActivity {
     }
 
     public void signUpWindow() {
-            playButton.setClickable(false);
+            playButton.setEnabled(false);
             Handler h = new Handler();
             h.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    playButton.setClickable(true);
+                    //playButton.setEnabled(true); micha - why enable here?
                     changeBackgroundOpacity(220,View.VISIBLE);
                     signUpPopUp.setVisibility(View.VISIBLE);
 
@@ -498,13 +498,18 @@ public class Score extends AppCompatActivity {
     }
 
     public void backToScoreButton(View view) {
-        closePopUp();
+        closePopUp(true); // limit this with a counter
     }
 
-    public void closePopUp () {
-        playButton.setClickable(true); // already true probably
-        changeBackgroundOpacity(0,View.GONE);
-        signUpPopUp.setVisibility(View.GONE);
+    public void closePopUp (boolean allowClosing) {
+        if (signUpPopUp.getVisibility() == View.VISIBLE)
+            changeBackgroundOpacity(220, View.VISIBLE); // for onResume conflict
+        if(allowClosing || !(Storage.getStringPreferences("signedUpType",this.getApplicationContext()).equals("NONE"))) {
+
+            playButton.setEnabled(true);
+            changeBackgroundOpacity(0, View.GONE);
+            signUpPopUp.setVisibility(View.GONE);
+        }
     }
 
 }

@@ -374,7 +374,7 @@
     <RelativeLayout
         android:id="@+id/signUpPopUp"
         android:background="#ffffff"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
