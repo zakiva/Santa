@@ -246,13 +246,13 @@ public class MainDrawingView extends View {
 
     public void updatePaintWithMode () {
         if (drawingMode == 0) {
-            paint.setStrokeWidth(22f);
+            paint.setStrokeWidth(22f); // BAD SIZE !!! need to be relative !! see: stroke field
             paint.setColor(Color.WHITE);
             //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             //paint.setAlpha(250);
         }
         else {
-            paint.setStrokeWidth(5f);
+            paint.setStrokeWidth(5f); // BAD SIZE !!! need to be relative !! see: stroke field
             paint.setColor(Color.BLACK);
             //paint.setAlpha(0);
             //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
@@ -279,11 +279,13 @@ public class MainDrawingView extends View {
             return;
         Path p = pathsUndo.get(0);
         pathsUndo.remove(0);
-        paint.setStrokeWidth(7f);
+        paint.setStrokeWidth((float)(stroke + 2));
         paint.setColor(Color.WHITE);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR)); // in order to remove
         drawCanvas.drawPath(p, paint);
-        updatePaintWithMode();
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth((float) stroke);
+        //updatePaintWithMode(); need only for the eraser feature but currently causes bugs
         paint.setXfermode(null); // go back to black - drawing mode
         //path.reset();
         invalidate();
