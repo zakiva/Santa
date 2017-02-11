@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
@@ -30,6 +31,11 @@ public class GoogleSignUp extends AppCompatActivity  implements GoogleApiClient.
     private static final int RC_SIGN_IN = 10;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInOptions googleSignInOptions;
+    private  String gender = "NONE";
+    private  String email = "NONE";
+    private  String ageRange = "NONE";
+    private  String name = "NONE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +66,26 @@ public class GoogleSignUp extends AppCompatActivity  implements GoogleApiClient.
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(MainActivity.TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
         if (resultCode == RESULT_OK)
-        Log.d(MainActivity.TAG, "second step = ");
+            Log.d(MainActivity.TAG, "second step = ");
         GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
         GoogleSignInAccount account = googleSignInResult.getSignInAccount();
         try {
-            String name, email;
             if (account != null) {
                 name = account.getDisplayName();
                 email = account.getEmail();
-                getExtraInfoFromGoogle(account,name);
+                Plus.PeopleApi.load(mGoogleApiClient, account.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
+                    @Override
+                    public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
+                        Person person = loadPeopleResult.getPersonBuffer().get(0);
+                         gender = getMaleFemale(person.getGender());
+                         ageRange = String.valueOf(person.getAgeRange());
+                        Log.d(MainActivity.TAG, "Gender: " + person.getGender());
+                        Log.d(MainActivity.TAG, "AgeRange: " + person.getAgeRange());
+                    }
+                });
                 Log.d(MainActivity.TAG, "googleEmail = " + email);
                 Log.d(MainActivity.TAG, "googleName = " + name);
+                Infra.updateUserAttributes("google",ageRange,gender,name,email);
                 String formattedEmail = Infra.formatEmail(email);
                 Storage.setStringPreferences(Loader.userEmailFieldName , formattedEmail, getApplicationContext());
                 Storage.setStringPreferences("signedUpType", "google", getApplicationContext());
@@ -84,20 +99,8 @@ public class GoogleSignUp extends AppCompatActivity  implements GoogleApiClient.
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-    public void getExtraInfoFromGoogle(GoogleSignInAccount account, final String name) {
-        Plus.PeopleApi.load(mGoogleApiClient, account.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
-            @Override
-            public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
-                Person person = loadPeopleResult.getPersonBuffer().get(0);
-                String gender = getMaleFemale(person.getGender());
-                String ageRange = String.valueOf(person.getAgeRange());
-                Infra.updateUserAttributes("google",ageRange,gender,name);
-                Log.d(MainActivity.TAG, "Gender: " + person.getGender());
-                Log.d(MainActivity.TAG, "Birthday: " + person.getBirthday());
-                Log.d(MainActivity.TAG, "AgeRange: " + person.getAgeRange());
-            }
-        });
-    }
+
+
     public String getMaleFemale(int gender){
         if(gender==0) {
             return "Male";

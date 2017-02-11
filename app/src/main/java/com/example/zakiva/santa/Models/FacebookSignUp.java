@@ -30,6 +30,11 @@ import java.util.Arrays;
 public class FacebookSignUp extends AppCompatActivity {
 
     private CallbackManager callbackManager;
+    private String name = "NONE";
+    private String gender = "NONE";
+    private String ageRange = "NONE";
+    private String email = "NONE";
+    private String facebookUserId = "NONE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class FacebookSignUp extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends","email"));
     }
 
 
@@ -65,23 +70,31 @@ public class FacebookSignUp extends AppCompatActivity {
 
                 json = response.getJSONObject();
                 try {
-                    String name, gender, ageRange;
                     if (json != null) {
-                        gender = json.getString("gender");
-                        name = json.getString("name");
-                        ageRange = json.getString("age_range");
+                        facebookUserId = json.getString("id");
+                        if(json.has("gender")) {
+                            gender = json.getString("gender");
+                        }
+                        if(json.has("name")) {
+                            name = json.getString("name");
+                            Log.d(MainActivity.TAG, "name = " + json.getString("name"));
+                        }
+                        if(json.has("age_range")) {
+                            ageRange = json.getString("age_range");
+                        }
+                        if(json.has("email")) {
+                            email = json.getString("email");
+                            Log.d(MainActivity.TAG, "email" + json.getString("email"));
+                        }
                         Log.d(MainActivity.TAG, "granted: " + AccessToken.getCurrentAccessToken().getPermissions());
                         Log.d(MainActivity.TAG, "granted: " + AccessToken.getCurrentAccessToken().getDeclinedPermissions());
-                        Infra.updateUserAttributes("facebook",ageRange,gender,name);
-                        String formattedEmail = Infra.formatEmail(json.getString("email"));
-                        Storage.setStringPreferences(Loader.userEmailFieldName , formattedEmail, getApplicationContext());
+                        Infra.updateUserAttributes("facebook",ageRange,gender,name,email);
+                        Storage.setStringPreferences(Loader.userEmailFieldName , facebookUserId, getApplicationContext());
                         Storage.setStringPreferences("signedUpType", "facebook", getApplicationContext());
                         String token = Storage.getStringPreferences("userToken", getApplicationContext());
-                        Infra.copyOldUserToNewUser(token, formattedEmail);
+                        Infra.copyOldUserToNewUser(token, facebookUserId);
                         ((Santa) myApp).setSignedUpType("facebook");
-                        ((Santa) myApp).setGlobalEmail(formattedEmail);
-                        Log.d(MainActivity.TAG, "email" + json.getString("email"));
-                        Log.d(MainActivity.TAG, "name = " + json.getString("name"));
+                        ((Santa) myApp).setGlobalEmail(facebookUserId);
                         finish();
                     }
 
