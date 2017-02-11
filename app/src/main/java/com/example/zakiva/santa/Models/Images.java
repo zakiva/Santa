@@ -231,38 +231,6 @@ public class Images {
         });
     }
 
-    public static void downloadImageToDisk1(final String folder, final String imageName, final Context context) {
-
-
-        Log.d("$$$$$$$$$$$ downloadImageToDisk1 " + folder + "   " + imageName,"");
-
-
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl(context.getString(R.string.firebase_storage));
-        storageRef.child(folder).child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                try {
-                    Log.d("$$$$$$$$$ onSuccess downloadImageToDisk1 " + folder + "   " + imageName,"");
-
-                    DB snappydb = DBFactory.open(context);
-                    snappydb.put(imageName, bytes);
-                    snappydb.close();
-                    DrawingGame.imagesOnDisk.add(imageName);
-                    // Use next line only if you use this method in Loader activity
-                    Loader.increase();
-                } catch (SnappydbException e) {
-                    Log.d("Problem: ", e.toString());
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d("problem: ", "can't load image");
-            }
-        });
-    }
 
     // Use this method like this:
     // Images.getBitmapFromDisk("drawing1.jpg", getApplicationContext());

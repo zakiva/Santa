@@ -106,13 +106,10 @@ public class Loader extends AppCompatActivity {
         }
         for (int i = 0; i < DrawingGame.sourceIndexes.size(); i++) {
             image = "drawing" + DrawingGame.sourceIndexes.get(i);
-            Drawing.downloadDrawing(image + ".png", getApplicationContext());
-            Drawing.downloadDrawing(image + "Clue1.png", getApplicationContext());
-            Drawing.downloadDrawing(image + "Clue2.png", getApplicationContext());
 
-            //Images.downloadImageToDisk(image + ".png", getApplicationContext());
-            //Images.downloadImageToDisk(image + "Clue1.png", getApplicationContext());
-            //Images.downloadImageToDisk(image + "Clue2.png", getApplicationContext());
+            Images.downloadImageToDisk(image + ".png", getApplicationContext());
+            Images.downloadImageToDisk(image + "Clue1.png", getApplicationContext());
+            Images.downloadImageToDisk(image + "Clue2.png", getApplicationContext());
             setStringPreferences("oldImage" + i, image, getApplicationContext());
         }
         DrawingGame.defaultIndex = DrawingGame.sourceIndexes.get(0); //for safety

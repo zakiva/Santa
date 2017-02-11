@@ -37,10 +37,6 @@ public class Drawing {
         JUMP = MainDrawingView.JUMP;
     }
 
-    public static void downloadDrawing (String drawingName, Context context) {
-        Images.downloadImageToDisk1("drawings", drawingName, context);
-    }
-
     public static void printMatrix(int[][] matrix, int h, int w) {
         int JUMP_PRINT = 5;
         String line;

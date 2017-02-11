@@ -147,17 +147,9 @@ public class DrawingGame extends AppCompatActivity {
         String newImage = "drawing" + sourceIndexes.get(sourceIndexes.size() - 1);
 
 
-
-        Drawing.downloadDrawing(newImage + ".png", getApplicationContext());
-        Drawing.downloadDrawing(newImage + "Clue1.png", getApplicationContext());
-        Drawing.downloadDrawing(newImage + "Clue2.png", getApplicationContext());
-
-
-
-
-        //Images.downloadImageToDisk(newImage + ".png", getApplicationContext());
-        //Images.downloadImageToDisk(newImage + "Clue1.png", getApplicationContext());
-        //Images.downloadImageToDisk(newImage + "Clue2.png", getApplicationContext());
+        Images.downloadImageToDisk(newImage + ".png", getApplicationContext());
+        Images.downloadImageToDisk(newImage + "Clue1.png", getApplicationContext());
+        Images.downloadImageToDisk(newImage + "Clue2.png", getApplicationContext());
         //shift the old images in Preferences
         setStringPreferences("oldImage0", getStringPreferences("oldImage1", getApplicationContext()), getApplicationContext());
         setStringPreferences("oldImage1", getStringPreferences("oldImage2", getApplicationContext()), getApplicationContext());
