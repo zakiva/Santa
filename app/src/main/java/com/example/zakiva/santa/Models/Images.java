@@ -39,6 +39,8 @@ public class Images {
     yourActivity - the activity that the imageView is in, The format is: [MainActivity.this]
     index - this helps the caching mechanism to search for the image. Each time you should call this method with a different index. The format is: ["1"]
     */
+    public static String STORAGE_DRAWINGS_FOLDER = "drawings";
+
     public static void updateImage(final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
         ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
         Bitmap bitmap = (Bitmap) Cache.getInstance().getLru().get(imageName);
@@ -205,11 +207,11 @@ public class Images {
     }
 
     // Use this method like this:
-    // Images.downloadImageToDisk("drawing1.jpg", getApplicationContext());
-    public static void downloadImageToDisk(final String imageName, final Context context) {
+    // Images.downloadImageToDisk("drawing1.jpg", "drawings", getApplicationContext());
+    public static void downloadImageToDisk(final String imageName, final String folder, final Context context) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(context.getString(R.string.firebase_storage));
-        storageRef.child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(folder).child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 try {
