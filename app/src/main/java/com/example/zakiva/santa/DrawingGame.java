@@ -78,6 +78,7 @@ public class DrawingGame extends AppCompatActivity {
     private static int replaceHelperPrice = 50;
     private static int flashHelperPrice = 150;
     private static int clueHelperPrice = 200;
+    private static int GRADE_TIMEOUT = 4000;
     private RelativeLayout flashBox;
     private RelativeLayout replaceBox;
     private RelativeLayout clueBox;
@@ -428,15 +429,22 @@ public class DrawingGame extends AppCompatActivity {
     }
     */
 
+    Date startTime; // avoid timeout
+
     public long calcScoreNew() {
 
         boolean DEBUG = false;
 
-        if (MainDrawingView.blackPixelsCounter > 500) {
+        startTime = getCurrentTime();
+
+        Log.d(MainActivity.TAG, " *&&&* MainDrawingView.blackPixelsCounmter = " + MainDrawingView.blackPixelsCounter);
+
+
+        if (MainDrawingView.blackPixelsCounter > 1500) {
             return 0; //there are too many black pixels in the user matrix - to avoid long calculation time
         }
 
-      //  BitmapFactory.Options options = new BitmapFactory.Options();
+      //  BitmapFactory.Options optio0ns = new BitmapFactory.Options();
        // options.inScaled = false;
         //Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), randomImage, options);
        // Bitmap bitmap = getBitmapFromDisk("drawing0.jpg", getApplicationContext());
@@ -478,7 +486,23 @@ public class DrawingGame extends AppCompatActivity {
         // Bitmap sourceBitmapFixedSize = Bitmap.createScaledBitmap(sourceBitmap, s, s, true);
 
 
-        int score = formula(compareSourceBitmapToUserMatrix(sourceScaledBitmap, userBytesMatrix));
+        HashMap<String, Integer> data = compareSourceBitmapToUserMatrix(sourceScaledBitmap, userBytesMatrix);
+
+        if (data.get("black") == -999) // Timeout !!!
+        {
+            Log.d(MainActivity.TAG, " *&&&* Exit on Timeout");
+            return 0;
+        }
+
+
+        int score = formula(data);
+
+        Date endTime = getCurrentTime();
+
+        long difference = (endTime.getTime() - startTime.getTime());
+
+        Log.d(MainActivity.TAG, " *&&&* differnece = " +  difference);
+
 
         return score;
     }
@@ -508,6 +532,7 @@ public class DrawingGame extends AppCompatActivity {
 
         Log.d(MainActivity.TAG, " ###########################printer from cpmareBitmaps: ############################");
 
+        HashMap<String, Integer> result = new HashMap<>();
 
         globalBlackSource = 0;
 
@@ -522,6 +547,13 @@ public class DrawingGame extends AppCompatActivity {
         //check metrics
 
         for (int i = 0; i < squared.getHeight(); i += MainDrawingView.JUMP) {
+
+            //avoid timeout
+            if (getCurrentTime().getTime() - startTime.getTime() > GRADE_TIMEOUT) {
+                result.put("black", -999);
+                return result;
+            }
+
             for (int j = 0; j < squared.getWidth(); j += MainDrawingView.JUMP) {
 
 
@@ -604,7 +636,6 @@ public class DrawingGame extends AppCompatActivity {
 
 
 
-        HashMap<String, Integer> result = new HashMap<>();
         result.put("bad", bad + outOfSquared);
         result.put("missed", missed);
         result.put("black", globalBlackSource);
