@@ -311,7 +311,8 @@ public class DrawingGame extends AppCompatActivity {
         Date endTime = getCurrentTime();
 
         long millisecondsDelta = (endTime.getTime() - startTime.getTime());
-        long timeForHandler = 2000 - millisecondsDelta >= 0 ? 2000 - millisecondsDelta : 0;
+        //long timeForHandler = 2000 - millisecondsDelta >= 0 ? 2000 - millisecondsDelta : 0; // I don't love it
+        long timeForHandler = 1500;
 
         intent.putExtra("game", "drawing");
         Handler handler = new Handler();
