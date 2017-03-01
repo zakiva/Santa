@@ -40,8 +40,10 @@ public class Images {
     index - this helps the caching mechanism to search for the image. Each time you should call this method with a different index. The format is: ["1"]
     */
     public static String STORAGE_DRAWINGS_FOLDER = "drawings";
+    public static String STORAGE_WINNERS_FOLDER = "winners";
+    public static String STORAGE_PRIZES_FOLDER = "prizes";
 
-    public static void updateImage(final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
+    public static void updateImage(final String folder, final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
         ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
         Bitmap bitmap = (Bitmap) Cache.getInstance().getLru().get(imageName);
         if (bitmap != null) {
@@ -58,7 +60,7 @@ public class Images {
                 Cache.getInstance().getLru().put(imageName, bm);
                 Log.d("Load from: ", "DISK");
             } else {
-                downloadAndUpdateImage(imageName, imageViewId, yourActivity, index);
+                downloadAndUpdateImage(folder, imageName, imageViewId, yourActivity, index);
                 Log.d("Load from: ", "WEB");
             }
         }
@@ -71,7 +73,7 @@ public class Images {
     yourActivity - the activity that the imageView is in, The format is: [MainActivity.this]
     index - this helps the caching mechanism to search for the image. Each time you should call this method with a different index. The format is: ["1"]
     */
-    public static void update2Images(final String imageName, final int imageViewId, final String imageName2, final int imageViewId2, final Activity yourActivity, final String index, final String index2) {
+    public static void update2Images(final String folder, final String imageName, final int imageViewId, final String imageName2, final int imageViewId2, final Activity yourActivity, final String index, final String index2) {
         ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
         Bitmap bitmap = (Bitmap) Cache.getInstance().getLru().get(imageName);
         ImageView image2 = (ImageView) yourActivity.findViewById(imageViewId2);
@@ -97,7 +99,7 @@ public class Images {
                 Cache.getInstance().getLru().put(imageName2, bm2);
                 Log.d("Load from: ", "DISK");
             } else {
-                downloadAndUpdate2Images(imageName, imageViewId, imageName2, imageViewId2, yourActivity, index, index2);
+                downloadAndUpdate2Images(folder, imageName, imageViewId, imageName2, imageViewId2, yourActivity, index, index2);
                 Log.d("Load from: ", "WEB");
             }
         }
@@ -107,7 +109,7 @@ public class Images {
     Another option to update image. Same args as "updateImage".
     This method do the same thing as "updateImage". Use both and check which one perform better and use it.
     */
-    public static void updateImageWithUrl(final String imageName, final int imageViewId, final Activity yourActivity, final String index){
+    public static void updateImageWithUrl(final String folder, final String imageName, final int imageViewId, final Activity yourActivity, final String index){
         SharedPreferences settings = yourActivity.getSharedPreferences("MY_DATA", 0);
         String url = settings.getString("IM2" + " " + index, "NONE");
         String name = settings.getString("IM2" + " name " + index, "NONE");
@@ -117,7 +119,7 @@ public class Images {
         } else {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
-            storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            storageRef.child(folder).child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     ImageView image = (ImageView) yourActivity.findViewById(imageViewId);
@@ -138,10 +140,10 @@ public class Images {
         }
     }
 
-    static void downloadAndUpdateImage(final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
+    static void downloadAndUpdateImage(final String folder, final String imageName, final int imageViewId, final Activity yourActivity, final String index) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
-        storageRef.child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(folder).child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -171,15 +173,15 @@ public class Images {
         editor.commit();
     }
 
-    static void downloadAndUpdate2Images(final String imageName, final int imageViewId, final String imageName2, final int imageViewId2, final Activity yourActivity, final String index, final String index2) {
+    static void downloadAndUpdate2Images(final String folder, final String imageName, final int imageViewId, final String imageName2, final int imageViewId2, final Activity yourActivity, final String index, final String index2) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
-        storageRef.child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child(folder).child(imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 final Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 final ImageView imageView = (ImageView) yourActivity.findViewById(imageViewId);
-                storageRef.child(imageName2).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                storageRef.child(folder).child(imageName2).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes2) {
                         Bitmap bm2 = BitmapFactory.decodeByteArray(bytes2, 0, bytes2.length);

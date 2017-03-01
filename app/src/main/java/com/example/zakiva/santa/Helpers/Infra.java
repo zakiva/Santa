@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zakiva.santa.Models.Competition;
 import com.example.zakiva.santa.Models.Game;
+import com.example.zakiva.santa.Models.Images;
 import com.example.zakiva.santa.Models.MainDrawingView;
 import com.example.zakiva.santa.Models.Token;
 import com.example.zakiva.santa.Models.TriviaQuestion;
@@ -336,7 +337,7 @@ public class Infra {
         final int minusKey = Integer.parseInt(key) * (-1);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
-        storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child(Images.STORAGE_WINNERS_FOLDER).child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Winner winner = new Winner(name, competition, details, imageName, uri.toString(), prize, minusKey);
@@ -421,7 +422,7 @@ public class Infra {
     public static void addPrize (final String prizeNumber, final String competitionNumber, final String timeCode, final String prizeName, final String category, final String imageName, final String worth, final String company, final String description, final Activity yourActivity) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
-        storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child(Images.STORAGE_PRIZES_FOLDER).child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //Winner winner = new Winner(name, competition, details, imageName, uri.toString(), prize, minusKey);
