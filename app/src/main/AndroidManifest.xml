@@ -96,7 +96,8 @@
             android:name=".SignUp"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".Models.FacebookSignUp" />
-        <activity android:name=".Models.GoogleSignUp"></activity>
+        <activity android:name=".Models.GoogleSignUp" />
+        <activity android:name=".WinnerForm"></activity>
     </application>
 
 </manifest>
