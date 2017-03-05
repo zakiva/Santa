@@ -299,7 +299,7 @@ public class DrawingGame extends AppCompatActivity {
 
         //  Drawable d = new BitmapDrawable(getResources(), coloredBitmap);
         // sourceImage.setImageDrawable(d);
-        // v.setBackground(d); 
+        // v.setBackground(d);
 
         Log.d(MainActivity.TAG, ">>>>>>>>>> =after draewbake before intent  ");
 

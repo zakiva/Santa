@@ -36,7 +36,7 @@ public class Trivia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia);
         dataHash = new HashMap<>();
-        getTriviaDataFromFirebase();
+        //getTriviaDataFromFirebase();
 
         question = ((TextView) findViewById(R.id.question));
         answerA = ((TextView) findViewById(R.id.answerA));

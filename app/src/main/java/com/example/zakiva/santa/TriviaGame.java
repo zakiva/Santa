@@ -27,7 +27,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
+
 public class TriviaGame extends AppCompatActivity {
+    // TODOs : mountains timeZones
+    public static String [] allSheetsNames = {"inventions","countries","israelBands","worldBands","singers", "worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors", "quotes","wifeHusband","worldLeaders","apps","cars"};
+    public static int currentSheetsOffset;
+    public static String [] currentSheetsNames;
+    public static String [] nextSheetsNames;
+    public static HashMap<Integer, String> sheetsMapping;
+    public static ArrayList<Integer> sheetsIndexs;
     private static TextView quest;
     private static TextView answer1;
     private static TextView answer2;
@@ -42,7 +51,7 @@ public class TriviaGame extends AppCompatActivity {
     private RelativeLayout skipQuestBox;
     private ImageView bonusRound;
     private ProgressBar freezeBar;
-    private static int NUMBER_OF_QUESTIONS;
+    public static int NUMBER_OF_QUESTIONS = 5; // must update here AND in initFields()
     private int timeForGreen;
     private int timeForRed;
     private int timeForNextQuestion;
@@ -71,22 +80,23 @@ public class TriviaGame extends AppCompatActivity {
         setContentView(R.layout.activity_trivia_game);
         initViews();
         initFields();
+        updateSheets();
         startGame();
     }
     public void initFields(){
         skipQuestPrice = 200;
         freezeGamePrice = 100;
         fiftyFiftyPrice = 150;
-        NUMBER_OF_QUESTIONS = 5;
         timeWhenStopped = 0;
-        timeForBonus = 5700;
+        NUMBER_OF_QUESTIONS = 5; // must update here AND above (static init)
+        timeForBonus = 4700;
         timeForAnswer = 2000;
         FREEZE_TIME = 5000;
         wrongCount = 0;
         index = 0;
         timeForNextQuestion = 3000;
-        timeForRed = 650;
-        timeForGreen = 1000;
+        timeForRed = 500;
+        timeForGreen = 500;
         timeForSkipQuestion = 1000;
         enableHelpers = new HashMap<>();
         disableHelpers = new HashMap<>();
@@ -114,6 +124,47 @@ public class TriviaGame extends AppCompatActivity {
         freezeBar = (ProgressBar) findViewById(R.id.freezeBar);
     }
 
+    public void updateSheets() {
+
+        Log.d(MainActivity.TAG, "updateSheets started");
+
+
+        Log.d(MainActivity.TAG, "data hash keys = " + dataHash.keySet().toString());
+        Log.d(MainActivity.TAG, "current sheets names = ");
+
+        for (int i = 0; i < currentSheetsNames.length; i++) {
+            Log.d(MainActivity.TAG, "sheet name = " + currentSheetsNames[i]);
+        }
+
+        questionsArray = getQuestArray(currentSheetsNames);
+
+        Log.d(MainActivity.TAG, "updateSheets after get questroins array ");
+
+
+        for (String sheet: nextSheetsNames) {
+            if (dataHash.get(sheet) == null)
+                return;
+        }
+
+        for (String sheet: currentSheetsNames) {
+            dataHash.remove(sheet);
+        }
+
+        // all next sheets exist in the data hash
+
+        for (int i = 0; i < currentSheetsNames.length; i++) {
+            currentSheetsNames[i] = nextSheetsNames[i];
+        }
+
+        for (int i = 0; i < NUMBER_OF_QUESTIONS + 1; i++) {
+            nextSheetsNames[i] = sheetsMapping.get(sheetsIndexs.get((i + currentSheetsOffset) % sheetsIndexs.size()));
+        }
+
+        getTriviaDataFromFirebase(nextSheetsNames);
+
+        currentSheetsOffset += (NUMBER_OF_QUESTIONS + 1);
+    }
+
     public void startGame(){
         activityBackground.getBackground().setAlpha(0);
         clock.setBase(SystemClock.elapsedRealtime());
@@ -123,7 +174,6 @@ public class TriviaGame extends AppCompatActivity {
         addFont();
         initDisableEnable(disableHelpers, false, false, false);
         initDisableEnable(enableHelpers, true, true, true);
-        questionsArray = getQuestArray();
         nextQuestion(0);
     }
 
@@ -208,8 +258,8 @@ public class TriviaGame extends AppCompatActivity {
         return score < 0 ? 0 : score;
     }
 
-    public static ArrayList<TriviaQuestion> getQuestArray() {
-        ArrayList<TriviaQuestion> a = GeneratorHelper.generateQuestionsArray(NUMBER_OF_QUESTIONS);
+    public static ArrayList<TriviaQuestion> getQuestArray(String [] sheetsNames) {
+        ArrayList<TriviaQuestion> a = GeneratorHelper.generateQuestionsArray(NUMBER_OF_QUESTIONS + 1, sheetsNames);
         Log.d(MainActivity.TAG, "getQuestArray:  a.size = "+a.size());
         return a;
     }

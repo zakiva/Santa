@@ -18,6 +18,7 @@ import com.example.zakiva.santa.Models.Token;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 
 import static com.example.zakiva.santa.Helpers.Drawing.printImagesNameOnDisk;
@@ -67,7 +68,7 @@ public class Loader extends AppCompatActivity {
         Log.d(TAG, " start loadrss  ");
 
         getGlobalFieldsFromFirebase();
-        getTriviaDataFromFirebase();
+        initTrivia();
         getWinnersFromFirebase(getApplicationContext());
        // Log.d(TAG, "on create loader before clean");
       //  printImagesNameOnDisk(getApplicationContext());
@@ -115,6 +116,35 @@ public class Loader extends AppCompatActivity {
         setStringPreferences("oldImage3", "drawing" + DrawingGame.defaultIndex, getApplicationContext());
     }
 
+    void initTrivia() {
+        TriviaGame.dataHash = new HashMap<>();
+        TriviaGame.sheetsMapping = new HashMap<>();
+        TriviaGame.sheetsIndexs = new ArrayList<>();
+        for (int i = 0; i < TriviaGame.allSheetsNames.length; i ++) {
+            TriviaGame.sheetsMapping.put(i, TriviaGame.allSheetsNames[i]);
+            TriviaGame.sheetsIndexs.add(i);
+        }
+        Collections.shuffle(TriviaGame.sheetsIndexs);
+        TriviaGame.currentSheetsNames = new String[TriviaGame.NUMBER_OF_QUESTIONS + 1];
+        TriviaGame.nextSheetsNames = new String[TriviaGame.NUMBER_OF_QUESTIONS + 1];
+        for (int i = 0; i < TriviaGame.NUMBER_OF_QUESTIONS + 1; i++) {
+            TriviaGame.currentSheetsNames[i] = TriviaGame.sheetsMapping.get(TriviaGame.sheetsIndexs.get(i));
+        }
+        int offset = TriviaGame.NUMBER_OF_QUESTIONS + 1;
+        for (int i = 0; i < TriviaGame.NUMBER_OF_QUESTIONS + 1; i++) {
+            TriviaGame.nextSheetsNames[i] = TriviaGame.sheetsMapping.get(TriviaGame.sheetsIndexs.get(i + offset));
+        }
+        getTriviaDataFromFirebase(TriviaGame.currentSheetsNames);
+        getTriviaDataFromFirebase(TriviaGame.nextSheetsNames);
+
+        TriviaGame.currentSheetsOffset = TriviaGame.NUMBER_OF_QUESTIONS * 2 + 2;
+
+        Log.d(TAG, " sheets name =  ");
+        for (int i = 0; i < TriviaGame.sheetsIndexs.size(); i ++) {
+            Log.d(TAG, TriviaGame.sheetsMapping.get(TriviaGame.sheetsIndexs.get(i)));
+        }
+    }
+
 /*    @Override
     protected void onPause() {
         super.onPause();
@@ -141,7 +171,7 @@ public class Loader extends AppCompatActivity {
 
     public void startApp  () {
         // 9 out of the 14 are images for drawing
-        if (counter == 14)
+        if (counter == 15)
             startActivity(new Intent(Loader.this, MainActivity.class));
     }
 }

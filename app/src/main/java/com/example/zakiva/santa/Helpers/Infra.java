@@ -46,7 +46,6 @@ public class Infra {
     public static DatabaseReference myDatabase;
     public static String userEmail;
     public static String timeCode;
-    public static String [] triviaSheets = {"inventions","countries","israelBands","worldBands","singers", "timeZones","worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors","mountains","quotes","wifeHusband","worldLeaders","apps","cars"};
     public static int HallOfFameListLimit = 40;
     public static int HallOfFamePreDownloadLimit = 20;
 
@@ -273,9 +272,8 @@ public class Infra {
         myRef.addValueEventListener(triviaQuestionListener);
     }
 
-    public static void getTriviaDataFromFirebase() {
+    public static void getTriviaDataFromFirebase(final String [] sheetsNames) {
         //must initialize data hash before puttint data inside
-        TriviaGame.dataHash = new HashMap<>();
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("triviaDataSheets");
         ValueEventListener triviaDataListener = new ValueEventListener() {
             @Override
@@ -288,9 +286,9 @@ public class Infra {
 
                 Map <String, Object> data = (Map) dataSnapshot.getValue();
 
-                for (String sheet : triviaSheets) {
-                    ArrayList<HashMap<String, Object>> lst = (ArrayList<HashMap<String, Object>>) data.get(sheet);
-                    TriviaGame.addSheetToDataHash(sheet, lst);
+                for (int i = 0; i < sheetsNames.length; i++) {
+                    ArrayList<HashMap<String, Object>> lst = (ArrayList<HashMap<String, Object>>) data.get(sheetsNames[i]);
+                    TriviaGame.addSheetToDataHash(sheetsNames[i], lst);
                 }
 
                 Loader.increase();

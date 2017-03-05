@@ -217,9 +217,10 @@ public class GeneratorHelper {
         return seq;
     }
 
-    public static ArrayList<TriviaQuestion> generateQuestionsArray(int number_of_questions) {
+    public static ArrayList<TriviaQuestion> generateQuestionsArray(int number_of_questions, String [] sheetsNames) {
         Log.d(MainActivity.TAG, "generateQuestionsArray");
 
+        /*
         int ARRAY_SIZE = number_of_questions * 2;
         //IMPORTANT: when adding new generators must update this number:
         int NUMBER_OF_GENERATORS = 19;
@@ -230,17 +231,20 @@ public class GeneratorHelper {
         for (int i=0; i<5; i++){
             Collections.shuffle(numbers);
         }
+        */
+
         ArrayList<TriviaQuestion> array = new ArrayList<>();
         Generator generator = new Generator();
-        int indexForRandom, randomNumber;
-        HashSet <Integer> indexes = new HashSet<>();
-        int safe = 0;
+        //int indexForRandom, randomNumber;
+        //HashSet <Integer> indexes = new HashSet<>();
+        //int safe = 0;
 
-        for (int i = 0; i < ARRAY_SIZE; i++) {
+        for (int i = 0; i < number_of_questions; i++) {
             Log.d(MainActivity.TAG, "AAA");
-            Log.d(MainActivity.TAG, "indexes size = " + indexes.size());
+            //Log.d(MainActivity.TAG, "indexes size = " + indexes.size());
 
 
+            /*
             do {
                 Log.d(MainActivity.TAG, "BBB");
                 randomNumber = new Random().nextInt(50);
@@ -251,39 +255,41 @@ public class GeneratorHelper {
             safe = 0;
 
             indexes.add(indexForRandom);
+            */
 
-            checkRandom(numbers.get(indexForRandom));
-            Log.d(MainActivity.TAG, "generateQuestionsArray:  i,  random number = " + i + "," + numbers.get((indexForRandom)));
+            //checkRandom(numbers.get(indexForRandom));
+            //Log.d(MainActivity.TAG, "generateQuestionsArray:  i,  random number = " + i + "," + numbers.get((indexForRandom)));
             //add new generators down here AND update NUMBER_OF_GENERATORS above.
-            switch (numbers.get((indexForRandom))) {
 
-                case 0:array.add(generator.groupGeneratorsIsraelBands());break;
-                case 1:array.add(generator.groupGeneratorsWorldBands());break;
-                case 2:array.add(generator.groupGeneratorsAuthors());break;
-                case 3:array.add(generator.groupGeneratorsBrands());break;
-                case 4:array.add(generator.groupGeneratorsChampionships());break;
-                case 5:array.add(generator.groupGeneratorsInventions());break;
-                case 6:array.add(generator.groupGeneratorsIsraelEvents());break;
-                case 7:array.add(generator.groupGeneratorsSingers());break;
-                case 8:array.add(generator.groupGeneratorsCountries());break;
-                case 9:array.add(generator.groupGeneratorsLatitudes());break;
-                case 10:array.add(generator.groupGeneratorsWorldCups());break;
-                case 11:array.add(generator.groupGeneratorsWifeToHusband());break;
-                case 12:array.add(generator.groupGeneratorsActors());break;
-                case 13:array.add(generator.sonToFather());break;
-                case 14:array.add(generator.quoteToPerson());break;
-                case 15:array.add(generator.leaderToYears());break;
-                case 16:array.add(generator.yearsToLeader());break;
-                case 17:array.add(generator.groupGeneratorsApps());break;
-                case 18:array.add(generator.carToCountry());break;
+            //NEED TO ADD: "timeZones", "mountains" ?
 
 
-
+            switch (sheetsNames[i]) {
+                case "israelBands" : array.add(generator.groupGeneratorsIsraelBands());break;
+                case "worldBands" : array.add(generator.groupGeneratorsWorldBands());break;
+                case "authors" : array.add(generator.groupGeneratorsAuthors());break;
+                case "brands" : array.add(generator.groupGeneratorsBrands());break;
+                case "championships" : array.add(generator.groupGeneratorsChampionships());break;
+                case "inventions" : array.add(generator.groupGeneratorsInventions());break;
+                case "israelEvents" : array.add(generator.groupGeneratorsIsraelEvents());break;
+                case "singers" : array.add(generator.groupGeneratorsSingers());break;
+                case "countries" : array.add(generator.groupGeneratorsCountries());break;
+                case "latitudes" : array.add(generator.groupGeneratorsLatitudes());break;
+                case "worldCups" : array.add(generator.groupGeneratorsWorldCups());break;
+                case "wifeHusband" : array.add(generator.groupGeneratorsWifeToHusband());break;
+                case "femaleActors" : array.add(generator.groupGeneratorsFemaleActors());break;
+                case "maleActors" : array.add(generator.groupGeneratorsMaleActors());break;
+                case "bibleFathers" : array.add(generator.sonToFather());break;
+                case "quotes" : array.add(generator.quoteToPerson());break;
+                case "worldLeaders" : array.add(generator.leaderToYears());break;
+                case "leadersYears" : array.add(generator.yearsToLeader());break;
+                case "apps" : array.add(generator.groupGeneratorsApps());break;
+                case "cars" : array.add(generator.carToCountry());break;
             }
         }
         Log.d(MainActivity.TAG, "generateQuestionsArray:  array.size = " + array.size());
         runIndex++;
-        printRandomCheck(); // for debugging the random
+        //printRandomCheck(); // for debugging the random
         return array;
     }
 

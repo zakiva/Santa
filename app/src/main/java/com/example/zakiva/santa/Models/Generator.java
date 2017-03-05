@@ -188,14 +188,20 @@ public class Generator {
             case 1:tq = mostSouth();break;
         }return tq;
     }
-    public TriviaQuestion groupGeneratorsActors() {
+    public TriviaQuestion groupGeneratorsMaleActors() {
         TriviaQuestion tq = null;
-        int random = new Random().nextInt(4);
+        int random = new Random().nextInt(2);
         switch (random) {
             case 0:tq = maleActorToCharacter();break;
             case 1:tq = characterToMaleActor();break;
-            case 2:tq = femaleActorToCharacter();break;
-            case 3:tq = characterToFemaleActor();break;
+        }return tq;
+    }
+    public TriviaQuestion groupGeneratorsFemaleActors() {
+        TriviaQuestion tq = null;
+        int random = new Random().nextInt(2);
+        switch (random) {
+            case 0:tq = femaleActorToCharacter();break;
+            case 1:tq = characterToFemaleActor();break;
         }return tq;
     }
     public TriviaQuestion groupGeneratorsApps() {
