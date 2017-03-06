@@ -1,6 +1,7 @@
 package com.example.zakiva.santa;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -18,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zakiva.santa.Helpers.Infra;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 public class Prize extends AppCompatActivity {
 
@@ -220,5 +223,130 @@ public class Prize extends AppCompatActivity {
 
     public void hallOfFameClicked(View view) {
         startActivity(new Intent(Prize.this, HallOfFame.class));
+    }
+
+    public static void updatePrizeInfoFields(Map<String,Map<String, String>> bothPrizes, Context context){
+
+        Prize.prizeACategory = bothPrizes.get("a").get("category");
+        Prize.prizeACompany = bothPrizes.get("a").get("company");
+        Prize.prizeACompetitionNumber = bothPrizes.get("a").get("competitionNumber");
+        Prize.prizeADescription = bothPrizes.get("a").get("description");
+        Prize.prizeAImageUrl = bothPrizes.get("a").get("imageUrl");
+        Prize.prizeAName = bothPrizes.get("a").get("prizeName");
+        Prize.prizeANumber = bothPrizes.get("a").get("prizeNumber");
+        Prize.prizeAWorth = bothPrizes.get("a").get("worth");
+
+        Prize.prizeBCategory = bothPrizes.get("b").get("category");
+        Prize.prizeBCompany = bothPrizes.get("b").get("company");
+        Prize.prizeBCompetitionNumber = bothPrizes.get("b").get("competitionNumber");
+        Prize.prizeBDescription = bothPrizes.get("b").get("description");
+        Prize.prizeBImageUrl = bothPrizes.get("b").get("imageUrl");
+        Prize.prizeBName = bothPrizes.get("b").get("prizeName");
+        Prize.prizeBNumber = bothPrizes.get("b").get("prizeNumber");
+        Prize.prizeBWorth = bothPrizes.get("b").get("worth");
+
+        Picasso.with(context).load(Prize.prizeAImageUrl).fetch();
+        Picasso.with(context).load(Prize.prizeBImageUrl).fetch();
+    }
+
+    public static void updatePrizeIcons(){
+
+        switch (Prize.prizeACategory) {
+            case "Culinary":
+                Prize.drawableAEnabled = R.drawable.culinary_enable;
+                Prize.drawableADisabled = R.drawable.culinary_disable;
+                break;
+            case "Lifestyle":
+                Prize.drawableAEnabled = R.drawable.lifrstyle_enable;
+                Prize.drawableADisabled = R.drawable.lifrstyle_disable;
+                break;
+            case "Fashion":
+                Prize.drawableAEnabled = R.drawable.fashion_enable;
+                Prize.drawableADisabled = R.drawable.fashion_disable;
+                break;
+            case "Gadgets":
+                Prize.drawableAEnabled = R.drawable.gadget_enable;
+                Prize.drawableADisabled = R.drawable.gadget_disable;
+                break;
+            case "Beauty Products":
+                Prize.drawableAEnabled = R.drawable.beauty_enable;
+                Prize.drawableADisabled = R.drawable.beauty_disable;
+                break;
+            case "Cash":
+                Prize.drawableAEnabled = R.drawable.cash_enable;
+                Prize.drawableADisabled = R.drawable.cash_disable;
+                break;
+            case "Baby Products":
+                Prize.drawableAEnabled = R.drawable.babies_enable;
+                Prize.drawableADisabled = R.drawable.babies_disable;
+                break;
+            case "Sport":
+                Prize.drawableAEnabled = R.drawable.sport_enable;
+                Prize.drawableADisabled = R.drawable.sport_disable;
+                break;
+            case "Tourism":
+                Prize.drawableAEnabled = R.drawable.travel_enable;
+                Prize.drawableADisabled = R.drawable.travel_disable;
+                break;
+            case "Pet Products":
+                Prize.drawableAEnabled = R.drawable.animal_enable;
+                Prize.drawableADisabled = R.drawable.animal_disable;
+                break;
+            case "Shopping":
+                Prize.drawableAEnabled = R.drawable.shopping_enable;
+                Prize.drawableADisabled = R.drawable.shopping_disable;
+                break;
+            default:
+                break;
+        }
+
+        switch (Prize.prizeBCategory) {
+            case "Culinary":
+                Prize.drawableBEnabled = R.drawable.culinary_enable;
+                Prize.drawableBDisabled = R.drawable.culinary_disable;
+                break;
+            case "Lifestyle":
+                Prize.drawableBEnabled = R.drawable.lifrstyle_enable;
+                Prize.drawableBDisabled = R.drawable.lifrstyle_disable;
+                break;
+            case "Fashion":
+                Prize.drawableBEnabled = R.drawable.fashion_enable;
+                Prize.drawableBDisabled = R.drawable.fashion_disable;
+                break;
+            case "Gadgets":
+                Prize.drawableBEnabled = R.drawable.gadget_enable;
+                Prize.drawableBDisabled = R.drawable.gadget_disable;
+                break;
+            case "Beauty Products":
+                Prize.drawableBEnabled = R.drawable.beauty_enable;
+                Prize.drawableBDisabled = R.drawable.beauty_disable;
+                break;
+            case "Cash":
+                Prize.drawableBEnabled = R.drawable.cash_enable;
+                Prize.drawableBDisabled = R.drawable.cash_disable;
+                break;
+            case "Baby Products":
+                Prize.drawableBEnabled = R.drawable.babies_enable;
+                Prize.drawableBDisabled = R.drawable.babies_disable;
+                break;
+            case "Sport":
+                Prize.drawableBEnabled = R.drawable.sport_enable;
+                Prize.drawableBDisabled = R.drawable.sport_disable;
+                break;
+            case "Tourism":
+                Prize.drawableBEnabled = R.drawable.travel_enable;
+                Prize.drawableBDisabled = R.drawable.travel_disable;
+                break;
+            case "Pet Products":
+                Prize.drawableBEnabled = R.drawable.animal_enable;
+                Prize.drawableBDisabled = R.drawable.animal_disable;
+                break;
+            case "Shopping":
+                Prize.drawableBEnabled = R.drawable.shopping_enable;
+                Prize.drawableBDisabled = R.drawable.shopping_disable;
+                break;
+            default:
+                break;
+        }
     }
 }
