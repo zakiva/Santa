@@ -228,23 +228,47 @@ public class Infra {
     }
 
     //get a timestamp code from the database
-    public static void getGlobalFieldsFromFirebase () {
+    public static void getGlobalFieldsFromFirebase (final Context context) {
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("globalFields");
         ValueEventListener timeCodeListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-
                 HashMap<String,Object> fields = (HashMap<String, Object>) dataSnapshot.getValue();
-                MainActivity.setTimeCode((String) fields.get("timeCode"));
 
-                Log.d(TAG, "## We got the timecode: " + fields.get("timeCode"));
+                String fullTimeCode = (String) fields.get("timeCode");
 
-                Log.d(TAG, "<< >> MainActivity.getTime =  " + MainActivity.getTimeCode());
+                String timeCodeFirstPart = fullTimeCode.split("_")[0];
+                String timeCodeSecondPart = fullTimeCode.split("_")[1];
+
+                // Setting the timecode
+                MainActivity.setTimeCode(timeCodeFirstPart);
+
+                //Log.d(TAG, "## We got the timecode: " + fields.get("timeCodeNew"));
+                //Log.d(TAG, "<< >> MainActivity.getTime =  " + MainActivity.getTimeCode());
 
                 DrawingGame.NUMBER_OF_DRAWINGS = (int) (long) ((Long) fields.get("drawingsNumber"));
+
+                DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("prizes").child(timeCodeSecondPart);
+                myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        Map<String,Map<String, String>> bothPrizes = new HashMap<String,Map<String, String>>();
+                        bothPrizes = (Map<String,Map<String, String>>) snapshot.getValue();
+                        Prize.updatePrizeInfoFields(bothPrizes, context);
+                        Prize.updatePrizeIcons();
+                        Prize.updatePrizesNames();
+                        Prize.colorPrizes();
+                        Loader.increase();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("FB error (prizes): ", databaseError.getMessage());
+                    }
+                });
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -393,4 +417,36 @@ public class Infra {
         }
         return s;
     }
+
+    public static void addPrize (final String prizeNumber, final String competitionNumber, final String timeCode, final String prizeName, final String category, final String imageName, final String worth, final String company, final String description, final Activity yourActivity) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(yourActivity.getString(R.string.firebase_storage));
+        storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //Winner winner = new Winner(name, competition, details, imageName, uri.toString(), prize, minusKey);
+                Map<String,String> prize = new HashMap<String, String>();
+                prize.put("prizeNumber", prizeNumber);
+                prize.put("competitionNumber", competitionNumber);
+                prize.put("timeCode", timeCode);
+                prize.put("prizeName", prizeName);
+                prize.put("category", category);
+                prize.put("worth", worth);
+                prize.put("company", company);
+                prize.put("description", description);
+                prize.put("imageUrl", uri.toString());
+                String aORb = "b";
+                if ((Integer.parseInt(prizeNumber) % 2) == 1)
+                    aORb = "a";
+                myDatabase.child("prizes").child(competitionNumber).child(aORb).setValue(prize);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+    }
+
+
 }
