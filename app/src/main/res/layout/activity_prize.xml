@@ -130,24 +130,24 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tag="b"
+            android:tag="a"
             android:layout_marginTop="15dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/culinary_disable"
             android:onClick="prizeClicked"
-            android:id="@+id/prizeBIcon"/>
+            android:id="@+id/prizeAIcon"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tag="b"
+            android:tag="a"
             android:gravity="center"
             android:text="Moses meal"
             android:layout_marginTop="58dp"
             android:layout_centerHorizontal="true"
             android:textColor="#aaaaaa"
             android:onClick="prizeClicked"
-            android:id="@+id/prizeBLabel"/>
+            android:id="@+id/prizeALabel"/>
     </RelativeLayout>
 
     <TextView
@@ -175,24 +175,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tag="a"
+            android:tag="b"
             android:text="Xbox One"
             android:gravity="center"
             android:layout_marginTop="58dp"
             android:textColor="#aaaaaa"
             android:layout_centerHorizontal="true"
             android:onClick="prizeClicked"
-            android:id="@+id/prizeALabel"/>
+            android:id="@+id/prizeBLabel"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="a"
+        android:tag="b"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/gadget_disable"
         android:onClick="prizeClicked"
-        android:id="@+id/prizeAIcon"/>
+        android:id="@+id/prizeBIcon"/>
 
 
     </RelativeLayout>
@@ -214,7 +214,7 @@
         android:textColor="#ffffff"
         android:id="@+id/windisPrizeButton"
         android:onClick="windisPrizeClicked"
-        android:layout_below="@id/prizeA"
+        android:layout_below="@id/prizeB"
         android:layout_centerHorizontal="true"/>
 
     <RelativeLayout
