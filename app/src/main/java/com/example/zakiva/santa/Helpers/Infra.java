@@ -237,7 +237,7 @@ public class Infra {
 
                 HashMap<String,Object> fields = (HashMap<String, Object>) dataSnapshot.getValue();
 
-                String fullTimeCode = (String) fields.get("timeCodeNew");
+                String fullTimeCode = (String) fields.get("timeCode");
 
                 String timeCodeFirstPart = fullTimeCode.split("_")[0];
                 String timeCodeSecondPart = fullTimeCode.split("_")[1];
