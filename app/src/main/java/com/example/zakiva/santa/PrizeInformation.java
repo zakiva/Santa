@@ -58,7 +58,6 @@ public class PrizeInformation extends AppCompatActivity {
 
         Picasso.with(this).load(Prize.prizeAImageUrl).into(imageViewA);
         Picasso.with(this).load(Prize.prizeBImageUrl).into(imageViewB);
-
     }
 
     public void createTabs(){
