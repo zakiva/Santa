@@ -96,4 +96,7 @@ public class MainActivity extends AppCompatActivity {
     public void popUpSignUp(View view){
         startActivity(new Intent(MainActivity.this, PopUp.class));
     }
+    public void winnerFormClicked(View view){
+        startActivity(new Intent(MainActivity.this, WinnerForm.class));
+    }
 }
