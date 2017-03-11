@@ -32,6 +32,7 @@ import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
 public class TriviaGame extends AppCompatActivity {
     // TODOs : mountains timeZones
     public static String [] allSheetsNames = {"inventions","countries","israelBands","worldBands","singers", "worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors", "quotes","wifeHusband","worldLeaders","apps","cars"};
+    public static String [] allEnglishSheetsNames = {"inventionsEnglish","worldBandsEnglish","worldCupsEnglish","latitudesEnglish","brandsEnglish","actorsEnglish","leadersYearsEnglish", "quotesEnglish","wifeHusbandEnglish","worldLeadersEnglish","appsEnglish","carsEnglish"};
     public static int currentSheetsOffset;
     public static String [] currentSheetsNames;
     public static String [] nextSheetsNames;
