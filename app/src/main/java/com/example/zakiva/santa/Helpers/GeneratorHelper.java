@@ -3,6 +3,7 @@ package com.example.zakiva.santa.Helpers;
 import android.util.Log;
 
 import com.example.zakiva.santa.MainActivity;
+import com.example.zakiva.santa.Models.EnglishGenerator;
 import com.example.zakiva.santa.Models.Generator;
 import com.example.zakiva.santa.Models.TriviaQuestion;
 
@@ -292,8 +293,34 @@ public class GeneratorHelper {
         //printRandomCheck(); // for debugging the random
         return array;
     }
+    public static ArrayList<TriviaQuestion> generateEnglishQuestionsArray(int number_of_questions, String [] sheetsNames) {
+        Log.d(MainActivity.TAG, "generateEnglishQuestionsArray");
 
+        ArrayList<TriviaQuestion> array = new ArrayList<>();
+        EnglishGenerator generator = new EnglishGenerator();
 
+        for (int i = 0; i < number_of_questions; i++) {
+            Log.d(MainActivity.TAG, "AAA");
+            switch (sheetsNames[i]) {
+                case "worldBandsEnglish" : array.add(generator.groupGeneratorsWorldBands());break;
+                case "brandsEnglish" : array.add(generator.groupGeneratorsBrands());break;
+                case "inventionsEnglish" : array.add(generator.groupGeneratorsInventions());break;
+                case "latitudesEnglish" : array.add(generator.groupGeneratorsLatitudes());break;
+                case "worldCupsEnglish" : array.add(generator.groupGeneratorsWorldCups());break;
+                case "wifeHusbandEnglish" : array.add(generator.groupGeneratorsWifeToHusband());break;
+                case "actorsEnglish" : array.add(generator.groupGeneratorsActors());break;
+                case "quotesEnglish" : array.add(generator.quoteToPerson());break;
+                case "worldLeadersEnglish" : array.add(generator.leaderToYears());break;
+                case "leadersYearsEnglish" : array.add(generator.yearsToLeader());break;
+                case "appsEnglish" : array.add(generator.groupGeneratorsApps());break;
+                case "carsEnglish" : array.add(generator.carToCountry());break;
+            }
+        }
+        Log.d(MainActivity.TAG, "generateEnglishQuestionsArray:  array.size = " + array.size());
+        runIndex++;
+        //printRandomCheck(); // for debugging the random
+        return array;
+    }
 
     // ########## random checker - start ##############
 
