@@ -119,7 +119,7 @@ public class Loader extends AppCompatActivity {
     }
 
     void initTrivia() {
-        TriviaGame.language = "Hebrew";
+        TriviaGame.language = "English";
         String [] allSheetsNames;
 
         if (TriviaGame.language.equals("Hebrew")) {
