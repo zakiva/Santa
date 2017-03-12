@@ -119,11 +119,21 @@ public class Loader extends AppCompatActivity {
     }
 
     void initTrivia() {
+        TriviaGame.language = "Hebrew";
+        String [] allSheetsNames;
+
+        if (TriviaGame.language.equals("Hebrew")) {
+            allSheetsNames = TriviaGame.hebrewSheetsNames;
+        }
+        else {
+            allSheetsNames = TriviaGame.englishSheetsNames;
+        }
+
         TriviaGame.dataHash = new HashMap<>();
         TriviaGame.sheetsMapping = new HashMap<>();
         TriviaGame.sheetsIndexs = new ArrayList<>();
-        for (int i = 0; i < TriviaGame.allSheetsNames.length; i ++) {
-            TriviaGame.sheetsMapping.put(i, TriviaGame.allSheetsNames[i]);
+        for (int i = 0; i < allSheetsNames.length; i ++) {
+            TriviaGame.sheetsMapping.put(i, allSheetsNames[i]);
             TriviaGame.sheetsIndexs.add(i);
         }
         Collections.shuffle(TriviaGame.sheetsIndexs);

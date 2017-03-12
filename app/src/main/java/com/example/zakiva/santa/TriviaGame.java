@@ -31,8 +31,8 @@ import static com.example.zakiva.santa.Helpers.Infra.getTriviaDataFromFirebase;
 
 public class TriviaGame extends AppCompatActivity {
     // TODOs : mountains timeZones
-    public static String [] allSheetsNames = {"inventions","countries","israelBands","worldBands","singers", "worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors", "quotes","wifeHusband","worldLeaders","apps","cars"};
-    public static String [] allEnglishSheetsNames = {"inventionsEnglish","worldBandsEnglish","worldCupsEnglish","latitudesEnglish","brandsEnglish","actorsEnglish","leadersYearsEnglish", "quotesEnglish","wifeHusbandEnglish","worldLeadersEnglish","appsEnglish","carsEnglish"};
+    public static String [] englishSheetsNames = {"inventionsEnglish","worldBandsEnglish","worldCupsEnglish","latitudesEnglish","brandsEnglish","actorsEnglish","leadersYearsEnglish", "quotesEnglish","wifeHusbandEnglish","worldLeadersEnglish","appsEnglish","carsEnglish"};
+    public static String [] hebrewSheetsNames = {"inventions","countries","israelBands","worldBands","singers", "worldCups","championships","latitudes","authors","israelEvents","bibleFathers","brands","femaleActors","leadersYears","maleActors", "quotes","wifeHusband","worldLeaders","apps","cars"};
     public static int currentSheetsOffset;
     public static String [] currentSheetsNames;
     public static String [] nextSheetsNames;
@@ -74,6 +74,7 @@ public class TriviaGame extends AppCompatActivity {
     private TextView candiesTextView;
     public static HashMap<String, ArrayList<HashMap<String,Object>>> dataHash;
     private static HashMap<String,Boolean> enableHelpers,disableHelpers;
+    public static String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,7 +261,13 @@ public class TriviaGame extends AppCompatActivity {
     }
 
     public static ArrayList<TriviaQuestion> getQuestArray(String [] sheetsNames) {
-        ArrayList<TriviaQuestion> a = GeneratorHelper.generateQuestionsArray(NUMBER_OF_QUESTIONS + 1, sheetsNames);
+        ArrayList<TriviaQuestion> a;
+        if (language.equals("Hebrew")) {
+            a = GeneratorHelper.generateQuestionsArray(NUMBER_OF_QUESTIONS + 1, sheetsNames);
+        }
+        else {
+            a = GeneratorHelper.generateEnglishQuestionsArray(NUMBER_OF_QUESTIONS + 1, sheetsNames);
+        }
         Log.d(MainActivity.TAG, "getQuestArray:  a.size = "+a.size());
         return a;
     }
