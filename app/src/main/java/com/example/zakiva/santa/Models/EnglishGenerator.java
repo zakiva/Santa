@@ -87,22 +87,22 @@ public class EnglishGenerator {
     }
     public TriviaQuestion quoteToPerson() {
         String[] q = {"quote"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("quotesEnglish"), "Who said #0#?", q, "name");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("quotesEnglish"), "Who said \"#0#\"?", q, "name");
     }
 
     public TriviaQuestion carToCountry() {
         String[] q = {"car"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("carsEnglish"), "Where is #0# manufactured?", q, "country");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("carsEnglish"), "Where are the #0# cars made?", q, "country");
     }
 
     public TriviaQuestion leaderToYears() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldLeadersEnglish"), "In what years did #0# live?", q, "years");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldLeadersEnglish"), "During what years did #0# live?", q, "years");
     }
 
     public TriviaQuestion yearsToLeader() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("leadersYearsEnglish"), "In what years was #0#?", q, "years");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("leadersYearsEnglish"), "During what years was #0#?", q, "years");
     }
 
     public TriviaQuestion actorToCharacter() {
@@ -117,12 +117,12 @@ public class EnglishGenerator {
 
     public TriviaQuestion wifeToHusband() {
         String[] q = {"husband"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("wifeHusbandEnglish"), "#0# is married to?", q, "wife");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("wifeHusbandEnglish"), "#0# is married to:", q, "wife");
     }
 
     public TriviaQuestion husbandToWife() {
         String[] q = {"wife"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("wifeHusbandEnglish"), "#0# is married to?", q, "husband");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("wifeHusbandEnglish"), "#0# is married to:", q, "husband");
     }
 
     public TriviaQuestion inventionToYear() {
@@ -163,11 +163,11 @@ public class EnglishGenerator {
     }
     public TriviaQuestion hostToYear() {
         String[] q = { "year"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country hosted the world cup in #0#",q, "host");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country hosted the world cup in #0#?",q, "host");
     }
     public TriviaQuestion winnerToYear() {
         String[] q = { "year"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country won the world cup in #0#",q, "winner");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country won the World Cup in #0#?",q, "winner");
     }
     public TriviaQuestion appToYear() {
         String[] q = {"name"};
@@ -180,10 +180,10 @@ public class EnglishGenerator {
         return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("appsEnglish"), "Which of the following apps was launched later?", "name","year",true);
     }
     public TriviaQuestion mostNorth() {
-        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("latitudesEnglish"), "Which city is located further north?","city","latitude",true);
+        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("latitudesEnglish"), "Which city is located further North?","city","latitude",true);
     }
     public TriviaQuestion mostSouth() {
-        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("latitudesEnglish"), "Which city is located further south?","city", "latitude",false);
+        return GeneratorHelper.maxGenerateQuestionWithData(TriviaGame.dataHash.get("latitudesEnglish"), "Which city is located further South?","city", "latitude",false);
     }
     public TriviaQuestion worldBandToAlbum() {
         String[] q = {"name"};
