@@ -155,7 +155,7 @@ public class Prize extends AppCompatActivity {
     public void windisPrizeClicked(View view) {
 
         if (prizeChosen.equals("NONE")) {
-            Toast toast = Toast.makeText(this, "First choose a prize mateee!!!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Please choose a prize first", Toast.LENGTH_SHORT);
             TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
             v.setTextColor(Color.WHITE);
             toast.show();

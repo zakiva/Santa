@@ -81,7 +81,7 @@ public class Games extends AppCompatActivity {
         Intent intent = new Intent(Games.this, Score.class);
         String tag = view.getTag().toString();
         if (tag.equals("")) { // for coming soon games
-            Toast toast = Toast.makeText(this, "We can't wait to play it too!!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "We can't wait to play it either!", Toast.LENGTH_SHORT);
             TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
             v.setTextColor(Color.WHITE);
             toast.show();
