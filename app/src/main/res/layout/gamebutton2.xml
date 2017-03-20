@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/gameName"
-                android:text="Nerds’ Revenge -"
+                android:text="Nerds’ Revenge"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="20dp"
                 android:layout_centerHorizontal="true"

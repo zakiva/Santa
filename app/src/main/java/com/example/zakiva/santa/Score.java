@@ -105,7 +105,7 @@ public class Score extends AppCompatActivity {
             messageBox.setLayoutParams(p);
 
             //set text of CTA to retry
-            playButton.setText("Retry! (100 candis)");
+            playButton.setText("Retry! (100 candies)");
 
             //show share score
             shareScore.setVisibility(View.VISIBLE);

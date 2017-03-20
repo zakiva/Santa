@@ -117,9 +117,7 @@
             android:id="@+id/messageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You made it to the TOP 100!
-Winners will be announced soon,
-Stay tuned to see if you won!"
+            android:text="You made it to the TOP 100! Winners will be announced soon, Stay tuned!"
             android:layout_marginTop="13dp"
             android:gravity="center"
             android:layout_marginBottom="13dp"
@@ -213,7 +211,7 @@ Stay tuned to see if you won!"
     </RelativeLayout>
 
     <TextView
-        android:text="Play! (100 candis)"
+        android:text="Play! (100 candies)"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center"
