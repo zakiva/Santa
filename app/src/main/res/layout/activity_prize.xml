@@ -93,7 +93,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="prize section"
+        android:text="Choose your prize"
         android:layout_below="@+id/mainIconPrizeSection"
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
@@ -105,9 +105,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="choose a prize below"
+        android:text="The best things in life are free"
         android:layout_below="@+id/mainTitle"
         android:layout_centerHorizontal="true"
+        android:textAlignment="center"
         android:textAllCaps="false"
         android:layout_marginTop="8dp"
         android:textColor="@android:color/black"
@@ -230,8 +231,9 @@
         android:paddingTop="12dp">
 
         <TextView
-            android:text="see prize information"
+            android:text="See information about today’s prizes"
             android:textSize="15dp"
+            android:textAlignment="center"
             android:textColor="#9254ff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -242,7 +244,7 @@
 
 
     <TextView
-        android:text="To End Of Competition"
+        android:text="To end of competition"
         android:textSize="15dp"
         android:textColor="#303030"
         android:layout_width="wrap_content"

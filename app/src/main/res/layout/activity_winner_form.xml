@@ -131,7 +131,7 @@
                             android:layout_width="180dp"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="Please fill the form in order to get your prize"
+                            android:text="Please fill in all required fields in order to receive the prize"
                             android:textAlignment="center"
                             android:textColor="#303030"
                             android:textSize="15sp" />
