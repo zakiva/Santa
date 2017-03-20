@@ -147,6 +147,11 @@ public class Infra {
         myDatabase.child("users").child(userEmail).child("attributes").child("exp").setValue(exp);
     }
 
+    public static void addTimestampToUser () {
+        long currentTimeMillis = System.currentTimeMillis();
+        myDatabase.child("users").child(userEmail).child("attributes").child("timestamp").setValue(currentTimeMillis);
+    }
+
     //init exp - per user NOT per competition
     //set/retrieve data from firebase and set the global vars.
     public static void getUserAttributesFromFirebase () {
@@ -164,6 +169,7 @@ public class Infra {
 
                 // need this for the first time only (?)
                 if (dataSnapshot.getValue() == null) {
+                    addTimestampToUser();
                     Log.d(TAG, " getUserAttributesFromFirebase  value  == null ");
                     addExpToUser(0);
                     return;
