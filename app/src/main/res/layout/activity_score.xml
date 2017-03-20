@@ -117,7 +117,9 @@
             android:id="@+id/messageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You are in the top 100 wowhoh motherfuckerr!! congraitonsmannn"
+            android:text="You made it to the TOP 100!
+Winners will be announced soon,
+Stay tuned to see if you won!"
             android:layout_marginTop="13dp"
             android:gravity="center"
             android:layout_marginBottom="13dp"
@@ -237,7 +239,7 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/playButton"
-        android:text="Invite friends and watch videos to get more candis!"
+        android:text="Watch videos &amp; invite friends to earn more candies!"
         android:textSize="15dp"
         android:textColor="#303030"
         android:layout_marginTop="30dp"/>

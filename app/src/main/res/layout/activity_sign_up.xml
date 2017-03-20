@@ -35,7 +35,7 @@
         android:layout_below="@+id/textView2"
         android:layout_alignLeft="@id/textView2"
         android:layout_marginTop="7dp"
-        android:text="In order to continue please sign up"
+        android:text="In order to keep playing &amp; winning you need to signup via one of the following platforms:"
         android:textSize="14sp"
         android:textColor="#303030"/>
 
