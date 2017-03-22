@@ -107,7 +107,7 @@ public class EnglishGenerator {
 
     public TriviaQuestion actorToCharacter() {
         String[] q = {"actor", "name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("actorsEnglish"), "What character was played by #0# in #1#?", q, "character");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("actorsEnglish"), "Which character was played by #0# in #1#?", q, "character");
     }
 
     public TriviaQuestion characterToActor() {
@@ -131,7 +131,7 @@ public class EnglishGenerator {
     }
     public TriviaQuestion inventionToInventor() {
         String[] q = {"name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventionsEnglish"), "Who invented the #0#?", q, "inventor");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("inventionsEnglish"), "Who invented #0#?", q, "inventor");
     }
     public TriviaQuestion inventionToCountry() {
         String[] q = {"name"};
@@ -151,7 +151,7 @@ public class EnglishGenerator {
     }
     public TriviaQuestion brandToYear() {
         String[] q = {"brand"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brandsEnglish"), "In what year was the brand #0# founded?",q, "year");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brandsEnglish"), "In what year was #0# founded?",q, "year");
     }
     public TriviaQuestion brandToFounder() {
         String[] q = {"brand"};
@@ -159,7 +159,7 @@ public class EnglishGenerator {
     }
     public TriviaQuestion brandToCountry() {
         String[] q = { "brand"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brandsEnglish"), "In which country was the brand #0# founded?",q, "country");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("brandsEnglish"), "In which country was #0# founded?",q, "country");
     }
     public TriviaQuestion hostToYear() {
         String[] q = { "year"};
