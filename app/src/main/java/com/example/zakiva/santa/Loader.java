@@ -184,6 +184,6 @@ public class Loader extends AppCompatActivity {
     public void startApp  () {
         // 9 out of the 14 are images for drawing
         if (counter == 16)
-            startActivity(new Intent(Loader.this, MainActivity.class));
+            startActivity(new Intent(Loader.this, Prize.class));
     }
 }
