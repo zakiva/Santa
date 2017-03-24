@@ -112,7 +112,7 @@ public class EnglishGenerator {
 
     public TriviaQuestion characterToActor() {
         String[] q = {"character", "name"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("actorsEnglish"), "#0# in #1# was played by?", q, "actor");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("actorsEnglish"), "#0# in #1# was played by:", q, "actor");
     }
 
     public TriviaQuestion wifeToHusband() {
@@ -163,11 +163,11 @@ public class EnglishGenerator {
     }
     public TriviaQuestion hostToYear() {
         String[] q = { "year"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country hosted the world cup in #0#?",q, "host");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country hosted the FIFA World Cup in #0#?",q, "host");
     }
     public TriviaQuestion winnerToYear() {
         String[] q = { "year"};
-        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country won the World Cup in #0#?",q, "winner");
+        return GeneratorHelper.generateQuestionWithData(TriviaGame.dataHash.get("worldCupsEnglish"), "Which country won the FIFA World Cup in #0#?",q, "winner");
     }
     public TriviaQuestion appToYear() {
         String[] q = {"name"};
